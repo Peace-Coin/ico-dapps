@@ -34,7 +34,34 @@ const profileSchema = new Schema({
     },
     socialSecurityId: {
       type: String
-    }
+    },
+    birth: {
+      type: String,
+    },
+    passport: {
+      type: String,
+    },
+    certificateResidence: {
+      type: String,
+    },
+    picture: {
+      type: String,
+    },
+    ethereumAddress: {
+      type: String,
+    },
+    aml: {
+      type: String,
+    },
+    terms: {
+      type: String,
+    },
+    status: {
+      type: String,
+    },
+    statusName: {
+      type: String,
+    },
   },
   date: {
     type: Date,

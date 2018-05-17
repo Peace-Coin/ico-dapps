@@ -48,7 +48,100 @@ module.exports = {
               max: 'less than 48 char'
             }
           }
-        })
+        }),
+      address: Joi.string()
+        .required()
+        .max(250)
+        .options({
+          language: {
+            string: {
+              required: 'Address must be required',
+              max: 'less than 250 char'
+            }
+          }
+        }),
+      birth: Joi.string()
+        .required()
+        .options({
+          language: {
+            string: {
+              required: 'Birth must be required'
+            }
+          }
+        }),
+      country: Joi.string()
+        .required()
+        .options({
+          language: {
+            string: {
+              required: 'Country must be required'
+            }
+          }
+        }),
+      passport: Joi.string()
+        .required()
+        .max(1000000)
+        .options({
+          language: {
+            string: {
+              required: 'Passport must be required',
+              max: 'less than 10MB byte size'
+            }
+          }
+        }),
+      certificateResidence: Joi.string()
+        .required()
+        .max(1000000)
+        .options({
+          language: {
+            string: {
+              required: 'Certificate of Residence must be required',
+              max: 'less than 10MB byte size'
+            }
+          }
+        }),
+      picture: Joi.string()
+        .required()
+        .max(1000000)
+        .options({
+          language: {
+            string: {
+              required: 'Picture must be required',
+              max: 'less than 250 char'
+            }
+          }
+        }),
+      ethereumAddress: Joi.string()
+        .required()
+        .max(250)
+        .options({
+          language: {
+            string: {
+              required: 'EthereumAddress must be required',
+              max: 'less than 250 char'
+            }
+          }
+        }),
+      aml: Joi.boolean()
+        .valid(true)
+        .required()
+        .options({
+          language: {
+            string: {
+              valid: 'AML(anti-money laundering)? must be Checked'
+            }
+          }
+        }),
+      terms: Joi.boolean()
+        .valid(true)
+        .required()
+        .options({
+          language: {
+            string: {
+              valid: 'We confirmed PiaceCoin Terms must be Checked'
+            }
+          }
+        }),
     })
   }
 };
