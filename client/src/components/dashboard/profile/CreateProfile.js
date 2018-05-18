@@ -10,6 +10,18 @@ import SelectListGroupOfCountry from '../../UI/SelectListGroupOfCountry';
 import FileFieldGroup from '../../UI/FileFieldGroup';
 import CheckBoxGroup from '../../UI/CheckBoxGroup';
 import { createProfile } from '../../../actions/profileAction';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -35,6 +47,8 @@ class CreateProfile extends Component {
       uploadFileImage1: '',
       uploadFileImage2: '',
       uploadFileImage3: '',
+      //ポップアップ状態
+      modalIsOpen: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -44,6 +58,21 @@ class CreateProfile extends Component {
     this.onChangeCheckBoxAml = this.onChangeCheckBoxAml.bind(this);
     this.onChangeCheckBoxTerms = this.onChangeCheckBoxTerms.bind(this);
 
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  afterOpenModal() {
+
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -316,6 +345,7 @@ class CreateProfile extends Component {
             error={errors.aml}
             info="AML(anti-money laundering)?"
           />
+        <input type="button" value="confirm terms" onClick={this.openModal} />
           <CheckBoxGroup
             name="terms"
             value="true"
@@ -342,6 +372,34 @@ class CreateProfile extends Component {
           <br />
           <input type="submit" value="Starting Confirm !" />
         </form>
+
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Terms"
+        >
+          <div>
+            <h3>1. head title</h3>
+            <table>
+              <tbody>
+              <tr>
+                <td>
+                  <label>1.1 aaaa</label>
+                </td>
+                <td>
+                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <button onClick={this.closeModal}>
+              close
+            </button>
+          </div>
+        </Modal>
       </div>
     );
   }
