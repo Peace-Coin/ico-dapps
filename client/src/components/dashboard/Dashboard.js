@@ -10,8 +10,6 @@ class Dashboard extends Component {
       <div>
         <p>Dashboard</p>
         <Lottery />
-        <a href="/auth">auth page</a>
-        <br />
         <Link to="/dashboard/profile">profile page</Link>
       </div>
     );
