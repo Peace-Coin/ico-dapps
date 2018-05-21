@@ -26,65 +26,79 @@ module.exports = {
   profileSchema: {
     profileCheck: Joi.object().keys({
       firstName: Joi.string()
-        .min(1)
-        .max(48)
+        .max(50)
         .required()
+        .regex(/^[a-zA-Z0-9./=-]*$/)
+        .label('first Name')
         .options({
           language: {
             string: {
-              min: 'more than 2 char',
-              max: 'less than 48 char'
+              max: 'less than 50 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number and [[./=-]'
+              }
             }
           }
         }),
       lastName: Joi.string()
-        .min(1)
-        .max(48)
+        .max(50)
         .required()
+        .regex(/^[a-zA-Z0-9./=-]*$/)
+        .label('last Name')
         .options({
           language: {
             string: {
-              min: 'more than 2 char',
-              max: 'less than 48 char'
+              max: 'less than 50 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number and [./=-]'
+              }
             }
           }
         }),
       address: Joi.string()
         .required()
+        .regex(/^[a-zA-Z0-9./=-]*$/)
         .max(250)
+        .label('address')
         .options({
           language: {
             string: {
-              required: 'Address must be required',
-              max: 'less than 250 char'
+              max: 'less than 250 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number and [./=-]'
+              }
             }
           }
         }),
       birth: Joi.string()
         .required()
+        .regex(/^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
+        .label('Date of birth')
         .options({
           language: {
             string: {
-              required: 'Birth must be required'
-            }
+              regex: {
+                base: 'fails to match the required pattern: YYYY-MM-DD',
+              },
+            },
           }
         }),
       country: Joi.string()
         .required()
+        .label('country')
         .options({
           language: {
             string: {
-              required: 'Country must be required'
             }
           }
         }),
       passport: Joi.string()
         .required()
         .max(1000000)
+        .label('passport')
         .options({
           language: {
             string: {
-              required: 'Passport must be required',
               max: 'less than 10MB byte size'
             }
           }
@@ -92,10 +106,10 @@ module.exports = {
       certificateResidence: Joi.string()
         .required()
         .max(1000000)
+        .label('Certificate of Residence')
         .options({
           language: {
             string: {
-              required: 'Certificate of Residence must be required',
               max: 'less than 10MB byte size'
             }
           }
@@ -103,83 +117,51 @@ module.exports = {
       picture: Joi.string()
         .required()
         .max(1000000)
+        .label('picture')
         .options({
           language: {
             string: {
-              required: 'Picture must be required',
-              max: 'less than 250 char'
+              max: 'less than 10MB byte size'
             }
           }
         }),
       ethereumAddress: Joi.string()
         .required()
+        .regex(/^[a-zA-Z0-9]*$/)
         .max(250)
+        .label('Ethereum Address')
         .options({
           language: {
             string: {
-              required: 'EthereumAddress must be required',
-              max: 'less than 250 char'
-            }
+              max: 'less than 250 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number'
+              }
+            },
           }
         }),
       aml: Joi.boolean()
         .valid(true)
         .required()
+        .label('AML(anti-money laundering)?')
         .options({
           language: {
-            string: {
-              valid: 'AML(anti-money laundering)? must be Checked'
+            any: {
+              allowOnly: 'must be Checked',
             }
           }
         }),
       terms: Joi.boolean()
         .valid(true)
         .required()
+        .label('We confirmed PiaceCoin Terms')
         .options({
           language: {
-            string: {
-              valid: 'We confirmed PiaceCoin Terms must be Checked'
+            any: {
+              allowOnly: 'must be Checked',
             }
           }
         }),
     })
   }
 };
-
-// {
-//   firstName : "fails to match the aaaa pattern",
-//   lastName  : "fails to match the bbbb pattern"
-// }
-
-// lastName: Joi.string()
-// .regex(/^[1-4]\d*$/, 'aaaa')
-// .required()
-// .options({
-//   language: {
-//     string: {
-//       regex: {
-//         aaaa: '1-4 rgular expression error 1',
-//         bbbb: '5-9 rgular expression error 1'
-//       }
-//     }
-//   }
-// })
-// })
-
-// password: Joi.string()
-//   .regex(/^\S+$/, 'firstName')
-//   .regex(/[A-Z]+/, 'secondName')
-//   .regex(/\d+/, 'thirdName')
-//   .required()
-//   .options({
-//     language: {
-//       string: {
-//         regex: {
-//           base: 'base',
-//           firstName: 'first',
-//           secondName: 'second',
-//           thirdName: 'third'
-//         }
-//       }
-//     }
-//   });

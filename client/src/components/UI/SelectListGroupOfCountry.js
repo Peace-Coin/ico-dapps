@@ -15,7 +15,7 @@ const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled 
         onChange={onChange}
         disabled={disabled}
       >
-      <option value="">Country...</option>
+      <option value="">*Country...</option>
       <option value="AF">Afghanistan</option>
       <option value="AL">Albania</option>
       <option value="DZ">Algeria</option>

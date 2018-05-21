@@ -36,8 +36,8 @@ class CreateProfile extends Component {
       certificateResidence: '',
       picture: '',
       ethereumAddress: '',
-      aml: '',
-      terms: '',
+      aml: false,
+      terms: false,
       errors: {},
       //アップロード後のファイル名
       uploadFileName1: '',
@@ -292,7 +292,7 @@ class CreateProfile extends Component {
             info="This is for address"
           />
           <TextFieldGroup
-            placeholder="*Date of birth"
+            placeholder="*YYYY-MM-DD"
             name="birth"
             value={this.state.birth}
             onChange={this.onChange}
