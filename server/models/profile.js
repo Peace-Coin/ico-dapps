@@ -56,7 +56,7 @@ const profileSchema = new Schema({
     terms: {
       type: String,
     },
-    status: {
+    status: { //1:confirm, 2:approve, ... 9:system error
       type: String,
     },
     statusName: {

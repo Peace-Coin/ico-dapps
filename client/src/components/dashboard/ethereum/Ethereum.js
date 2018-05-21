@@ -56,8 +56,6 @@ export default class Ethereum extends Component {
 
   render() {
 
-    const progress = 50;
-
     return(
       <div>
         <div>

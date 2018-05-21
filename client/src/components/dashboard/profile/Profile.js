@@ -14,7 +14,23 @@ class Profile extends Component {
   render() {
     const { profile, loading } = this.props.profile;
 
-    // Profile COntens
+    // Change Profile
+    let changeProfileLink;
+
+    if (profile != null){
+
+      //when status is not approve
+      if(Object.keys(profile).length > 0 && profile.Profile.status != '2'){
+
+        changeProfileLink = (
+          <Link to="/dashboard/profile/create-profile">
+            FILL KYC/AML FORM
+          </Link>
+        );
+      }
+    }
+
+    // Profile Contents
     let profileContent;
 
     if (profile === null || loading) {
@@ -77,6 +93,7 @@ class Profile extends Component {
     return (
       <div>
         <h1>Profile</h1>
+        {changeProfileLink}
         {profileContent}
       </div>
     );

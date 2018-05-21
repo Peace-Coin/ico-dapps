@@ -263,7 +263,7 @@ class CreateProfile extends Component {
 
     const { errors } = this.state;
     return (
-      <div>
+      <div style={{fontSize: '16px'}}>
         <h1>Create Your KYC</h1>
         <p>Please, Please, Please, submit your Info</p>
         <form onSubmit={this.onSubmit}>
