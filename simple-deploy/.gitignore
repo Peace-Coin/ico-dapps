@@ -2,3 +2,4 @@
 /secrets
 
 package-lock.json
+/build
