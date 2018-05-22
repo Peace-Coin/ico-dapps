@@ -21,7 +21,20 @@ class Navbar extends Component {
 
     this.toggleLang = this.toggleLang.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
+
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //
+  //   if(this.props.profile.Profile.firstName === nextProps.profile.Profile.firstName){
+  //
+  //     return false;
+  //
+  //   }else{
+  //
+  //     return true;
+  //   }
+  // }
 
   componentDidMount() {
     this.props.getCurrentProfile();
@@ -60,7 +73,7 @@ class Navbar extends Component {
       // show a link to sign out
       return (
         <li className="nav-item">
-          <NavLink to="/dashboard/profile">Auth</NavLink>
+          <NavLink to="/dashboard/profile">Profile</NavLink>
           <NavLink to="/signout">Sign Out</NavLink>
         </li>
       );

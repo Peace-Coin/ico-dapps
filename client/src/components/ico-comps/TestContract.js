@@ -19,8 +19,20 @@ class TestContract extends Component {
   };
 
   async componentDidMount() {
+
+    console.log('start');
+
     // Crowdsale Token
-    const owner = await PeaceCoinCrowdsaleToken.methods.owner().call();
+    //const owner = await PeaceCoinCrowdsaleToken.methods.owner().call();
+
+    const owner = await PeaceCoinCrowdsaleToken.methods.owner().call().then((result)=>{
+      console.log(result);
+    }).catch(err => {
+      console.log(err);
+    });
+
+    console.log('end');
+
     const tokenName = await PeaceCoinCrowdsaleToken.methods.name().call();
     const symbol = await PeaceCoinCrowdsaleToken.methods.symbol().call();
     const decimals = await PeaceCoinCrowdsaleToken.methods.decimals().call();
@@ -46,6 +58,11 @@ class TestContract extends Component {
     const cap = await PeaceCoinCrowdsale.methods.cap().call();
 
     let value;
+
+    console.log('rate' + rate);
+    console.log('weiRaised' + weiRaised);
+    console.log('goal' + goal);
+    console.log('cap' + cap);
 
     this.setState({
       owner,

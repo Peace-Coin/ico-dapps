@@ -6,6 +6,7 @@ import { Link, withRouter } from 'react-router-dom';
 import Modal from 'react-modal';
 import Ethereum from './ethereum/Ethereum';
 import { getCurrentProfile } from '../../actions/profileAction';
+import TestContract from '../ico-comps/TestContract';
 
 const customStyles = {
   content : {
@@ -42,9 +43,9 @@ class Dashboard extends Component {
     this.closeSmartContractAddressModal = this.closeSmartContractAddressModal.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getCurrentProfile();
-  }
+  // componentDidMount() {
+  //   this.props.getCurrentProfile();
+  // }
 
   openEthereumModal() {
     this.setState({ethereumModalIsOpen: true});
@@ -148,8 +149,22 @@ class Dashboard extends Component {
             <p class="content__sub cl_themeA-2"><span class="coin coin-eth"><span class="num coin__num">5,200</span><span class="unit coin__unit">ETH</span></span><span class="coin coin-btc"><span class="num coin__num">5,761</span><span class="unit coin__unit">BTC</span></span><span class="coin coin-usd"><span class="num coin__num">5,761</span><span class="unit coin__unit">USD</span></span></p>
           </div>
           <div class="l-content--buybtnSet clearfix">
-            <div onClick={this.openEthereumModal} class="l-content--buybtnSet__item l-content--buybtnSet__item-L borderBox"><div  class="btn btn--cl-1 btn--size-1"><svg class="ico-svg ethereum"><use xlinkHref="http://www.modafilm.com/sample/peaceCoinIco/img/symbol-defs.svg#icon-ethereum"></use></svg><span class="text">Ethereum</span></div></div>
-            <div onClick={this.openBitcoinModal} class="l-content--buybtnSet__item l-content--buybtnSet__item-R borderBox"><div class="btn btn--cl-1 btn--size-1"><svg class="ico-svg bitcoin"><use xlinkHref="http://www.modafilm.com/sample/peaceCoinIco/img/symbol-defs.svg#icon-bitcoin"></use></svg><span class="text">Bitcoin</span></div></div>
+            <div onClick={this.openEthereumModal} class="l-content--buybtnSet__item l-content--buybtnSet__item-L borderBox">
+              <div  class="btn btn--cl-1 btn--size-1">
+                <svg class="ico-svg ethereum">
+                  <use xlinkHref="/symbol-defs.svg#icon-ethereum"></use>
+                </svg>
+                <span class="text">Ethereum</span>
+              </div>
+            </div>
+            <div onClick={this.openBitcoinModal} class="l-content--buybtnSet__item l-content--buybtnSet__item-R borderBox">
+              <div class="btn btn--cl-1 btn--size-1">
+                <svg class="ico-svg bitcoin">
+                  <use xlinkHref="/symbol-defs.svg#icon-bitcoin"></use>
+                </svg>
+                <span class="text">Bitcoin</span>
+              </div>
+            </div>
           </div>
           <div class="l-content--right">
           <div class="l-content--currentprice">
@@ -224,6 +239,7 @@ class Dashboard extends Component {
         </div>
       </div>
     </div>
+    <TestContract />
       </div>
 
     </body>
