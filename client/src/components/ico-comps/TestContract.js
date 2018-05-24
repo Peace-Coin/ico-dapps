@@ -4,116 +4,79 @@ import PeaceCoinCrowdsaleToken from '../../ethereum/ico-interface/PeaceCoinCrowd
 import PeaceCoinCrowdsale from '../../ethereum/ico-interface/PeaceCoinCrowdsale';
 
 class TestContract extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-      //PeaceCoinCrowdSale
-      rate: '',
-      token: '',
-      wallet: '',
-      weiRaised: 0,
-      goal: '',
-      vault: '',
-      crowdsalOowner: '',
-      cap: 0,
-      openingTime: '',
-      closingTime: '',
-
-      //PeaceCoinCrowdSaleToken
-      owner: '',
-      tokenName: '',
-      symbol: '',
-      decimals: '',
-      investor: '',
-      tokenAmount: 0,
-
-      limitTime: '',
-      value: '',
-      dDays: '',
-      dHour: '',
-      dMin: '',
-      dSec: '',
-    };
-
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+  state = {
+    owner: '',
+    tokenName: '',
+    symbol: '',
+    decimals: '',
+    tokenAmount: 0,
+    rate: 0,
+    weiRaised: 0,
+    value: '',
+    investor: '',
+    goal: 0,
+    cap: 0
+  };
 
   async componentDidMount() {
 
+    console.log('start');
+
     // Crowdsale Token
-    const owner = await PeaceCoinCrowdsaleToken.methods.owner().call();
+    //const owner = await PeaceCoinCrowdsaleToken.methods.owner().call();
+
+    const owner = await PeaceCoinCrowdsaleToken.methods.owner().call().then((result)=>{
+      console.log(result);
+    }).catch(err => {
+      console.log(err);
+    });
+
+    console.log('end');
+
     const tokenName = await PeaceCoinCrowdsaleToken.methods.name().call();
     const symbol = await PeaceCoinCrowdsaleToken.methods.symbol().call();
     const decimals = await PeaceCoinCrowdsaleToken.methods.decimals().call();
+
     const accounts = await web3.eth.getAccounts();
     const investor = accounts[0];
     const tokenAmount = await PeaceCoinCrowdsaleToken.methods
       .balanceOf(accounts[0])
       .call();
 
+    // let account = web3.eth.accounts[0];
+    // const accountInterval = setInterval(function() {
+    //   if (web3.eth.accounts[0] !== account) {
+    //     account = web3.eth.accounts[0];
+    //     //updateInterface();
+    //   }
+    // }, 100);
+
     // Crowdsale
     const rate = await PeaceCoinCrowdsale.methods.rate().call();
-    const token = await PeaceCoinCrowdsale.methods.token().call();
-    const wallet = await PeaceCoinCrowdsale.methods.wallet().call();
-
     const weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
     const goal = await PeaceCoinCrowdsale.methods.goal().call();
-
-    const vault = await PeaceCoinCrowdsale.methods.vault().call();
-    const crowdsalOowner = await PeaceCoinCrowdsale.methods.owner().call();
     const cap = await PeaceCoinCrowdsale.methods.cap().call();
-    let openingTime = await PeaceCoinCrowdsale.methods.openingTime().call();
-
-    var d = new Date( Number(openingTime) * 1000 );
-    var year  = d.getFullYear();
-    var month = d.getMonth() + 1;
-    var day  = d.getDate();
-    var hour = ( '0' + d.getHours() ).slice(-2);
-    var min  = ( '0' + d.getMinutes() ).slice(-2);
-    var sec   = ( '0' + d.getSeconds() ).slice(-2);
-
-    openingTime = d.getTime();
-
-    let closingTime = await PeaceCoinCrowdsale.methods.closingTime().call();
-
-    d = new Date( Number(closingTime) * 1000 );
-    year  = d.getFullYear();
-    month = d.getMonth() + 1;
-    day  = d.getDate();
-    hour = ( '0' + d.getHours() ).slice(-2);
-    min  = ( '0' + d.getMinutes() ).slice(-2);
-    sec   = ( '0' + d.getSeconds() ).slice(-2);
-
-    closingTime = d.getTime();
 
     let value;
 
-    this.setState({
-      //PeaceCoinCrowdSale
-      rate,
-      token,
-      wallet,
-      weiRaised,
-      goal,
-      vault,
-      crowdsalOowner,
-      cap,
-      openingTime,
-      closingTime,
+    console.log('rate' + rate);
+    console.log('weiRaised' + weiRaised);
+    console.log('goal' + goal);
+    console.log('cap' + cap);
 
-      //PeaceCoinCrowdSaleToken
+    this.setState({
       owner,
       tokenName,
       symbol,
       decimals,
-      investor,
       tokenAmount,
+      rate,
+      weiRaised,
+      value,
+      investor,
+      goal,
+      cap
     });
-
-  
   }
 
   onSubmit = async event => {
@@ -127,8 +90,7 @@ class TestContract extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1 style={{fontSize: '18px'}}>PeaceCoinCrowdSaleToken</h1>
-        <p style={{fontSize: '16px'}}>
+        <p>
           token owner: {this.state.owner}
           <br />
           token name: {this.state.tokenName}
@@ -137,48 +99,27 @@ class TestContract extends Component {
           <br />
           decimals: {this.state.decimals}
           <br />
-          investor: {this.state.investor}
-          <br />
           balanceOf: {this.state.tokenAmount}
-        </p>
-        <br />
-        <p style={{fontSize: '16px'}}>
-          <h1 style={{fontSize: '18px'}}>PeaceCoinCrowdSale</h1>
+          <br />
           rate: {this.state.rate}
-          <br />
-          token: {this.state.token}
-          <br />
-          wallet: {this.state.wallet}
-          <br />
-          waiRaised: {this.state.weiRaised}
           <br />
           goal: {this.state.goal}
           <br />
-          vault: {this.state.vault}
-          <br />
-          owner: {this.state.crowdsalOowner}
-          <br />
           cap: {this.state.cap}
           <br />
-          openingTime: {this.state.openingTime}
+          waiRaised: {this.state.weiRaised}
           <br />
-          closingTime: {this.state.closingTime}
           <br />
+          investor: {this.state.investor}
         </p>
-        <br />
         <form onSubmit={this.onSubmit}>
           <div>
-            Buy PCE Token :
+            <label>Buy PCE Token</label>
             <input
               value={this.state.value}
               onChange={event => this.setState({ value: event.target.value })}
             />
-          <br />
-          <br />
-          <input
-            type='button'
-            value='METAMASK'
-          />
+            <button>Buy</button>
           </div>
         </form>
       </React.Fragment>
