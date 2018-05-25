@@ -31,6 +31,7 @@ import Dashborad from '../components/dashboard/Dashboard';
 import Profile from '../components/dashboard/profile/Profile';
 import CreateProfile from '../components/dashboard/profile/CreateProfile';
 import Auth from '../components/auth/Auth';
+import PlayGround from '../components/playground/PlayGround';
 
 class AppRouter extends Component {
   render() {
@@ -48,6 +49,11 @@ class AppRouter extends Component {
               <Route exact path="/help" component={HelpPage} />
               <Route exact path="/tempolaryentry" component={TempolaryEntry} />
               <Route exact path="/auth" component={RequireAuth(Auth)} />
+              <Route
+                exact
+                path="/PlayGround"
+                component={RequireAuth(PlayGround)}
+              />
               <Route
                 exact
                 path="/dashboard"

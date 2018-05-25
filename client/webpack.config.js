@@ -56,6 +56,15 @@ module.exports = {
     ]
   },
   devServer: {
+    devServer: {
+      proxy: {
+        '/api': {
+          target: 'http://api-rinkeby.etherscan.io/',
+          changeOrigin: true,
+          secure: false
+        }
+      }
+    },
     historyApiFallback: true,
     port: 3000,
     inline: true
