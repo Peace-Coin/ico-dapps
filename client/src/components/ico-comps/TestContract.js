@@ -5,17 +5,25 @@ import PeaceCoinCrowdsale from '../../ethereum/ico-interface/PeaceCoinCrowdsale'
 
 class TestContract extends Component {
   state = {
-    owner: '',
-    tokenName: '',
-    symbol: '',
-    decimals: '',
-    tokenAmount: 0,
-    rate: 0,
-    weiRaised: 0,
-    value: '',
-    investor: '',
-    goal: 0,
-    cap: 0
+    //PeaceCoinCrowdSale
+    rate:'',
+    token:'',
+    wallet:'',
+    weiRaised:'',
+    goal:'',
+    vault:'',
+    crowdsalOowner:'',
+    cap:'',
+    openingTime:'',
+    closingTime:'',
+
+    //PeaceCoinCrowdSaleToken
+    owner:'',
+    tokenName:'',
+    symbol:'',
+    decimals:'',
+    investor:'',
+    tokenAmount:'',
   };
 
   async componentDidMount() {
@@ -53,29 +61,38 @@ class TestContract extends Component {
 
     // Crowdsale
     const rate = await PeaceCoinCrowdsale.methods.rate().call();
+    const token = await PeaceCoinCrowdsale.methods.token().call();
+    const wallet = await PeaceCoinCrowdsale.methods.wallet().call();
     const weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
     const goal = await PeaceCoinCrowdsale.methods.goal().call();
+    const vault = await PeaceCoinCrowdsale.methods.vault().call();
+    const crowdsalOowner = await PeaceCoinCrowdsale.methods.owner().call();
     const cap = await PeaceCoinCrowdsale.methods.cap().call();
+    const openingTime = await PeaceCoinCrowdsale.methods.openingTime().call();
+    const closingTime = await PeaceCoinCrowdsale.methods.closingTime().call();
 
     let value;
 
-    console.log('rate' + rate);
-    console.log('weiRaised' + weiRaised);
-    console.log('goal' + goal);
-    console.log('cap' + cap);
-
     this.setState({
+      //PeaceCoinCrowdSale
+      rate,
+      token,
+      wallet,
+      weiRaised,
+      goal,
+      vault,
+      crowdsalOowner,
+      cap,
+      openingTime,
+      closingTime,
+
+      //PeaceCoinCrowdSaleToken
       owner,
       tokenName,
       symbol,
       decimals,
-      tokenAmount,
-      rate,
-      weiRaised,
-      value,
       investor,
-      goal,
-      cap
+      tokenAmount,
     });
   }
 
