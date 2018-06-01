@@ -16,28 +16,22 @@ class Navbar extends Component {
       menuStatus2: 'selector__item selector__item-list selector__item-list-user theme-list-selector is-hidden',
       langStatusOpenFlg: false,
       menuStatusOpenFlg: false,
-      userName: 'guest'
     }
 
     this.toggleLang = this.toggleLang.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
-
+    this.toggleReset = this.toggleReset.bind(this);
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //
-  //   if(this.props.profile.Profile.firstName === nextProps.profile.Profile.firstName){
-  //
-  //     return false;
-  //
-  //   }else{
-  //
-  //     return true;
-  //   }
-  // }
+  toggleReset() {
 
-  componentDidMount() {
-    this.props.getCurrentProfile();
+    if(this.state.langStatusOpenFlg){
+
+      this.setState({langStatus2: 'selector__item selector__item-list selector__item-list-lang theme-list-selector is-hidden'});
+      this.setState({langStatusOpenFlg: false});
+      this.setState({menuStatus2: 'selector__item selector__item-list selector__item-list-lang theme-list-selector is-hidden'});
+      this.setState({menuStatusOpenFlg: false});
+    }
   }
 
   toggleLang() {
@@ -78,6 +72,7 @@ class Navbar extends Component {
         </li>
       );
     } else {
+
       // show a link to sign in or sign up
       return [
         <li key={1}>
@@ -94,20 +89,23 @@ class Navbar extends Component {
 
     const { profile, loading } = this.props.profile;
 
-    let userName = (
-      <span class="text">guest</span>
-    );
+    let handleName
 
-    if (profile != null){
+    if (this.props.authenticated) {
 
-      //when status is not approve
-      if(Object.keys(profile).length > 0){
+      handleName = this.props.auth.user.email;
 
-        userName = (
-          <span class="text">{profile.Profile.firstName} {profile.Profile.lastName}</span>
-        );
+      if(handleName === '' || handleName == undefined){
+
+        handleName = 'guest';
       }
+    }else{
+        handleName = 'guest';
     }
+
+    let userName = (
+      <span class="text">{handleName}</span>
+    );
 
     return (
       <nav>

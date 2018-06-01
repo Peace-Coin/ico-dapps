@@ -39,9 +39,6 @@ module.exports = {
         profile.Profile.statusName = 'systemError';
       }
 
-      console.log('profile');
-      console.log(profile);
-
       return profile;
     }
   }

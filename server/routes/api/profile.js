@@ -41,6 +41,22 @@ router
     ProfilesController.createProfile
   );
 
+router
+  .route('/changeEthreumAddress')
+  .post(
+    passportJWT,
+    validateProfile(profileSchema.changeEthreumAddressCheck),
+    ProfilesController.changeEthreumAddress
+  );
+
+router
+  .route('/changeBitcoinAddress')
+  .post(
+    passportJWT,
+    validateProfile(profileSchema.changeBitcoinAddressCheck),
+    ProfilesController.changeBitcoinAddress
+  );
+
 // @reute  GET api/profile/user/:user_id
 // @desc   Get profile by user ID
 // @access Private

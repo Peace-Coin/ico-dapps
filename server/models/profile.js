@@ -50,10 +50,10 @@ const profileSchema = new Schema({
     ethereumAddress: {
       type: String,
     },
-    aml: {
+    bitcoinAddress: {
       type: String,
     },
-    terms: {
+    aml: {
       type: String,
     },
     status: { //1:confirm, 2:approve, ... 9:system error

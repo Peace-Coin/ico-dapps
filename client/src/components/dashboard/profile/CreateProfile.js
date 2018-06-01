@@ -36,6 +36,7 @@ class CreateProfile extends Component {
       certificateResidence: '',
       picture: '',
       ethereumAddress: '',
+      bitcoinAddress: '',
       aml: false,
       terms: false,
       errors: {},
@@ -261,7 +262,26 @@ class CreateProfile extends Component {
       </div>
     );
 
-    const { errors } = this.state;
+    var { errors } = this.state;
+
+    if(errors == undefined){
+
+      errors = {
+        firstName: '',
+        lastName: '',
+        address: '',
+        birth: '',
+        country: '',
+        passport: '',
+        certificateResidence: '',
+        picture: '',
+        ethereumAddress: '',
+        bitcoinAddress: '',
+        aml: '',
+        terms: '',
+      }
+    }
+
     return (
       <div style={{fontSize: '16px'}}>
         <h1>Create Your KYC</h1>
@@ -331,12 +351,20 @@ class CreateProfile extends Component {
             info="This is for your picture"
           />
           <TextFieldGroup
-            placeholder="*ethereumAddress"
+            placeholder="*Ethereum Address"
             name="ethereumAddress"
             value={this.state.ethereumAddress}
             onChange={this.onChange}
             error={errors.ethereumAddress}
-            info="This is for ethereumAddress"
+            info="This is for Ethereum address"
+          />
+          <TextFieldGroup
+            placeholder="*Bitcoin Address"
+            name="bitcoinAddress"
+            value={this.state.bitcoinAddress}
+            onChange={this.onChange}
+            error={errors.bitcoinAddress}
+            info="This is for Bitcoin address"
           />
           <CheckBoxGroup
             name="aml"
@@ -344,14 +372,6 @@ class CreateProfile extends Component {
             onChange={this.onChangeCheckBoxAml}
             error={errors.aml}
             info="AML(anti-money laundering)?"
-          />
-        <input type="button" value="confirm terms" onClick={this.openModal} />
-          <CheckBoxGroup
-            name="terms"
-            value="true"
-            onChange={this.onChangeCheckBoxTerms}
-            error={errors.terms}
-            info="We confirmed PiaceCoin Terms"
           />
           <input
             type="hidden"
@@ -372,34 +392,6 @@ class CreateProfile extends Component {
           <br />
           <input type="submit" value="Starting Confirm !" />
         </form>
-
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Terms"
-        >
-          <div>
-            <h3>1. head title</h3>
-            <table>
-              <tbody>
-              <tr>
-                <td>
-                  <label>1.1 aaaa</label>
-                </td>
-                <td>
-                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                </td>
-              </tr>
-              </tbody>
-            </table>
-            <button onClick={this.closeModal}>
-              close
-            </button>
-          </div>
-        </Modal>
       </div>
     );
   }

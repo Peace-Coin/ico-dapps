@@ -1,5 +1,6 @@
 const Profile = require('../models/profile');
 const CodeNameUtil = require('../util/CodeNameUtil');
+const Rate = require('../models/rate');
 
 module.exports = {
   // secret
@@ -36,8 +37,8 @@ module.exports = {
     profileFields.Profile.certificateResidence = req.body.certificateResidence;
     profileFields.Profile.picture = req.body.picture;
     profileFields.Profile.ethereumAddress = req.body.ethereumAddress;
+    profileFields.Profile.bitcoinAddress = req.body.bitcoinAddress;
     profileFields.Profile.aml = req.body.aml;
-    profileFields.Profile.terms = req.body.terms;
     profileFields.Profile.status = '1';
 
     Profile.findOne({ user: req.user.id }).then(profile => {
@@ -57,6 +58,81 @@ module.exports = {
         new Profile(profileFields).save().then(profile => res.json(CodeNameUtil.getProfileStatus(profile)));
       }
     });
+  },
+
+  // changeEthreumAddress
+  changeEthreumAddress: async (req, res, next) => {
+    // Basic Info
+    const profileFields = {};
+    profileFields.user = req.user.id;
+
+    console.log(req.body);
+
+    profileFields.Profile = {};
+    profileFields.Profile.ethereumAddress = req.body.ethereumAddress;
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+
+      profile.Profile.ethereumAddress = profileFields.Profile.ethereumAddress;
+
+      if (profile) {
+        // Update
+        Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profile }
+        ).then(profile => {
+
+          Profile.findOne({ user: req.user.id })
+            .then(profile => {
+              if (!profile) {
+                errors.noprofile = 'There is no profile for this user';
+                res.status(404).json(errors);
+              }
+
+              res.json(CodeNameUtil.getProfileStatus(profile));
+            })
+            .catch(err => res.status(404).json(err));
+        });
+      }
+    }).catch(err => res.status(500).json(err));
+  },
+
+  // changeBitcoinAddress
+  changeBitcoinAddress: async (req, res, next) => {
+
+    // Basic Info
+    const profileFields = {};
+    profileFields.user = req.user.id;
+
+    console.log(req.body);
+
+    profileFields.Profile = {};
+    profileFields.Profile.bitcoinAddress = req.body.bitcoinAddress;
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+
+      profile.Profile.bitcoinAddress = profileFields.Profile.bitcoinAddress;
+
+      if (profile) {
+        // Update
+        Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profile }
+        ).then(profile => {
+
+          Profile.findOne({ user: req.user.id })
+            .then(profile => {
+              if (!profile) {
+                errors.noprofile = 'There is no profile for this user';
+                res.status(404).json(errors);
+              }
+
+              res.json(CodeNameUtil.getProfileStatus(profile));
+            })
+            .catch(err => res.status(404).json(err));
+        });
+      }
+    }).catch(err => res.status(500).json(err));
   },
 
   // Get Profile

@@ -140,6 +140,20 @@ module.exports = {
             },
           }
         }),
+        bitcoinAddress: Joi.string()
+          .regex(/^[a-zA-Z0-9]*$/)
+          .max(250)
+          .label('Ethereum Address')
+          .options({
+            language: {
+              string: {
+                max: 'less than 250 char',
+                regex: {
+                  base: 'fails to match the required pattern: half-width alphanumeric and number'
+                }
+              },
+            }
+          }),
       aml: Joi.boolean()
         .valid(true)
         .required()
@@ -151,17 +165,40 @@ module.exports = {
             }
           }
         }),
-      terms: Joi.boolean()
-        .valid(true)
+    }),
+    changeEthreumAddressCheck: Joi.object().keys({
+      ethereumAddress: Joi.string()
         .required()
-        .label('We confirmed PiaceCoin Terms')
+        .regex(/^[a-zA-Z0-9]*$/)
+        .max(250)
+        .label('Ethereum Address')
         .options({
           language: {
-            any: {
-              allowOnly: 'must be Checked',
-            }
+            string: {
+              max: 'less than 250 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number'
+              }
+            },
           }
         }),
-    })
+    }),
+    changeBitcoinAddressCheck: Joi.object().keys({
+      bitcoinAddress: Joi.string()
+        .required()
+        .regex(/^[a-zA-Z0-9]*$/)
+        .max(250)
+        .label('Bitcoin Address')
+        .options({
+          language: {
+            string: {
+              max: 'less than 250 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number'
+              }
+            },
+          }
+        }),
+    }),
   }
 };

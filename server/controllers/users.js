@@ -13,12 +13,28 @@ signToken = user => {
 
   console.log('user -> ' + user);
 
+  let handleName = 'guest';
+
+  if(user.local != undefined){
+
+    handleName = user.local.email
+
+  }else if(user.google != undefined){
+
+    handleName = user.google.email
+
+  }else if(user.facebook != undefined){
+
+    handleName = user.facebook.email
+  }
+
   return JWT.sign(
     {
       iss: 'thebind',
       sub: user.id,
       iat: new Date().getTime(), // Current Time
-      exp: new Date().setDate(new Date().getDate() + 1) // Current time + 1 day ahead
+      exp: new Date().setDate(new Date().getDate() + 1), // Current time + 1 day ahead
+      email: handleName
     },
     JWT_SECRET
   );

@@ -6,11 +6,14 @@ import { Link, withRouter } from 'react-router-dom';
 import Modal from 'react-modal';
 import Ethereum from './ethereum/Ethereum';
 import { getCurrentProfile } from '../../actions/profileAction';
+import { getRate } from '../../actions/rateAction';
 import PeaceCoinCrowdsaleToken from '../../ethereum/ico-interface/PeaceCoinCrowdsaleToken';
 import PeaceCoinCrowdsale from '../../ethereum/ico-interface/PeaceCoinCrowdsale';
 import web3 from '../../ethereum/web3';
 import TestContract from '../ico-comps/TestContract';
 import PurchaseHistory from './ethereum/PurchaseHistory';
+import axios from '../../shared/axios';
+import Spinner from '../UI/Spinner';
 
 const customStyles = {
   content: {
@@ -28,9 +31,33 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
+      investor: '',
+      tokenAmount: 0,
+      loading: true,
+
+
       ethereumModalIsOpen: false,
       bitcoinModalIsOpen: false,
-      smartContractAddressIsOpen: false
+      smartContractAddressIsOpen: false,
+
+      ethAmount: '',
+
+      // getRateApi
+      rates: {
+        bitcoinRate: '',
+        usdRate: '',
+        bitcoinRateAmount: '',
+        usdRateAmount: '',
+        //project total usd amount
+        totalUsdAmount: ''
+      },
+
+      conf: {
+        PeaceCoinCrowdsaleAddress: ''
+      },
+
+      profile: {},
     };
 
     this.openEthereumModal = this.openEthereumModal.bind(this);
@@ -56,93 +83,135 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
-    // Crowdsale Token
-    const owner = await PeaceCoinCrowdsaleToken.methods.owner().call();
-    const tokenName = await PeaceCoinCrowdsaleToken.methods.name().call();
-    const symbol = await PeaceCoinCrowdsaleToken.methods.symbol().call();
-    const decimals = await PeaceCoinCrowdsaleToken.methods.decimals().call();
-    const accounts = await web3.eth.getAccounts();
-    const investor = accounts[0];
-    let tokenAmount = await PeaceCoinCrowdsaleToken.methods
-      .balanceOf(accounts[0])
-      .call();
 
-    // const history = await PeaceCoinCrowdsale.methods.buyTokens(this.state.investor).call({
-    //   address: investor,
-    // });
+    //ポップアップ制御用
+    axios.get('/api/profile')
+      .then(res => {
 
-    tokenAmount = String(tokenAmount).replace(
-      /(\d)(?=(\d\d\d)+(?!\d))/g,
-      '$1,'
-    );
+        this.setState({profile: res.data})
 
-    // Crowdsale
-    let rate = await PeaceCoinCrowdsale.methods.rate().call();
+        let investor = this.state.profile.Profile.ethereumAddress;
 
-    rate = String(rate).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        this.setState({investor: investor})
+      });
 
-    const token = await PeaceCoinCrowdsale.methods.token().call();
-    const wallet = await PeaceCoinCrowdsale.methods.wallet().call();
+    try{
 
-    let weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
-    weiRaised = weiRaised * 0.000000000000000001;
+      // Crowdsale Token
+      const owner = await PeaceCoinCrowdsaleToken.methods.owner().call();
+      const tokenName = await PeaceCoinCrowdsaleToken.methods.name().call();
+      const symbol = await PeaceCoinCrowdsaleToken.methods.symbol().call();
+      const decimals = await PeaceCoinCrowdsaleToken.methods.decimals().call();
+      const accounts = await web3.eth.getAccounts();
 
-    const goal = await PeaceCoinCrowdsale.methods.goal().call();
+      let tokenAmount = await PeaceCoinCrowdsaleToken.methods
+          .balanceOf(this.state.investor)
+          .call();
 
-    const vault = await PeaceCoinCrowdsale.methods.vault().call();
-    const crowdsalOowner = await PeaceCoinCrowdsale.methods.owner().call();
-    const cap = await PeaceCoinCrowdsale.methods.cap().call();
-    let openingTime = await PeaceCoinCrowdsale.methods.openingTime().call();
+      // Crowdsale
+      let rate = await PeaceCoinCrowdsale.methods.rate().call();
 
-    var d = new Date(Number(openingTime) * 1000);
-    var year = d.getFullYear();
-    var month = d.getMonth() + 1;
-    var day = d.getDate();
-    var hour = ('0' + d.getHours()).slice(-2);
-    var min = ('0' + d.getMinutes()).slice(-2);
-    var sec = ('0' + d.getSeconds()).slice(-2);
+      const token = await PeaceCoinCrowdsale.methods.token().call();
+      const wallet = await PeaceCoinCrowdsale.methods.wallet().call();
 
-    openingTime = d.getTime();
+      const goal = await PeaceCoinCrowdsale.methods.goal().call();
 
-    let closingTime = await PeaceCoinCrowdsale.methods.closingTime().call();
+      const vault = await PeaceCoinCrowdsale.methods.vault().call();
+      const crowdsalOowner = await PeaceCoinCrowdsale.methods.owner().call();
+      const cap = await PeaceCoinCrowdsale.methods.cap().call();
+      let openingTime = await PeaceCoinCrowdsale.methods.openingTime().call();
 
-    d = new Date(Number(closingTime) * 1000);
-    year = d.getFullYear();
-    month = d.getMonth() + 1;
-    day = d.getDate();
-    hour = ('0' + d.getHours()).slice(-2);
-    min = ('0' + d.getMinutes()).slice(-2);
-    sec = ('0' + d.getSeconds()).slice(-2);
+      var d = new Date(Number(openingTime) * 1000);
+      var year = d.getFullYear();
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      var hour = ('0' + d.getHours()).slice(-2);
+      var min = ('0' + d.getMinutes()).slice(-2);
+      var sec = ('0' + d.getSeconds()).slice(-2);
 
-    closingTime = d.getTime();
+      openingTime = d.getTime();
 
-    let value;
+      let closingTime = await PeaceCoinCrowdsale.methods.closingTime().call();
 
-    this.setState({
-      //PeaceCoinCrowdSale
-      rate,
-      token,
-      wallet,
-      weiRaised,
-      goal,
-      vault,
-      crowdsalOowner,
-      cap,
-      openingTime,
-      closingTime,
+      d = new Date(Number(closingTime) * 1000);
+      year = d.getFullYear();
+      month = d.getMonth() + 1;
+      day = d.getDate();
+      hour = ('0' + d.getHours()).slice(-2);
+      min = ('0' + d.getMinutes()).slice(-2);
+      sec = ('0' + d.getSeconds()).slice(-2);
 
-      //PeaceCoinCrowdSaleToken
-      owner,
-      tokenName,
-      symbol,
-      decimals,
-      investor,
-      tokenAmount
+      closingTime = d.getTime();
 
-      //history,
-    });
+      let value;
 
-    this.interval = setInterval(this.countDowm, 1000);
+      var conf = require('../../config/conf.json');
+
+      this.setState({
+        //PeaceCoinCrowdSale
+        rate,
+        token,
+        wallet,
+
+        goal,
+        vault,
+        crowdsalOowner,
+        cap,
+        openingTime,
+        closingTime,
+        //PeaceCoinCrowdSaleToken
+        owner,
+        tokenName,
+        symbol,
+        decimals,
+
+        conf,
+      });
+
+      this.interval = setInterval(this.countDowm, 1000);
+
+      let ethAmount;
+
+      //PeaceUtil 小数点以下誤差吸収ライブラリ
+      var BigNumber = require('bignumber.js');
+
+      ethAmount = new BigNumber(tokenAmount).times(conf.EXCHANGE_WEI_ETH_RATE).toPrecision()
+
+      tokenAmount = new BigNumber(tokenAmount).times(conf.EXCHANGE_WEI_ETH_RATE).times(rate).toPrecision()
+
+      //eth raised = weiRaised * exchange_length
+      let weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
+
+      //weiRaised = PeaceUtil.multiply(weiRaised, conf.EXCHANGE_WEI_ETH_RATE);
+      weiRaised = new BigNumber(weiRaised).times(conf.EXCHANGE_WEI_ETH_RATE).toPrecision()
+
+      this.props.getRate(ethAmount, weiRaised, this.props.history);
+
+      tokenAmount = String(tokenAmount).replace(
+        /(\d)(?=(\d\d\d)+(?!\d))/g,
+        '$1,'
+      );
+
+      ethAmount = String(ethAmount).replace(
+        /(\d)(?=(\d\d\d)+(?!\d))/g,
+        '$1,'
+      );
+
+      weiRaised = String(weiRaised).replace(
+        /(\d)(?=(\d\d\d)+(?!\d))/g,
+        '$1,'
+      );
+
+      this.setState({
+        tokenAmount,
+        weiRaised,
+        ethAmount,
+      });
+
+    }catch(e){
+
+      this.setState({tokenAmount: 0})
+    }
   }
 
   countDowm() {
@@ -169,10 +238,22 @@ class Dashboard extends Component {
       this.setState({ dMin: dMin });
       this.setState({ dSec: dSec });
     }
+
+    this.setState({loading: false})
   }
 
   openEthereumModal() {
-    this.setState({ ethereumModalIsOpen: true });
+
+    //KYC 登録済みであること 承認状態は問わない
+      if(this.state.profile.Profile != undefined){
+
+      this.setState({ ethereumModalIsOpen: true });
+      this.setState({ errorMessage: '' });
+
+    }else{
+
+      this.setState({ errorMessage: 'PLEASE KYC FINISHED !' });
+    }
   }
 
   afterEthereumOpenModal() {}
@@ -182,7 +263,24 @@ class Dashboard extends Component {
   }
 
   openBitcoinModal() {
-    this.setState({ bitcoinModalIsOpen: true });
+
+    //KYC 認証済みであること 承認状態は問わない
+    if(this.state.profile.Profile != undefined){
+
+      if(this.state.profile.Profile.bitcoinAddress != '' && this.state.profile.Profile.bitcoinAddress != undefined){
+
+        this.setState({ bitcoinModalIsOpen: true });
+        this.setState({ errorMessage: '' });
+
+      }else{
+
+        this.setState({ errorMessage: 'PLEASE ENTRY BITCOIN ADDRESS !' });
+      }
+
+    }else{
+
+      this.setState({ errorMessage: 'PLEASE KYC FINISHED !' });
+    }
   }
 
   afterBitcoinOpenModal() {}
@@ -209,663 +307,175 @@ class Dashboard extends Component {
     });
   }
 
-  // onSubmit = async event => {
-  //
-  //   event.preventDefault();
-  //   await PeaceCoinCrowdsale.methods.buyTokens(this.state.investor).send({
-  //     from: this.state.investor,
-  //     value: web3.utils.toWei(this.state.value, 'ether')
-  //   });
-  // };
-
   render() {
-    return (
-      <body class="peaceCoinIco dashboard">
-        <div>
-          <Modal
-            isOpen={this.state.smartContractAddressIsOpen}
-            onAfterOpen={this.afterSmartContractAddressOpenModal}
-            onRequestClose={this.closeSmartContractAddressModal}
-            style={customStyles}
-            contentLabel="SmartContractAddressModal"
-          >
-            <div>
-              <h3>1. head title</h3>
 
-              <button onClick={this.closeSmartContractAddressModal}>
-                close
-              </button>
-            </div>
-          </Modal>
+    let dashboardContent;
+
+    const loading = this.state.loading;
+
+    if(loading){
+
+      dashboardContent = <Spinner />;
+
+    }else{
+
+      dashboardContent = (
+        <body class="peaceCoinIco dashboard">
+        <div style={{backgroundColor: 'red', fontSize: '18px'}}>
+          {this.state.errorMessage}
         </div>
-
-        <div id="mainContent" role="main">
-          <div id="pageContent">
-            <div class="l-sec sec_token">
-              <h2 class="title_sec title_sec__a title_sec-token">Token</h2>
-              <div class="l-content l-content--token theme-bgA">
-                <p class="content__main">
-                  <span class="coin coin-pce">
-                    <span class="num coin__num">{this.state.tokenAmount}</span>
-                    <span class="unit coin__unit">PCE</span>
-                  </span>
-                </p>
-                <p class="content__sub cl_themeA-2">
-                  <span class="coin coin-eth">
-                    <span class="num coin__num">5,200</span>
-                    <span class="unit coin__unit">ETH</span>
-                  </span>
-                  <span class="coin coin-btc">
-                    <span class="num coin__num">5,761</span>
-                    <span class="unit coin__unit">BTC</span>
-                  </span>
-                  <span class="coin coin-usd">
-                    <span class="num coin__num">5,761</span>
-                    <span class="unit coin__unit">USD</span>
-                  </span>
-                </p>
-              </div>
+        <div>
+          <div>
+            <br /><input type="button" value="Smart Contract Address" onClick={this.openSmartContractAddressModal} />
+          </div>
+          <div>
+            <Modal
+              isOpen={this.state.ethereumModalIsOpen}
+              onAfterOpen={this.afterEthereumOpenModal}
+              onRequestClose={this.closeEthereumModal}
+              style={customStyles}
+              contentLabel="ETHEREUM"
+            >
+              <Ethereum ethreumAddress={this.state.investor} />
+            </Modal>
+          </div>
+          <div>
+            <Modal
+              isOpen={this.state.bitcoinModalIsOpen}
+              onAfterOpen={this.afterBitcoinOpenModal}
+              onRequestClose={this.closeBitcoinModal}
+              style={customStyles}
+              contentLabel="BITCOIN"
+            >
               <div>
-                <Modal
-                  isOpen={this.state.ethereumModalIsOpen}
-                  onAfterOpen={this.afterEthereumOpenModal}
-                  onRequestClose={this.closeEthereumModal}
-                  style={customStyles}
-                  contentLabel="ETHEREUM"
-                >
-                  <Ethereum ref="child" />
-                </Modal>
-              </div>
-              <div class="l-content--right">
-                <div class="l-content--currentprice">
-                  <h3 class="title_content title_content__a title_content-currentprice">
-                    Current price
-                  </h3>
-                  <p class="content__main content__main-currentprice">
-                    <span class="coin coin-eth">
-                      <span class="num coin__num">1</span>
-                      <span class="unit coin__unit">ETH</span>
-                    </span>{' '}
-                    ={' '}
-                    <span class="coin coin-pce">
-                      <span class="num coin__num">{this.state.rate}</span>
-                      <span class="unit coin__unit">PCE</span>
-                    </span>
-                  </p>
-                </div>
-                <div class="l-content--increases">
-                  <h3 class="title_content title_content__a title_content-increases">
-                    Price increases in
-                  </h3>
-                  <div
-                    id="timeCount"
-                    class="content__main timer clearfix is-countdown"
-                  >
-                    <div
-                      class="theme-bgA"
-                      style={{
-                        fontSize: '40px',
-                        padding: '10px',
-                        borderRadius: '5px',
-                        textAlign: 'center'
-                      }}
-                    >
-                      <span class="num">{this.state.dDays}</span>
-                      <span
-                        class="unit cl_themeA-2"
-                        style={{ fontSize: '25px' }}
-                      >
-                        {' '}
-                        Days
-                      </span>
-                    </div>
-                    <br />
-                    <div class="theme-bgA timer__item timer__item-h">
-                      <span class="num">{this.state.dHour}</span>
-                      <span class="unit cl_themeA-2">Hours</span>
-                    </div>
-                    <div class="theme-bgA timer__item timer__item-m">
-                      <span class="num">{this.state.dMin}</span>
-                      <span class="unit cl_themeA-2">Minutes</span>
-                    </div>
-                    <div class="theme-bgA timer__item timer__item-s">
-                      <span class="num">{this.state.dSec}</span>
-                      <span class="unit cl_themeA-2">Seconds</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="l-content--raised">
-                  <h3 class="title_content title_content__a title_content-raised">
-                    Raised
-                  </h3>
-                  <p class="content__main content__main-raised">
-                    <span class="coin coin-usd">
-                      <span class="unit coin__unit">ETH</span>
-                      <span class="num coin__num">{this.state.weiRaised}</span>
-                    </span>
-                  </p>
-                  <p class="content__sub content__sub-raised">
-                    <span class="coin coin-eth">
-                      <span class="num coin__num">3,512,786.37</span>
-                      <span class="unit coin__unit">USD</span>
-                    </span>
-                  </p>
-                </div>
+                <h3>1. head title</h3>
 
-                <div id="mainContent" role="main">
-                  <div id="pageContent">
-                    <div class="l-sec sec_token">
-                      <h2 class="title_sec title_sec__a title_sec-token">
-                        Token
-                      </h2>
-                      <div class="l-content l-content--token theme-bgA">
-                        <p class="content__main">
-                          <span class="coin coin-pce">
-                            <span class="num coin__num">5,200</span>
-                            <span class="unit coin__unit">PCE</span>
-                          </span>
-                        </p>
-                        <p class="content__sub cl_themeA-2">
-                          <span class="coin coin-eth">
-                            <span class="num coin__num">5,200</span>
-                            <span class="unit coin__unit">ETH</span>
-                          </span>
-                          <span class="coin coin-btc">
-                            <span class="num coin__num">5,761</span>
-                            <span class="unit coin__unit">BTC</span>
-                          </span>
-                          <span class="coin coin-usd">
-                            <span class="num coin__num">5,761</span>
-                            <span class="unit coin__unit">USD</span>
-                          </span>
-                        </p>
-                      </div>
-                      <div class="l-content--buybtnSet clearfix">
-                        <div
-                          onClick={this.openEthereumModal}
-                          class="l-content--buybtnSet__item l-content--buybtnSet__item-L borderBox"
-                        >
-                          <div class="btn btn--cl-1 btn--size-1">
-                            <svg class="ico-svg ethereum">
-                              <use xlinkHref="/symbol-defs.svg#icon-ethereum" />
-                            </svg>
-                            <span class="text">Ethereum</span>
-                          </div>
-                        </div>
-                        <div
-                          onClick={this.openBitcoinModal}
-                          class="l-content--buybtnSet__item l-content--buybtnSet__item-R borderBox"
-                        >
-                          <div class="btn btn--cl-1 btn--size-1">
-                            <svg class="ico-svg bitcoin">
-                              <use xlinkHref="/symbol-defs.svg#icon-bitcoin" />
-                            </svg>
-                            <span class="text">Bitcoin</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="l-content--right">
-                        <div class="l-content--currentprice">
-                          <h3 class="title_content title_content__a title_content-currentprice">
-                            Current price
-                          </h3>
-                          <p class="content__main content__main-currentprice">
-                            <span class="coin coin-eth">
-                              <span class="num coin__num">1</span>
-                              <span class="unit coin__unit">ETH</span>
-                            </span>{' '}
-                            ={' '}
-                            <span class="coin coin-pce">
-                              <span class="num coin__num">9,052</span>
-                              <span class="unit coin__unit">PCE</span>
-                            </span>
-                          </p>
-                        </div>
-                        <div class="l-content--increases">
-                          <h3 class="title_content title_content__a title_content-increases">
-                            Price increases in
-                          </h3>
-                          <div
-                            id="timeCount"
-                            class="content__main timer clearfix is-countdown"
-                          >
-                            <div class="theme-bgA timer__item timer__item-day is-hide">
-                              <span class="num">11904</span>
-                              <span class="unit">Days</span>
-                            </div>
-                            <div class="theme-bgA timer__item timer__item-h">
-                              <span class="num">19</span>
-                              <span class="unit cl_themeA-2">Hours</span>
-                            </div>
-                            <div class="theme-bgA timer__item timer__item-m">
-                              <span class="num">05</span>
-                              <span class="unit cl_themeA-2">Minutes</span>
-                            </div>
-                            <div class="theme-bgA timer__item timer__item-s">
-                              <span class="num">23</span>
-                              <span class="unit cl_themeA-2">Seconds</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="l-content--raised">
-                          <h3 class="title_content title_content__a title_content-raised">
-                            Raised
-                          </h3>
-                          <p class="content__main content__main-raised">
-                            <span class="coin coin-usd">
-                              <span class="unit coin__unit">$</span>
-                              <span class="num coin__num">3,512,786.37</span>
-                            </span>
-                          </p>
-                          <p class="content__sub content__sub-raised">
-                            <span class="coin coin-eth">
-                              <span class="num coin__num">3,512,786.37</span>
-                              <span class="unit coin__unit">ETH</span>
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="l-sec sec_transactions">
-                      <h2 class="title_sec title_sec__a title_sec-transactions">
-                        Transactions
-                      </h2>
-                      <div class="l-content l-content--transactionsList">
-                        <div class="info clearfix">
-                          <p class="transactions--item__label" />
-                          <p class="transactions--item__hash">Hash Address</p>
-                          <p class="transactions--item__datetime">Data time</p>
-                          <p class="transactions--item__price">Price</p>
-                          <p class="transactions--item__status">Status</p>
-                        </div>
-                        <ul class="list_transactions">
-                          <li class="list_transactions--item theme-bgA unconfirmed clearfix">
-                            <p class="transactions--item__hash">
-                              20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                            </p>
-                            <p class="transactions--item__datetime">
-                              <span class="date">2018/01/18</span>
-                              <span class="time cl_themeA-2">00:10:32</span>
-                            </p>
-                            <p class="transactions--item__price">
-                              <span class="coin coin-pce">
-                                <span class="num coin__num">127</span>
-                                <span class="unit coin__unit">PCE</span>
-                              </span>
-                              <span class="coin coin-usd cl_themeA-2">
-                                <span class="unit coin__unit">$</span>
-                                <span class="num coin__num">181.61</span>
-                              </span>
-                            </p>
-                            <p class="transactions--item__status">
-                              <span class="status">
-                                <span class="label" />
-                                <span class="text">UNCONFIRMED</span>
-                              </span>
-                              <span class="confirmations cl_themeA-2">
-                                <span class="num">521</span>
-                                <span class="unit">Confirmations</span>
-                              </span>
-                            </p>
-                          </li>
-                          <li class="list_transactions--item theme-bgA canceled clearfix">
-                            <p class="transactions--item__hash">
-                              20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                            </p>
-                            <p class="transactions--item__datetime">
-                              <span class="date">2018/01/18</span>
-                              <span class="time cl_themeA-2">00:10:32</span>
-                            </p>
-                            <p class="transactions--item__price">
-                              <span class="coin coin-pce">
-                                <span class="num coin__num">127</span>
-                                <span class="unit coin__unit">PCE</span>
-                              </span>
-                              <span class="coin coin-usd cl_themeA-2">
-                                <span class="unit coin__unit">$</span>
-                                <span class="num coin__num">181.61</span>
-                              </span>
-                            </p>
-                            <p class="transactions--item__status">
-                              <span class="status">
-                                <span class="label" />
-                                <span class="text">CANCELED</span>
-                              </span>
-                              <span class="confirmations cl_themeA-2">
-                                <span class="num">521</span>
-                                <span class="unit">Confirmations</span>
-                              </span>
-                            </p>
-                          </li>
-                          <li class="list_transactions--item theme-bgA unconfirmed clearfix">
-                            <p class="transactions--item__hash">
-                              20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                            </p>
-                            <p class="transactions--item__datetime">
-                              <span class="date">2018/01/18</span>
-                              <span class="time cl_themeA-2">00:10:32</span>
-                            </p>
-                            <p class="transactions--item__price">
-                              <span class="coin coin-pce">
-                                <span class="num coin__num">127</span>
-                                <span class="unit coin__unit">PCE</span>
-                              </span>
-                              <span class="coin coin-usd cl_themeA-2">
-                                <span class="unit coin__unit">$</span>
-                                <span class="num coin__num">181.61</span>
-                              </span>
-                            </p>
-                            <p class="transactions--item__status">
-                              <span class="status">
-                                <span class="label" />
-                                <span class="text">UNCONFIRMED</span>
-                              </span>
-                              <span class="confirmations cl_themeA-2">
-                                <span class="num">521</span>
-                                <span class="unit">Confirmations</span>
-                              </span>
-                            </p>
-                          </li>
-                          <li class="list_transactions--item theme-bgA completed clearfix">
-                            <p class="transactions--item__hash">
-                              20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                            </p>
-                            <p class="transactions--item__datetime">
-                              <span class="date">2018/01/18</span>
-                              <span class="time cl_themeA-2">00:10:32</span>
-                            </p>
-                            <p class="transactions--item__price">
-                              <span class="coin coin-pce">
-                                <span class="num coin__num">127</span>
-                                <span class="unit coin__unit">PCE</span>
-                              </span>
-                              <span class="coin coin-usd cl_themeA-2">
-                                <span class="unit coin__unit">$</span>
-                                <span class="num coin__num">181.61</span>
-                              </span>
-                            </p>
-                            <p class="transactions--item__status">
-                              <span class="status">
-                                <span class="label" />
-                                <span class="text">COMPLETED</span>
-                              </span>
-                              <span class="confirmations cl_themeA-2">
-                                <span class="num">521</span>
-                                <span class="unit">Confirmations</span>
-                              </span>
-                            </p>
-                          </li>
-                          <li class="list_transactions--item theme-bgA completed clearfix">
-                            <p class="transactions--item__hash">
-                              20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                            </p>
-                            <p class="transactions--item__datetime">
-                              <span class="date">2018/01/18</span>
-                              <span class="time cl_themeA-2">00:10:32</span>
-                            </p>
-                            <p class="transactions--item__price">
-                              <span class="coin coin-pce">
-                                <span class="num coin__num">127</span>
-                                <span class="unit coin__unit">PCE</span>
-                              </span>
-                              <span class="coin coin-usd cl_themeA-2">
-                                <span class="unit coin__unit">$</span>
-                                <span class="num coin__num">181.61</span>
-                              </span>
-                            </p>
-                            <p class="transactions--item__status">
-                              <span class="status">
-                                <span class="label" />
-                                <span class="text">COMPLETED</span>
-                              </span>
-                              <span class="confirmations cl_themeA-2">
-                                <span class="num">521</span>
-                                <span class="unit">Confirmations</span>
-                              </span>
-                            </p>
-                          </li>
-                          <li class="list_transactions--item theme-bgA unconfirmed clearfix">
-                            <p class="transactions--item__hash">
-                              20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                            </p>
-                            <p class="transactions--item__datetime">
-                              <span class="date">2018/01/18</span>
-                              <span class="time cl_themeA-2">00:10:32</span>
-                            </p>
-                            <p class="transactions--item__price">
-                              <span class="coin coin-pce">
-                                <span class="num coin__num">127</span>
-                                <span class="unit coin__unit">PCE</span>
-                              </span>
-                              <span class="coin coin-usd cl_themeA-2">
-                                <span class="unit coin__unit">$</span>
-                                <span class="num coin__num">181.61</span>
-                              </span>
-                            </p>
-                            <p class="transactions--item__status">
-                              <span class="status">
-                                <span class="label" />
-                                <span class="text">UNCONFIRMED</span>
-                              </span>
-                              <span class="confirmations cl_themeA-2">
-                                <span class="num">521</span>
-                                <span class="unit">Confirmations</span>
-                              </span>
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="l-content l-content-transactionsAmount">
-                        <h3 class="title_content title_content__a title_content-transactionsAmount">
-                          Amount
-                        </h3>
-                        <p class="content__main">
-                          <span class="coin coin-pce">
-                            <span class="num coin__num">253,500</span>
-                            <span class="unit coin__unit">PCE</span>
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <ul class="list_transactions">
-                    <li class="list_transactions--item theme-bgA unconfirmed clearfix">
-                      <p class="transactions--item__hash">
-                        20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                      </p>
-                      <p class="transactions--item__datetime">
-                        <span class="date">2018/01/18</span>
-                        <span class="time cl_themeA-2">00:10:32</span>
-                      </p>
-                      <p class="transactions--item__price">
-                        <span class="coin coin-pce">
-                          <span class="num coin__num">127</span>
-                          <span class="unit coin__unit">PCE</span>
-                        </span>
-                        <span class="coin coin-usd cl_themeA-2">
-                          <span class="unit coin__unit">$</span>
-                          <span class="num coin__num">181.61</span>
-                        </span>
-                      </p>
-                      <p class="transactions--item__status">
-                        <span class="status">
-                          <span class="label" />
-                          <span class="text">UNCONFIRMED</span>
-                        </span>
-                        <span class="confirmations cl_themeA-2">
-                          <span class="num">521</span>
-                          <span class="unit">Confirmations</span>
-                        </span>
-                      </p>
-                    </li>
-                    <li class="list_transactions--item theme-bgA canceled clearfix">
-                      <p class="transactions--item__hash">
-                        20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                      </p>
-                      <p class="transactions--item__datetime">
-                        <span class="date">2018/01/18</span>
-                        <span class="time cl_themeA-2">00:10:32</span>
-                      </p>
-                      <p class="transactions--item__price">
-                        <span class="coin coin-pce">
-                          <span class="num coin__num">127</span>
-                          <span class="unit coin__unit">PCE</span>
-                        </span>
-                        <span class="coin coin-usd cl_themeA-2">
-                          <span class="unit coin__unit">$</span>
-                          <span class="num coin__num">181.61</span>
-                        </span>
-                      </p>
-                      <p class="transactions--item__status">
-                        <span class="status">
-                          <span class="label" />
-                          <span class="text">CANCELED</span>
-                        </span>
-                        <span class="confirmations cl_themeA-2">
-                          <span class="num">521</span>
-                          <span class="unit">Confirmations</span>
-                        </span>
-                      </p>
-                    </li>
-                    <li class="list_transactions--item theme-bgA unconfirmed clearfix">
-                      <p class="transactions--item__hash">
-                        20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                      </p>
-                      <p class="transactions--item__datetime">
-                        <span class="date">2018/01/18</span>
-                        <span class="time cl_themeA-2">00:10:32</span>
-                      </p>
-                      <p class="transactions--item__price">
-                        <span class="coin coin-pce">
-                          <span class="num coin__num">127</span>
-                          <span class="unit coin__unit">PCE</span>
-                        </span>
-                        <span class="coin coin-usd cl_themeA-2">
-                          <span class="unit coin__unit">$</span>
-                          <span class="num coin__num">181.61</span>
-                        </span>
-                      </p>
-                      <p class="transactions--item__status">
-                        <span class="status">
-                          <span class="label" />
-                          <span class="text">UNCONFIRMED</span>
-                        </span>
-                        <span class="confirmations cl_themeA-2">
-                          <span class="num">521</span>
-                          <span class="unit">Confirmations</span>
-                        </span>
-                      </p>
-                    </li>
-                    <li class="list_transactions--item theme-bgA completed clearfix">
-                      <p class="transactions--item__hash">
-                        20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                      </p>
-                      <p class="transactions--item__datetime">
-                        <span class="date">2018/01/18</span>
-                        <span class="time cl_themeA-2">00:10:32</span>
-                      </p>
-                      <p class="transactions--item__price">
-                        <span class="coin coin-pce">
-                          <span class="num coin__num">127</span>
-                          <span class="unit coin__unit">PCE</span>
-                        </span>
-                        <span class="coin coin-usd cl_themeA-2">
-                          <span class="unit coin__unit">$</span>
-                          <span class="num coin__num">181.61</span>
-                        </span>
-                      </p>
-                      <p class="transactions--item__status">
-                        <span class="status">
-                          <span class="label" />
-                          <span class="text">COMPLETED</span>
-                        </span>
-                        <span class="confirmations cl_themeA-2">
-                          <span class="num">521</span>
-                          <span class="unit">Confirmations</span>
-                        </span>
-                      </p>
-                    </li>
-                    <li class="list_transactions--item theme-bgA completed clearfix">
-                      <p class="transactions--item__hash">
-                        20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                      </p>
-                      <p class="transactions--item__datetime">
-                        <span class="date">2018/01/18</span>
-                        <span class="time cl_themeA-2">00:10:32</span>
-                      </p>
-                      <p class="transactions--item__price">
-                        <span class="coin coin-pce">
-                          <span class="num coin__num">127</span>
-                          <span class="unit coin__unit">PCE</span>
-                        </span>
-                        <span class="coin coin-usd cl_themeA-2">
-                          <span class="unit coin__unit">$</span>
-                          <span class="num coin__num">181.61</span>
-                        </span>
-                      </p>
-                      <p class="transactions--item__status">
-                        <span class="status">
-                          <span class="label" />
-                          <span class="text">COMPLETED</span>
-                        </span>
-                        <span class="confirmations cl_themeA-2">
-                          <span class="num">521</span>
-                          <span class="unit">Confirmations</span>
-                        </span>
-                      </p>
-                    </li>
-                    <li class="list_transactions--item theme-bgA unconfirmed clearfix">
-                      <p class="transactions--item__hash">
-                        20x4e3b03ebace6ab7db1e944dc73680x4e3b03ebace6ab7db1e944dc7368
-                      </p>
-                      <p class="transactions--item__datetime">
-                        <span class="date">2018/01/18</span>
-                        <span class="time cl_themeA-2">00:10:32</span>
-                      </p>
-                      <p class="transactions--item__price">
-                        <span class="coin coin-pce">
-                          <span class="num coin__num">127</span>
-                          <span class="unit coin__unit">PCE</span>
-                        </span>
-                        <span class="coin coin-usd cl_themeA-2">
-                          <span class="unit coin__unit">$</span>
-                          <span class="num coin__num">181.61</span>
-                        </span>
-                      </p>
-                      <p class="transactions--item__status">
-                        <span class="status">
-                          <span class="label" />
-                          <span class="text">UNCONFIRMED</span>
-                        </span>
-                        <span class="confirmations cl_themeA-2">
-                          <span class="num">521</span>
-                          <span class="unit">Confirmations</span>
-                        </span>
-                      </p>
-                    </li>
-                  </ul>
-                </div>
+                <button onClick={this.closeBitcoinModal}>
+                  close
+                </button>
               </div>
-            </div>
+            </Modal>
+          </div>
+          <div>
+            <Modal
+              isOpen={this.state.smartContractAddressIsOpen}
+              onAfterOpen={this.afterSmartContractAddressOpenModal}
+              onRequestClose={this.closeSmartContractAddressModal}
+              style={customStyles}
+              contentLabel="SmartContractAddressModal"
+            >
+              <div>
+                <h3>{this.state.conf.PeaceCoinCrowdsaleAddress}</h3>
+
+                <button onClick={this.closeSmartContractAddressModal}>
+                  close
+                </button>
+              </div>
+            </Modal>
           </div>
 
-          <div>{this.state.history}</div>
-          <form onSubmit={this.onSubmit}>
-            <div>
-              Buy PCE Token :
-              <input
-                value={this.state.value}
-                onChange={event => this.setState({ value: event.target.value })}
-              />
-              <br />
-              <br />
-              <input type="submit" value="METAMASK" />
+
+
+      <div id="mainContent" role="main">
+        <div id="pageContent">
+          <div class="l-sec sec_token">
+            <h2 class="title_sec title_sec__a title_sec-token">Token</h2>
+            <div class="l-content l-content--token theme-bgA">
+              <p class="content__main"><span class="coin coin-pce"><span class="num coin__num">{this.state.tokenAmount}</span><span class="unit coin__unit">PCE</span></span></p>
+              <p class="content__sub cl_themeA-2">
+                <span class="coin coin-eth">
+                  <span class="num coin__num">{this.state.ethAmount}</span>
+                  <span class="unit coin__unit">ETH</span>
+                </span>
+                <span class="coin coin-btc">
+                  <span class="num coin__num">{this.props.rates.bitcoinRateAmount}</span>
+                  <span class="unit coin__unit">BTC</span>
+                </span>
+                <span class="coin coin-usd">
+                  <span class="num coin__num">{this.props.rates.usdRateAmount}</span>
+                  <span class="unit coin__unit">USD</span>
+                </span>
+              </p>
             </div>
-          </form>
+            <div class="l-content--buybtnSet clearfix">
+              <div onClick={this.openEthereumModal} class="l-content--buybtnSet__item l-content--buybtnSet__item-L borderBox">
+                <div  class="btn btn--cl-1 btn--size-1">
+                  <svg class="ico-svg ethereum">
+                    <use xlinkHref="/symbol-defs.svg#icon-ethereum"></use>
+                  </svg>
+                  <span class="text">Ethereum</span>
+                </div>
+              </div>
+              <div onClick={this.openBitcoinModal} class="l-content--buybtnSet__item l-content--buybtnSet__item-R borderBox">
+                <div class="btn btn--cl-1 btn--size-1">
+                  <svg class="ico-svg bitcoin">
+                    <use xlinkHref="/symbol-defs.svg#icon-bitcoin"></use>
+                  </svg>
+                  <span class="text">Bitcoin</span>
+                </div>
+              </div>
+            </div>
+            <div class="l-content--right">
+            <div class="l-content--currentprice">
+              <h3 class="title_content title_content__a title_content-currentprice">Current price</h3>
+              <p class="content__main content__main-currentprice"><span class="coin coin-eth"><span class="num coin__num">1</span><span class="unit coin__unit">ETH</span></span> = <span class="coin coin-pce"><span class="num coin__num">{this.state.rate}</span><span class="unit coin__unit">PCE</span></span></p>
+            </div>
+            <div class="l-content--increases">
+              <h3 class="title_content title_content__a title_content-increases">Price increases in</h3>
+              <div id="timeCount" class="content__main timer clearfix is-countdown">
+                <div class="theme-bgA" style={{fontSize: '40px', padding: '10px', borderRadius: '5px', textAlign: 'center'}}>
+                  <span class="num">{this.state.dDays}</span>
+                  <span class="unit cl_themeA-2" style={{fontSize: '25px'}}> Days</span>
+              </div>
+              <br />
+                <div class="theme-bgA timer__item timer__item-h">
+                  <span class="num">{this.state.dHour}</span>
+                  <span class="unit cl_themeA-2">Hours</span>
+                </div>
+                <div class="theme-bgA timer__item timer__item-m">
+                  <span class="num">{this.state.dMin}</span>
+                  <span class="unit cl_themeA-2">Minutes</span>
+                </div>
+                <div class="theme-bgA timer__item timer__item-s">
+                  <span class="num">{this.state.dSec}</span>
+                  <span class="unit cl_themeA-2">Seconds</span>
+                </div>
+              </div>
+            </div>
+            <div class="l-content--raised">
+              <h3 class="title_content title_content__a title_content-raised">Raised</h3>
+              <p class="content__main content__main-raised"><span class="coin coin-usd"><span class="unit coin__unit">ETH</span><span class="num coin__num">{this.state.weiRaised}</span></span></p>
+              <p class="content__sub content__sub-raised"><span class="coin coin-eth"><span class="num coin__num">{this.props.rates.totalUsdAmount}</span><span class="unit coin__unit">USD</span></span></p>
+            </div>
+          </div>
+           </div>
+
+          <div class="l-sec sec_transactions">
+            <h2 class="title_sec title_sec__a title_sec-transactions">Transactions</h2>
+            <div class="l-content l-content--transactionsList">
+              <div class="info clearfix">
+                <p class="transactions--item__label"></p>
+                <p class="transactions--item__hash">Hash Address</p>
+                <p class="transactions--item__datetime">Data time</p>
+                <p class="transactions--item__price">Price</p>
+                <p class="transactions--item__status">Status</p>
+              </div>
+              <ul class="list_transactions">
+                <PurchaseHistory address={this.state.investor} rates={this.props.rates} />
+              </ul>
+            </div>
+          </div>
         </div>
-        <TestContract />
+      </div>
+      </div>
       </body>
+      );
+    }
+
+    return (
+      <div>
+      {dashboardContent}
+    </div>
     );
   }
 }
@@ -873,12 +483,17 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   profile: state.profile,
-  authenticated: state.auth.authenticated
+  authenticated: state.auth.authenticated,
+  // getRateApi
+  rates: state.rates,
 });
 
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func,
-  profile: PropTypes.object
+  getRate: PropTypes.func,
+  profile: PropTypes.object,
+  // getRateApi
+  rates: PropTypes.object,
 };
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile, getRate })(Dashboard);

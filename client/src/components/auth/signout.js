@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../actions/index";
+import Signin from './signin';
 
 class Signout extends Component {
   componentWillMount() {
@@ -8,7 +9,7 @@ class Signout extends Component {
   }
 
   render() {
-    return <div>Sorry to see you go...</div>;
+    return <Signin />;
   }
 }
 

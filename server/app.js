@@ -9,6 +9,7 @@ const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 const auth = require('./routes/api/auth');
+const rate = require('./routes/api/rate');
 
 // Express Instance
 const app = express();
@@ -44,6 +45,7 @@ if (process.env.NODE_ENV === 'playground') {
   app.use('/api/profile', profile);
   app.use('/api/posts', posts);
   app.use('/api/auth', auth);
+  app.use('/api/rate', rate);
 }
 
 module.exports = app;

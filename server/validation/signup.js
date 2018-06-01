@@ -38,14 +38,25 @@ module.exports = {
       email: Joi.string()
         .email()
         .error(new Error('Email must be a valid email'))
+        .label('email')
         .required(),
       password: Joi.string()
-        .regex(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!-/:-@[-`{-~])[!-~]{8,48}$/,
-          'Password'
-        )
-        .error(new Error('Fails to match the Password pattern'))
-        .required()
+      .required()
+      .regex(/^[a-zA-Z0-9!"\#$%&@()*+,-./_]*$/)
+      .max(48)
+      .min(8)
+      .label('password')
+      .options({
+        language: {
+          string: {
+            max: 'less than 48 char',
+            min: 'more than 8 char',
+            regex: {
+              base: 'fails to match the required pattern: half-width alphanumeric and number and [!"\#$%&@()*+,-./_]'
+            }
+          },
+        }
+      }),
     })
   }
 };
