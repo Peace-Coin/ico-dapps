@@ -36,6 +36,21 @@ export default function(state = intialState, action) {
         '$1,'
       );
 
+      if(isNaN(usdRateAmount)){
+
+        usdRateAmount = 0
+      }
+
+      if(isNaN(bitcoinRateAmount)){
+
+        bitcoinRateAmount = 0
+      }
+
+      console.log('usdRateAmount')
+      console.log(usdRateAmount)
+      console.log('bitcoinRateAmount')
+      console.log(bitcoinRateAmount)
+
       return updateObject(state, {
         bitcoinRate: action.payload.bitcoinRate,
         usdRate: action.payload.usdRate,

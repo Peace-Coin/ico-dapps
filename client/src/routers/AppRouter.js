@@ -72,7 +72,6 @@ class AppRouter extends Component {
               <Route exact path="/" component={Landing} />
               <Route component={NotFound404} />
             </Switch>
-            <Footer />
           </React.Fragment>
         </Router>
       </BrowserRouter>

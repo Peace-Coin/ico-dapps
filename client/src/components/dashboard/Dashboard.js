@@ -41,16 +41,18 @@ class Dashboard extends Component {
       bitcoinModalIsOpen: false,
       smartContractAddressIsOpen: false,
 
-      ethAmount: '',
+      ethAmount: 0,
+      tokenAmount: 0,
+      weiRaised: 0,
 
       // getRateApi
       rates: {
-        bitcoinRate: '',
-        usdRate: '',
-        bitcoinRateAmount: '',
-        usdRateAmount: '',
+        bitcoinRate: 0,
+        usdRate: 0,
+        bitcoinRateAmount: 0,
+        usdRateAmount: 0,
         //project total usd amount
-        totalUsdAmount: ''
+        totalUsdAmount: 0
       },
 
       conf: {
@@ -102,11 +104,6 @@ class Dashboard extends Component {
       const tokenName = await PeaceCoinCrowdsaleToken.methods.name().call();
       const symbol = await PeaceCoinCrowdsaleToken.methods.symbol().call();
       const decimals = await PeaceCoinCrowdsaleToken.methods.decimals().call();
-      const accounts = await web3.eth.getAccounts();
-
-      let tokenAmount = await PeaceCoinCrowdsaleToken.methods
-          .balanceOf(this.state.investor)
-          .call();
 
       // Crowdsale
       let rate = await PeaceCoinCrowdsale.methods.rate().call();
@@ -168,7 +165,9 @@ class Dashboard extends Component {
         conf,
       });
 
-      this.interval = setInterval(this.countDowm, 1000);
+      let tokenAmount = await PeaceCoinCrowdsaleToken.methods
+          .balanceOf(this.state.investor)
+          .call();
 
       let ethAmount;
 
@@ -208,9 +207,36 @@ class Dashboard extends Component {
         ethAmount,
       });
 
+      this.interval = setInterval(this.countDowm, 1000);
+
     }catch(e){
 
+      console.log('e')
+      console.log(e)
+
+      //PeaceUtil 小数点以下誤差吸収ライブラリ
+      var BigNumber = require('bignumber.js');
+
+      //eth raised = weiRaised * exchange_length
+      let weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
+
+      //weiRaised = PeaceUtil.multiply(weiRaised, conf.EXCHANGE_WEI_ETH_RATE);
+      weiRaised = new BigNumber(weiRaised).times(conf.EXCHANGE_WEI_ETH_RATE).toPrecision()
+
+      this.props.getRate('', weiRaised, this.props.history);
+
+      weiRaised = String(weiRaised).replace(
+        /(\d)(?=(\d\d\d)+(?!\d))/g,
+        '$1,'
+      );
+
+      this.setState({
+        weiRaised,
+      });
+
       this.setState({tokenAmount: 0})
+
+      this.interval = setInterval(this.countDowm, 1000);
     }
   }
 
