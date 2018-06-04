@@ -63,7 +63,6 @@ class PurchaseHistory extends Component {
         histories[i].dateTime1 = year + '/' + month + '/' + day;
         histories[i].dateTime2 = hour + ':' + min + ':' + sec;
 
-        console.log(histories[i])
       }
 
       records = histories.map(history => (

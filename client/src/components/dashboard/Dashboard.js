@@ -352,9 +352,6 @@ class Dashboard extends Component {
         </div>
         <div>
           <div>
-            <br /><input type="button" value="Smart Contract Address" onClick={this.openSmartContractAddressModal} />
-          </div>
-          <div>
             <Modal
               isOpen={this.state.ethereumModalIsOpen}
               onAfterOpen={this.afterEthereumOpenModal}
@@ -441,39 +438,75 @@ class Dashboard extends Component {
                 </div>
               </div>
             </div>
-            <div class="l-content--right">
-            <div class="l-content--currentprice">
-              <h3 class="title_content title_content__a title_content-currentprice">Current price</h3>
-              <p class="content__main content__main-currentprice"><span class="coin coin-eth"><span class="num coin__num">1</span><span class="unit coin__unit">ETH</span></span> = <span class="coin coin-pce"><span class="num coin__num">{this.state.rate}</span><span class="unit coin__unit">PCE</span></span></p>
-            </div>
-            <div class="l-content--increases">
-              <h3 class="title_content title_content__a title_content-increases">Price increases in</h3>
-              <div id="timeCount" class="content__main timer clearfix is-countdown">
-                <div class="theme-bgA" style={{fontSize: '40px', padding: '10px', borderRadius: '5px', textAlign: 'center'}}>
-                  <span class="num">{this.state.dDays}</span>
-                  <span class="unit cl_themeA-2" style={{fontSize: '25px'}}> Days</span>
+
+            <div class="l-content--right themeB">
+              <div class="l-content--currentprice">
+                <h3 class="title_content title_content__a title_content-currentprice">Current price</h3>
+                <p class="content__main content__main-currentprice"><span class="coin coin-eth"><span class="num coin__num">1</span><span class="unit coin__unit">ETH</span></span> = <span class="coin coin-pce"><span class="num coin__num">{this.state.rate}</span><span class="unit coin__unit">PCE</span></span></p>
               </div>
-              <br />
-                <div class="theme-bgA timer__item timer__item-h">
+              <div class="l-content--increases">
+                <h3 class="title_content title_content__a title_content-increases">Price increases in</h3>
+                <div id="timeCount" class="content__main timer clearfix is-countdown">
+                  <div class="timer__item timer__item-day">
+                    <span class="num">{this.state.dDays}</span>
+                    <span class="unit">Days</span>
+                  </div>
+                  <div class="timer__item timer__item-connect">
+                    <span class="num">:</span>
+                  </div><div class="timer__item timer__item-h">
                   <span class="num">{this.state.dHour}</span>
                   <span class="unit cl_themeA-2">Hours</span>
                 </div>
-                <div class="theme-bgA timer__item timer__item-m">
+                <div class="timer__item timer__item-connect">
+                  <span class="num">:</span>
+                </div>
+                <div class="timer__item timer__item-m">
                   <span class="num">{this.state.dMin}</span>
                   <span class="unit cl_themeA-2">Minutes</span>
                 </div>
-                <div class="theme-bgA timer__item timer__item-s">
+                <div class="timer__item timer__item-connect">
+                  <span class="num">:</span>
+                </div>
+                <div class="timer__item timer__item-s">
                   <span class="num">{this.state.dSec}</span>
                   <span class="unit cl_themeA-2">Seconds</span>
                 </div>
               </div>
+              </div>
+              <div class="l-content--raised">
+                <h3 class="title_content title_content__a title_content-raised">Raised</h3>
+                <p class="content__main content__main-raised">
+                  <span class="coin coin-usd">
+                    <span class="unit coin__unit">$</span>
+                    <span class="num coin__num">{this.state.rates.totalUsdAmount}</span>
+                  </span>
+                </p>
+                <p class="content__sub content__sub-raised">
+                  <span class="coin coin-eth">
+                    <span class="num coin__num">{this.state.weiRaised}</span>
+                    <span class="unit coin__unit">ETH</span>
+                  </span>
+                </p>
+                <div class="l-content--bar">
+                  <div class="l-content--bar__info">
+                    <span class="coin coin-usd coin--now"><span class="unit coin__unit">$</span><span class="num coin__num">100,000,000</span></span>
+                    <span class="coin coin-usd coin--goal"><span class="sub">Goal</span><span class="unit coin__unit">$</span><span class="num coin__num">2B</span></span>
+                  </div>
+                  <div class="l-content--bar__graph">
+                    <p class="graph_obj"><span class="graph_obj__main"></span></p>
+                    <p class="graph_text">50%</p>
+                  </div>
+                </div>
+              </div>
+              <div class="l-content--SClink">
+                <a onClick={this.openSmartContractAddressModal} class="modallink-smartContract" data-modaal-scope="modaal_1528071702034c308f23391407">
+                  PEACE COIN Smart Contract Address
+                  <span class="obj">
+                    <i class="fa fa-exclamation" aria-hidden="true"></i>
+                  </span>
+                </a>
+              </div>
             </div>
-            <div class="l-content--raised">
-              <h3 class="title_content title_content__a title_content-raised">Raised</h3>
-              <p class="content__main content__main-raised"><span class="coin coin-usd"><span class="unit coin__unit">ETH</span><span class="num coin__num">{this.state.weiRaised}</span></span></p>
-              <p class="content__sub content__sub-raised"><span class="coin coin-eth"><span class="num coin__num">{this.props.rates.totalUsdAmount}</span><span class="unit coin__unit">USD</span></span></p>
-            </div>
-          </div>
            </div>
 
           <div class="l-sec sec_transactions">
@@ -491,6 +524,8 @@ class Dashboard extends Component {
               </ul>
             </div>
           </div>
+
+
         </div>
       </div>
       </div>
