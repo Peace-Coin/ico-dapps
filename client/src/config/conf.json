@@ -3,8 +3,9 @@
   "PeaceCoinCrowdsaleTokenAddress": "0x32179efc8b8ae3e966b28f2e209b37426b1661cd",
   "GasPrice": "24x",
   "GasLimit": "21000",
-  "EthGasPrice": "28 Gwei",
+  "EthGasPrice": "28",
   "EthGasLimit": "21,000",
   "KYC_APPROVED_STATUS": "2",
-  "EXCHANGE_WEI_ETH_RATE": 0.000000000000000001
+  "EXCHANGE_WEI_ETH_RATE": 0.000000000000000001,
+  "BASE_RATE": 0.8
 }

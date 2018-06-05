@@ -97,7 +97,6 @@ class CreateProfile extends Component {
       picture: this.state.picture,
       ethereumAddress: this.state.ethereumAddress,
       aml: this.state.aml,
-      terms: this.state.terms,
     };
 
     // Create Profile

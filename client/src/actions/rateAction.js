@@ -13,7 +13,7 @@ import history from '../shared/history';
 import { Route, Redirect } from 'react-router-dom';
 
 // GET: Current Rate
-export const getRate = (ethAmount, weiRaised, history) => dispatch => {
+export const getRate = (ethAmount, weiRaised, goalEth, history) => dispatch => {
 
   axios
     .post('/api/rate/getRate')
@@ -23,7 +23,8 @@ export const getRate = (ethAmount, weiRaised, history) => dispatch => {
         bitcoinRate: res.data.bitcoinRate,
         usdRate: res.data.usdRate,
         ethAmount: ethAmount,
-        totalEthAmount: weiRaised
+        totalEthAmount: weiRaised,
+        goalEth: goalEth,
       }
 
       dispatch({

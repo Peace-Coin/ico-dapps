@@ -19,6 +19,19 @@ export default function(state = intialState, action) {
       //usd計算
       let usdRateAmount = new BigNumber(action.payload.ethAmount).times(action.payload.usdRate).toPrecision();
 
+      let goalBitcoin = new BigNumber(action.payload.goalEth).times(action.payload.bitcoinRate).toPrecision();
+      let goalUsd = new BigNumber(action.payload.goalEth).times(action.payload.usdRate).toPrecision();
+
+      if(!isFinite(usdRateAmount)){
+
+        usdRateAmount = 0
+      }
+
+      if(!isFinite(bitcoinRateAmount)){
+
+        bitcoinRateAmount = 0
+      }
+
       bitcoinRateAmount = String(bitcoinRateAmount).replace(
         /(\d)(?=(\d\d\d)+(?!\d))/g,
         '$1,'
@@ -31,25 +44,20 @@ export default function(state = intialState, action) {
 
       let totalUsdAmount = new BigNumber(action.payload.totalEthAmount).times(action.payload.usdRate).toPrecision();
 
+      console.log('action.payload.totalEthAmount -> ' + action.payload.totalEthAmount)
+      console.log('action.payload.usdRate -> ' + action.payload.usdRate)
+
       totalUsdAmount = String(totalUsdAmount).replace(
         /(\d)(?=(\d\d\d)+(?!\d))/g,
         '$1,'
       );
 
-      if(isNaN(usdRateAmount)){
-
-        usdRateAmount = 0
-      }
-
-      if(isNaN(bitcoinRateAmount)){
-
-        bitcoinRateAmount = 0
-      }
-
       console.log('usdRateAmount')
       console.log(usdRateAmount)
       console.log('bitcoinRateAmount')
       console.log(bitcoinRateAmount)
+      console.log('totalUsdAmount')
+      console.log(totalUsdAmount)
 
       return updateObject(state, {
         bitcoinRate: action.payload.bitcoinRate,
@@ -57,6 +65,8 @@ export default function(state = intialState, action) {
         bitcoinRateAmount: bitcoinRateAmount,
         usdRateAmount: usdRateAmount,
         totalUsdAmount: totalUsdAmount,
+        goalBitcoin: goalBitcoin,
+        goalUsd: goalUsd,
       });
     default:
       return state;

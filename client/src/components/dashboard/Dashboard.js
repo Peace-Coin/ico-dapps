@@ -23,7 +23,21 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: '#0091a7'
+    backgroundColor: 'white'
+  }
+};
+
+const popupStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white',
+    maxWidth: '600px',
+    width: '100%',
   }
 };
 
@@ -52,7 +66,9 @@ class Dashboard extends Component {
         bitcoinRateAmount: 0,
         usdRateAmount: 0,
         //project total usd amount
-        totalUsdAmount: 0
+        totalUsdAmount: 0,
+        goalUsd: 0,
+        goalBitcoin: 0,
       },
 
       conf: {
@@ -60,6 +76,7 @@ class Dashboard extends Component {
       },
 
       profile: {},
+      goalPar: 0,
     };
 
     this.openEthereumModal = this.openEthereumModal.bind(this);
@@ -181,10 +198,19 @@ class Dashboard extends Component {
       //eth raised = weiRaised * exchange_length
       let weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
 
+      let goalPar = weiRaised / goal * 100;
+      goalPar = Math.round(goalPar);
+
+      this.setState({
+        goalPar: goalPar
+      })
+
       //weiRaised = PeaceUtil.multiply(weiRaised, conf.EXCHANGE_WEI_ETH_RATE);
       weiRaised = new BigNumber(weiRaised).times(conf.EXCHANGE_WEI_ETH_RATE).toPrecision()
 
-      this.props.getRate(ethAmount, weiRaised, this.props.history);
+      let goalEth = new BigNumber(goal).times(conf.EXCHANGE_WEI_ETH_RATE).toPrecision();
+
+      this.props.getRate(ethAmount, weiRaised, goalEth, this.props.history);
 
       tokenAmount = String(tokenAmount).replace(
         /(\d)(?=(\d\d\d)+(?!\d))/g,
@@ -335,6 +361,8 @@ class Dashboard extends Component {
 
   render() {
 
+    let goalPar = this.state.goalPar;
+
     let dashboardContent;
 
     const loading = this.state.loading;
@@ -356,10 +384,10 @@ class Dashboard extends Component {
               isOpen={this.state.ethereumModalIsOpen}
               onAfterOpen={this.afterEthereumOpenModal}
               onRequestClose={this.closeEthereumModal}
-              style={customStyles}
+              style={popupStyles}
               contentLabel="ETHEREUM"
             >
-              <Ethereum ethreumAddress={this.state.investor} />
+              <Ethereum ethreumAddress={this.state.investor} close={this.closeEthereumModal} />
             </Modal>
           </div>
           <div>
@@ -367,7 +395,7 @@ class Dashboard extends Component {
               isOpen={this.state.bitcoinModalIsOpen}
               onAfterOpen={this.afterBitcoinOpenModal}
               onRequestClose={this.closeBitcoinModal}
-              style={customStyles}
+              style={popupStyles}
               contentLabel="BITCOIN"
             >
               <div>
@@ -387,12 +415,25 @@ class Dashboard extends Component {
               style={customStyles}
               contentLabel="SmartContractAddressModal"
             >
-              <div>
-                <h3>{this.state.conf.PeaceCoinCrowdsaleAddress}</h3>
-
-                <button onClick={this.closeSmartContractAddressModal}>
-                  close
-                </button>
+              <div class="modaal-wrapper modaal-inline l-content_modal--smartContract themeB" id="modaal_152816659947189668a73f3483">
+                <div class="modaal-outer-wrapper">
+                  <div class="modaal-inner-wrapper">
+                    <div class="modaal-container">
+                      <div class="modaal-content modaal-focus" aria-hidden="false" aria-label="Dialog Window (Press escape to close)" role="dialog" tabindex="0">
+                        <div class="modaal-content-container">
+                          <h3 class="title_content title_content__a title_content__a-modal title_content-smartContract">PEACE COIN Smart Contract Address</h3>
+                          <span class="address">{this.state.conf.PeaceCoinCrowdsaleAddress}</span>
+                          <p class="text">Copy this address to your wallet to view your PEACE COIN tokens.
+                            <br />Do not sent funds from an exchange to this address.
+                          </p>
+                        </div>
+                      </div>
+                      <button style={{border: '1px solid grey'}} onClick={this.closeSmartContractAddressModal} type="button" class="modaal-close" id="modaal-close" aria-label="Close (Press escape to close)">
+                        <span>Close</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </Modal>
           </div>
@@ -478,7 +519,7 @@ class Dashboard extends Component {
                 <p class="content__main content__main-raised">
                   <span class="coin coin-usd">
                     <span class="unit coin__unit">$</span>
-                    <span class="num coin__num">{this.state.rates.totalUsdAmount}</span>
+                    <span class="num coin__num">{this.props.rates.totalUsdAmount}</span>
                   </span>
                 </p>
                 <p class="content__sub content__sub-raised">
@@ -489,12 +530,12 @@ class Dashboard extends Component {
                 </p>
                 <div class="l-content--bar">
                   <div class="l-content--bar__info">
-                    <span class="coin coin-usd coin--now"><span class="unit coin__unit">$</span><span class="num coin__num">100,000,000</span></span>
-                    <span class="coin coin-usd coin--goal"><span class="sub">Goal</span><span class="unit coin__unit">$</span><span class="num coin__num">2B</span></span>
+                    <span class="coin coin-usd coin--now"><span class="unit coin__unit">$</span><span class="num coin__num">{this.props.rates.goalUsd}</span></span>
+                    <span class="coin coin-usd coin--goal"><span class="sub">Goal</span><span class="unit coin__unit">$</span><span class="num coin__num">{this.props.rates.goalBitcoin} B</span></span>
                   </div>
                   <div class="l-content--bar__graph">
-                    <p class="graph_obj"><span class="graph_obj__main"></span></p>
-                    <p class="graph_text">50%</p>
+                    <p class="graph_obj"><span class="graph_obj__main" style={{width: goalPar}}></span></p>
+                    <p class="graph_text">{goalPar}%</p>
                   </div>
                 </div>
               </div>
