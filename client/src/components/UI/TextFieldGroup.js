@@ -11,10 +11,11 @@ const TextFieldGroup = ({
   info,
   type,
   onChange,
-  disabled
+  disabled,
+  className,
+  id,
 }) => {
   return (
-    <div>
       <input
         type={type}
         className={classnames('form-control form-control-lg', {
@@ -25,10 +26,9 @@ const TextFieldGroup = ({
         value={value}
         onChange={onChange}
         disabled={disabled}
+        className={className}
+        id={id}
       />
-      {info && <small>{info}</small>}
-      {error && <div>{error}</div>}
-    </div>
   );
 };
 

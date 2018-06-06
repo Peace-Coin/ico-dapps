@@ -1,5 +1,12 @@
 /** 以下、紺野調整 */
 
+.iErr{
+
+  color: #FF8116;
+  padding: 5px;
+  font-size: 16px;
+}
+
 .is-active {
     font-size: 20px
 }
@@ -23,9 +30,9 @@
   border-radius: 6px
 }
 
-/* input[type="checkbox"]:checked+.faSet .fa.no-check {
+input[type="checkbox"]:checked+.faSet .fa.no-check {
   display: none
-
+}
 
 input[type="radio"], input[type="checkbox"] {
   display: none
@@ -37,7 +44,7 @@ input[type="checkbox"]+.faSet .fa.check {
 
 input[type="checkbox"]+.faSet .fa.no-check {
   display: inline-block
-} */
+}
 
 /** 以下、古谷さんCSS */
 

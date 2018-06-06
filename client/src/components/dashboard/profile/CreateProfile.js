@@ -7,6 +7,7 @@ import TextFieldGroup from '../../UI/TextFieldGroup';
 import TextAreaFieldGroup from '../../UI/TextAreaFieldGroup';
 import InputGroup from '../../UI/InputGroup';
 import SelectListGroupOfCountry from '../../UI/SelectListGroupOfCountry';
+import SelectListGroup from '../../UI/SelectListGroup';
 import FileFieldGroup from '../../UI/FileFieldGroup';
 import CheckBoxGroup from '../../UI/CheckBoxGroup';
 import { createProfile } from '../../../actions/profileAction';
@@ -282,116 +283,263 @@ class CreateProfile extends Component {
     }
 
     return (
-      <div style={{fontSize: '16px'}}>
-        <h1>Create Your KYC</h1>
-        <p>Please, Please, Please, submit your Info</p>
-        <form onSubmit={this.onSubmit}>
-          <TextFieldGroup
-            placeholder="*first name"
-            name="firstName"
-            value={this.state.firstName}
-            onChange={this.onChange}
-            error={errors.firstName}
-            info="This is for first Name"
-          />
-          <TextFieldGroup
-            placeholder="*last name"
-            name="lastName"
-            value={this.state.lastName}
-            onChange={this.onChange}
-            error={errors.lastName}
-            info="This is for last Name"
-          />
-          <TextFieldGroup
-            placeholder="*address"
-            name="address"
-            value={this.state.address}
-            onChange={this.onChange}
-            error={errors.address}
-            info="This is for address"
-          />
-          <TextFieldGroup
-            placeholder="*YYYY-MM-DD"
-            name="birth"
-            value={this.state.birth}
-            onChange={this.onChange}
-            error={errors.birth}
-            info="This is for Date of birth"
-          />
-          <SelectListGroupOfCountry
-            name="country"
-            value={this.state.country}
-            onChange={this.onChange}
-            error={errors.country}
-            info="This is for country"
-          />
-          <img src={this.state.uploadFileImage1} />
-          <FileFieldGroup
-            placeholder="*passport"
-            accept=".jpg, .jpeg, .png"
-            onChange={this.uploadedPassport}
-            error={errors.passport}
-            info="This is for Passport"
-          />
-          <img src={this.state.uploadFileImage2} />
-          <FileFieldGroup
-            placeholder="*Certificate of Residence"
-            accept=".jpg, .jpeg, .png"
-            onChange={this.uploadedCertificateResidence}
-            error={errors.certificateResidence}
-            info="This is for Certificate of Residence"
-          />
-          <img src={this.state.uploadFileImage3} />
-          <FileFieldGroup
-            placeholder="*picture"
-            accept=".jpg, .jpeg, .png"
-            onChange={this.uploadedPicture}
-            error={errors.picture}
-            info="This is for your picture"
-          />
-          <TextFieldGroup
-            placeholder="*Ethereum Address"
-            name="ethereumAddress"
-            value={this.state.ethereumAddress}
-            onChange={this.onChange}
-            error={errors.ethereumAddress}
-            info="This is for Ethereum address"
-          />
-          <TextFieldGroup
-            placeholder="*Bitcoin Address"
-            name="bitcoinAddress"
-            value={this.state.bitcoinAddress}
-            onChange={this.onChange}
-            error={errors.bitcoinAddress}
-            info="This is for Bitcoin address"
-          />
-          <CheckBoxGroup
-            name="aml"
-            value="true"
-            onChange={this.onChangeCheckBoxAml}
-            error={errors.aml}
-            info="AML(anti-money laundering)?"
-          />
-          <input
-            type="hidden"
-            name="passport"
-            value={this.state.passport}
-          />
-          <input
-            type="hidden"
-            name="certificateResidence"
-            value={this.state.certificateResidence}
-          />
-          <input
-            type="hidden"
-            name="picture"
-            value={this.state.picture}
-          />
-          <small>* is required</small>
-          <br />
-          <input type="submit" value="Starting Confirm !" />
-        </form>
-      </div>
+      <div id="mainContent" role="main">
+            <div id="pageContent">
+              <div class="l-sec sec_auth">
+                <h1 class="title_sec title_sec__a title_sec-auth">Authenticate</h1>
+                <div class="l-content l-content--navi l-content--navi-auth themeA clearfix"><span class="step step--text now">Input</span><span class="step step--obj"><i class="fa fa-angle-right" aria-hidden="true"></i></span><span class="step step--text">Confirmation</span><span class="step step--obj"><i class="fa fa-angle-right" aria-hidden="true"></i></span><span class="step step--text">Complete</span></div>
+                <div class="l-content l-content--form l-content--form-auth">
+                  <form id="form_auth" onSubmit={this.onSubmit}>
+                    <div class="form-group form-group--text form-group--text-name">
+                      <label for="frmName1" class="main main--auth">Name<span class="required obj-required">*</span></label>
+                      <div class="input-wrap clearfix">
+                        <TextFieldGroup
+                          className="theme-is-err half"
+                          placeholder="First Name"
+                          name="frmNamel"
+                          id="frmName1"
+                          value={this.state.firstName}
+                          onChange={this.onChange}
+                        />
+                        <TextFieldGroup
+                          className="theme-is-err half"
+                          placeholder="Last Name"
+                          name="frmName2"
+                          id="frmName2"
+                          value={this.state.lastName}
+                          onChange={this.onChange}
+                        />
+                      </div>
+                      <p className="iErr">{errors.firstName}</p>
+                      <p className="iErr">{errors.lastName}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--radio form-group--radio-gender">
+                      <label for="" class="main main--auth">Gender</label>
+                      <label class="radio"><input name="frmGender" value="male" type="radio" /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Male</span></label>
+                      <label class="radio"><input name="frmGender" value="female" type="radio" /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Female</span></label>
+                      <label class="radio"><input name="frmGender" value="other" type="radio" /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Other</span></label>
+                      <p class="text-err theme-is-err">Error message</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-birthday">
+                      <label for="frmBirthday" class="main main--auth">Birthday<span class="required obj-required">*</span></label>
+                      <TextFieldGroup
+                        className="theme-is-err"
+                        id="frmBirthday"
+                        placeholder="MM-DD-YYYY"
+                        name="frmBirthday"
+                        value={this.state.birth}
+                        onChange={this.onChange}
+                      />
+                      <p class="iErr">{errors.birth}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-streetaddress">
+                      <label for="frmStreetaddress" class="main main--auth">Street Address<span class="required obj-required">*</span></label>
+                      <TextFieldGroup
+                        className="theme-is-err"
+                        id="frmStreetaddress"
+                        placeholder=""
+                        name="frmStreetaddress"
+                        value={this.state.streetAddress}
+                        onChange={this.onChange}
+                      />
+                      <p class="iErr">{errors.streetAddress}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-city">
+                      <label for="frmCity" class="main main--auth">City<span class="required obj-required">*</span></label>
+                      <TextFieldGroup
+                        className="theme-is-err"
+                        id="frmCity"
+                        placeholder=""
+                        name="frmCity"
+                        value={this.state.cityAddress}
+                        onChange={this.onChange}
+                      />
+                      <p class="iErr">{errors.cityAddress}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-postalCode">
+                      <label for="frmPostalCode" class="main main--auth">Postal Code</label>
+                      <TextFieldGroup
+                        className="theme-is-err"
+                        id="frmPostalCode"
+                        placeholder=""
+                        name="frmPostalCode"
+                        value={this.state.postalCode}
+                        onChange={this.onChange}
+                      />
+                      <p class="iErr">{errors.postalCode}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--select form-group--select-country">
+                      <label for="frmCountry" class="main main--auth">Country</label>
+                      <div class="select-wrap">
+                        <SelectListGroupOfCountry
+                          className="theme-is-err"
+
+                          value={this.state.country}
+                          onChange={this.onChange}
+                        />
+                      </div>
+                      <p class="iErr">{errors.country}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--select form-group--text form-group--select-phone form-group--text-phone">
+                      <label for="frmPhone1" class="main main--auth">Phone Number</label>
+                      <div class="select-wrap">
+                        <SelectListGroup
+                          className="theme-is-err"
+                          name="frmPhone1"
+                          id="frmPhone1"
+                          value={this.state.phoneNumber1}
+                          onChange={this.onChange}
+                        />
+                      </div>
+                      <TextFieldGroup
+                        className="theme-is-err"
+                        id="frmPhone2"
+                        placeholder=""
+                        name="frmPhone2"
+                        value={this.state.phoneNumber2}
+                        onChange={this.onChange}
+                      />
+                      <p class="iErr">{errors.phoneNumber1}</p>
+                      <p class="iErr">{errors.phoneNumber2}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-idNum">
+                      <label for="frmIdnum" class="main main--auth">ID Number<span class="required obj-required">*</span></label>
+                      <TextFieldGroup
+                        className="theme-is-err"
+                        id="frmIdnum"
+                        placeholder=""
+                        name="frmIdnum"
+                        value={this.state.idNumber}
+                        onChange={this.onChange}
+                      />
+                      <p class="iErr">{errors.idNumber}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-erc">
+                      <label for="frmErc" class="main main--auth">ERC20 Address<span class="required obj-required">*</span></label>
+                      <TextFieldGroup
+                        className="theme-is-err"
+                        id="frmErc"
+                        placeholder=""
+                        name="frmErc"
+                        value={this.state.ethreumAddress}
+                        onChange={this.onChange}
+                      />
+                      <p class="iErr">{errors.ethreumAddress}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-erc">
+                      <label for="frmErc" class="main main--auth">BITCOIN Address</label>
+                      <TextFieldGroup
+                        className="theme-is-err"
+                        id="frmBit"
+                        placeholder=""
+                        name="frmBit"
+                        value={this.state.bitcoinAddress}
+                        onChange={this.onChange}
+                      />
+                      <p class="iErr">{errors.bitcoinAddress}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--file form-group--file-photoIdDocu help">
+                      <label for="frmPhotoIdDocu" class="main main--auth">Photo ID document<span class="required obj-required">*</span></label>
+                      <div class="file-wrap theme-is-err">
+                        <img src={this.state.uploadFileImage1} />
+                        <FileFieldGroup
+                          placeholder=""
+                          accept=".jpg, .jpeg, .png"
+                          onChange={this.uploadedPassport}
+                          name="frmPhotoIdDocu"
+                          id="frmPhotoIdDocu"
+                        />
+                      </div>
+                      <p class="iErr">{errors.passport}</p>
+                      <p class="text-help">ex.Passport, Driver’s license</p>
+                    </div>
+                    <div class="form-group form-group--file form-group--file-addressProof">
+                      <label for="frmAddressProof" class="main main--auth">Address proof image<span class="required obj-required">*</span></label>
+                      <div class="file-wrap theme-is-err">
+                        <img src={this.state.uploadFileImage2} />
+                        <FileFieldGroup
+                          placeholder=""
+                          accept=".jpg, .jpeg, .png"
+                          onChange={this.uploadedCertificateResidence}
+                          name="frmAddressProof"
+                          id="frmAddressProof"
+                        />
+                      </div>
+                      <p class="iErr">{errors.certificateResidence}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--file form-group--file-selfyImage">
+                      <label for="frmSelfyImage" class="main main--auth">Selfy image<span class="required obj-required">*</span></label>
+                      <div class="file-wrap theme-is-err">
+                        <img src={this.state.uploadFileImage3} />
+                        <FileFieldGroup
+                          placeholder=""
+                          accept=".jpg, .jpeg, .png"
+                          onChange={this.uploadedPicture}
+                          name="frmSelfyImage"
+                          id="frmSelfyImage"
+                        />
+                      </div>
+                      <p class="iErr">{errors.picture}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+                    <div class="form-group form-group--check form-group--check-aml">
+                      <label>
+                        <CheckBoxGroup
+                          name="aml"
+                          value="true"
+                          onChange={this.onChangeCheckBoxAml}
+                          className="theme-is-err"
+                        />
+                        <span class="faSet">
+                          <span class="fa fa-check-square check" aria-hidden="true"></span>
+                          <span class="fa fa-square no-check" aria-hidden="true"></span>
+                        </span>
+                        <span class="text-label">I agree to </span>
+                      </label>
+                      <a href="">the AML Authentication</a>
+                      <p className="iErr">{errors.aml}</p>
+                      <p class="text-help">Help text....</p>
+                    </div>
+
+                    <div class="l-sec sec_btnSet sec_btnSet-auth">
+                      <div class="form-group form-group--btn form-group--btn-confirmation">
+                        <button class="btn btn--cl-1 btn--size-1" type="submit" name="action" value="Confirmation">Confirmation</button>
+                      </div>
+                    </div>
+                    <input
+                      type="hidden"
+                      name="passport"
+                      value={this.state.passport}
+                    />
+                    <input
+                      type="hidden"
+                      name="certificateResidence"
+                      value={this.state.certificateResidence}
+                    />
+                    <input
+                      type="hidden"
+                      name="picture"
+                      value={this.state.picture}
+                    />
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
     );
   }
 }

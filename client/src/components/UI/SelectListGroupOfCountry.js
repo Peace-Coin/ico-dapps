@@ -2,20 +2,18 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled }) => {
+const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled, className, id }) => {
 
   return (
-    <div>
       <select
-        className={classnames('form-control form-control-lg', {
-          'is-invalid': error
-        })}
+        className={className}
         name={name}
         value={value}
         onChange={onChange}
         disabled={disabled}
+        className={className}
+        id={id}
       >
-      <option value="">*Country...</option>
       <option value="AF">Afghanistan</option>
       <option value="AL">Albania</option>
       <option value="DZ">Algeria</option>
@@ -264,9 +262,6 @@ const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled 
       <option value="ZM">Zambia</option>
       <option value="ZW">Zimbabwe</option>
       </select>
-      {info && <small>{info}</small>}
-      {error && <div>{error}</div>}
-    </div>
   );
 };
 

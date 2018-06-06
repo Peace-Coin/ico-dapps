@@ -374,7 +374,7 @@ class Dashboard extends Component {
     }else{
 
       dashboardContent = (
-        <body class="peaceCoinIco dashboard">
+        <div class="peaceCoinIco dashboard">
         <div style={{backgroundColor: 'red', fontSize: '18px'}}>
           {this.state.errorMessage}
         </div>
@@ -570,7 +570,7 @@ class Dashboard extends Component {
         </div>
       </div>
       </div>
-      </body>
+    </div>
       );
     }
 

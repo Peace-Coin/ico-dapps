@@ -12,27 +12,22 @@ const CheckBoxGroup = ({
   type,
   onChange,
   disabled,
-  checkedFlg
+  checkedFlg,
+  className
 }) => {
 
   if(checkedFlg){
 
     return (
-      <div>
         <input
           type='checkbox'
-          className={classnames('form-control form-control-lg', {
-            'is-invalid': error
-          })}
           name={name}
           value={value}
           onChange={onChange}
           disabled={disabled}
           checked={checkedFlg}
+          className={className}
         />
-        {info && <small>{info}</small>}
-        {error && <div>{error}</div>}
-      </div>
     );
   }else{
 
