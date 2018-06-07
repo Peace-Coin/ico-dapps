@@ -17,6 +17,11 @@ module.exports = {
       .catch(err => res.status(404).json(err));
   },
 
+  checkProfile: async (req, res, next) => {
+
+    res.json(req.body);
+  },
+
   // Create Profile
   createProfile: async (req, res, next) => {
     // Basic Info
@@ -30,7 +35,15 @@ module.exports = {
       profileFields.Profile.firstName = req.body.firstName;
     if (req.body.lastName) profileFields.Profile.lastName = req.body.lastName;
 
-    profileFields.Profile.address = req.body.address;
+    profileFields.Profile.gender = req.body.gender;
+
+    profileFields.Profile.phoneNumber1 = req.body.phoneNumber1;
+    profileFields.Profile.phoneNumber2 = req.body.phoneNumber2;
+    profileFields.Profile.postalCode = req.body.postalCode;
+    profileFields.Profile.cityAddress = req.body.cityAddress;
+    profileFields.Profile.streetAddress = req.body.streetAddress;
+    profileFields.Profile.idNumber = req.body.idNumber;
+
     profileFields.Profile.birth = req.body.birth;
     profileFields.Profile.country = req.body.country;
     profileFields.Profile.passport = req.body.passport;
@@ -65,8 +78,6 @@ module.exports = {
     // Basic Info
     const profileFields = {};
     profileFields.user = req.user.id;
-
-    console.log(req.body);
 
     profileFields.Profile = {};
     profileFields.Profile.ethereumAddress = req.body.ethereumAddress;
@@ -103,8 +114,6 @@ module.exports = {
     // Basic Info
     const profileFields = {};
     profileFields.user = req.user.id;
-
-    console.log(req.body);
 
     profileFields.Profile = {};
     profileFields.Profile.bitcoinAddress = req.body.bitcoinAddress;

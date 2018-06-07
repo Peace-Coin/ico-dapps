@@ -12,9 +12,9 @@ const SelectListGroup = ({ name, value, error, info, onChange, options, classNam
         onChange={onChange}
         disabled={disabled}
       >
-        <option value="">+1</option>
-        <option value="">+86</option>
-        <option value="">+81</option>
+        <option value="+1">+1</option>
+        <option value="+86">+86</option>
+        <option value="+81">+81</option>
       </select>
   );
 };

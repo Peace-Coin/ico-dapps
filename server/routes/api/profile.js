@@ -42,6 +42,14 @@ router
   );
 
 router
+  .route('/checkProfile')
+  .post(
+    passportJWT,
+    validateProfile(profileSchema.profileCheck),
+    ProfilesController.checkProfile
+  );
+
+router
   .route('/changeEthreumAddress')
   .post(
     passportJWT,

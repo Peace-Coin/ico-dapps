@@ -29,7 +29,7 @@ module.exports = {
         .max(50)
         .required()
         .regex(/^[a-zA-Z0-9./=-]*$/)
-        .label('first Name')
+        .label('First Name')
         .options({
           language: {
             string: {
@@ -44,7 +44,7 @@ module.exports = {
         .max(50)
         .required()
         .regex(/^[a-zA-Z0-9./=-]*$/)
-        .label('last Name')
+        .label('Last Name')
         .options({
           language: {
             string: {
@@ -55,15 +55,105 @@ module.exports = {
             }
           }
         }),
-      address: Joi.string()
+      gender: Joi.string()
+        .max(50)
         .required()
         .regex(/^[a-zA-Z0-9./=-]*$/)
-        .max(250)
-        .label('address')
+        .label('Gender')
         .options({
           language: {
             string: {
-              max: 'less than 250 char',
+              max: 'less than 50 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number and [[./=-]'
+              }
+            }
+          }
+        }),
+      phoneNumber1: Joi.string()
+        .max(5)
+        .required()
+        .regex(/^[0-9+]*$/)
+        .label('Phone Number (country)')
+        .options({
+          language: {
+            string: {
+              max: 'less than 5 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width number and [+]'
+              }
+            }
+          }
+        }),
+      phoneNumber2: Joi.string()
+        .max(15)
+        .required()
+        .regex(/^[0-9-]*$/)
+        .label('Phone Number')
+        .options({
+          language: {
+            string: {
+              max: 'less than 15 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width number and [-]'
+              }
+            }
+          }
+        }),
+      streetAddress: Joi.string()
+        .required()
+        .regex(/^[a-zA-Z0-9./=-]*$/)
+        .max(50)
+        .label('Street Address')
+        .options({
+          language: {
+            string: {
+              max: 'less than 50 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number and [./=-]'
+              }
+            }
+          }
+        }),
+      cityAddress: Joi.string()
+        .required()
+        .regex(/^[a-zA-Z0-9./=-]*$/)
+        .max(50)
+        .label('City')
+        .options({
+          language: {
+            string: {
+              max: 'less than 50 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number and [./=-]'
+              }
+            }
+          }
+        }),
+      postalCode: Joi.string()
+        .required()
+        .regex(/^[a-zA-Z0-9./=-]*$/)
+        .max(50)
+        .label('Postal Code')
+        .options({
+          language: {
+            string: {
+              max: 'less than 50 char',
+              regex: {
+                base: 'fails to match the required pattern: half-width alphanumeric and number and [./=-]'
+              }
+            }
+          }
+        }),
+      idNumber: Joi.string()
+        .required()
+        .regex(/^[a-zA-Z0-9./=-]*$/)
+        .max(50)
+        .label('ID Number')
+        .options({
+          language: {
+            string: {
+              max: 'less than 50 char',
               regex: {
                 base: 'fails to match the required pattern: half-width alphanumeric and number and [./=-]'
               }
@@ -72,13 +162,13 @@ module.exports = {
         }),
       birth: Joi.string()
         .required()
-        .regex(/^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-        .label('Date of birth')
+        .regex(/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-(\d{4})$/)
+        .label('Birthday')
         .options({
           language: {
             string: {
               regex: {
-                base: 'fails to match the required pattern: YYYY-MM-DD',
+                base: 'fails to match the required pattern: MM-DD-YYYY',
               },
             },
           }
@@ -86,16 +176,18 @@ module.exports = {
       country: Joi.string()
         .required()
         .label('country')
+        .max(50)
         .options({
           language: {
             string: {
+              max: 'less than 50 char',
             }
           }
         }),
       passport: Joi.string()
         .required()
-        .max(1000000)
-        .label('passport')
+        .max(15000000)
+        .label('Photo ID document')
         .options({
           language: {
             string: {
@@ -105,8 +197,8 @@ module.exports = {
         }),
       certificateResidence: Joi.string()
         .required()
-        .max(1000000)
-        .label('Certificate of Residence')
+        .max(15000000)
+        .label('Address proof image')
         .options({
           language: {
             string: {
@@ -116,8 +208,8 @@ module.exports = {
         }),
       picture: Joi.string()
         .required()
-        .max(1000000)
-        .label('picture')
+        .max(15000000)
+        .label('Selfy image')
         .options({
           language: {
             string: {
@@ -129,7 +221,7 @@ module.exports = {
         .required()
         .regex(/^[a-zA-Z0-9]*$/)
         .max(250)
-        .label('Ethereum Address')
+        .label('ERC20 Address')
         .options({
           language: {
             string: {

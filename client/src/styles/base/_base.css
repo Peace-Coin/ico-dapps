@@ -30,13 +30,23 @@
   border-radius: 6px
 }
 
-input[type="checkbox"]:checked+.faSet .fa.no-check {
+/* .chkbox{
+
+  width: 20px;
+  height: 20px;
+} */
+
+/* input[type="checkbox"]:checked+.faSet .fa.no-check {
+  display: none
+} */
+
+input[type="radio"]{
   display: none
 }
 
-input[type="radio"], input[type="checkbox"] {
+/* input[type="radio"], input[type="checkbox"] {
   display: none
-}
+} */
 
 input[type="checkbox"]+.faSet .fa.check {
   display: none

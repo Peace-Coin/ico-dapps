@@ -10,7 +10,7 @@ import SelectListGroupOfCountry from '../../UI/SelectListGroupOfCountry';
 import SelectListGroup from '../../UI/SelectListGroup';
 import FileFieldGroup from '../../UI/FileFieldGroup';
 import CheckBoxGroup from '../../UI/CheckBoxGroup';
-import { createProfile } from '../../../actions/profileAction';
+import { createProfile, checkProfile } from '../../../actions/profileAction';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -30,8 +30,14 @@ class CreateProfile extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      address: '',
+      gender: '',
+      phoneNumber1: '',
+      phoneNumber2: '',
       birth: '',
+      postalCode: '',
+      cityAddress: '',
+      streetAddress: '',
+      idNumber: '',
       country: '',
       passport: '',
       certificateResidence: '',
@@ -39,7 +45,6 @@ class CreateProfile extends Component {
       ethereumAddress: '',
       bitcoinAddress: '',
       aml: false,
-      terms: false,
       errors: {},
       //アップロード後のファイル名
       uploadFileName1: '',
@@ -58,7 +63,6 @@ class CreateProfile extends Component {
     this.uploadedCertificateResidence = this.uploadedCertificateResidence.bind(this);
     this.uploadedPicture = this.uploadedPicture.bind(this);
     this.onChangeCheckBoxAml = this.onChangeCheckBoxAml.bind(this);
-    this.onChangeCheckBoxTerms = this.onChangeCheckBoxTerms.bind(this);
 
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -90,7 +94,13 @@ class CreateProfile extends Component {
     const profileData = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
-      address: this.state.address,
+      gender: this.state.gender,
+      phoneNumber1: this.state.phoneNumber1,
+      phoneNumber2: this.state.phoneNumber2,
+      postalCode: this.state.postalCode,
+      cityAddress: this.state.cityAddress,
+      streetAddress: this.state.streetAddress,
+      idNumber: this.state.idNumber,
       birth: this.state.birth,
       country: this.state.country,
       passport: this.state.passport,
@@ -100,8 +110,11 @@ class CreateProfile extends Component {
       aml: this.state.aml,
     };
 
+    console.log('this.state.passport.length')
+    console.log(this.state.passport.length)
+
     // Create Profile
-    this.props.createProfile(profileData, this.props.history);
+    this.props.checkProfile(profileData, this.props.history);
   }
 
   onChange(e) {
@@ -127,25 +140,6 @@ class CreateProfile extends Component {
     }
   }
 
-  onChangeCheckBoxTerms(e) {
-
-    if(this.state.terms === ''){
-
-      this.setState({ [e.target.name]: e.target.value });
-
-    }else{
-
-      if(this.state.terms === 'true'){
-
-        this.setState({ [e.target.name]: 'false' });
-
-      }else{
-
-        this.setState({ [e.target.name]: 'true' });
-      }
-    }
-  }
-
   //（ファイル選択）パスポートアップロードイベント
   uploadedPassport(e) {
 
@@ -154,7 +148,7 @@ class CreateProfile extends Component {
     const { fields } = this.props;
     const files = [ ...e.target.files ];
 
-    if (files[0].size > 1000000) {
+    if (files[0].size > 10000000) {
       alert("passport image must be byte size less 10MB");
       return false;
     }
@@ -189,7 +183,7 @@ class CreateProfile extends Component {
     const { fields } = this.props;
     const files = [ ...e.target.files ];
 
-    if (files[0].size > 1000000) {
+    if (files[0].size > 10000000) {
       alert("Certificate of Residence image must be byte size less 10MB");
       return false;
     }
@@ -223,7 +217,7 @@ class CreateProfile extends Component {
     const { fields } = this.props;
     const files = [ ...e.target.files ];
 
-    if (files[0].size > 1000000) {
+    if (files[0].size > 10000000) {
       alert("Picture image must be byte size less 10MB");
       return false;
     }
@@ -269,7 +263,13 @@ class CreateProfile extends Component {
       errors = {
         firstName: '',
         lastName: '',
-        address: '',
+        gender: '',
+        phoneNumber1: '',
+        phoneNumber2: '',
+        postalCode: '',
+        cityAddress: '',
+        streetAddress: '',
+        idNumber: '',
         birth: '',
         country: '',
         passport: '',
@@ -296,7 +296,7 @@ class CreateProfile extends Component {
                         <TextFieldGroup
                           className="theme-is-err half"
                           placeholder="First Name"
-                          name="frmNamel"
+                          name="firstName"
                           id="frmName1"
                           value={this.state.firstName}
                           onChange={this.onChange}
@@ -304,7 +304,7 @@ class CreateProfile extends Component {
                         <TextFieldGroup
                           className="theme-is-err half"
                           placeholder="Last Name"
-                          name="frmName2"
+                          name="lastName"
                           id="frmName2"
                           value={this.state.lastName}
                           onChange={this.onChange}
@@ -315,11 +315,11 @@ class CreateProfile extends Component {
                       <p class="text-help">Help text....</p>
                     </div>
                     <div class="form-group form-group--radio form-group--radio-gender">
-                      <label for="" class="main main--auth">Gender</label>
-                      <label class="radio"><input name="frmGender" value="male" type="radio" /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Male</span></label>
-                      <label class="radio"><input name="frmGender" value="female" type="radio" /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Female</span></label>
-                      <label class="radio"><input name="frmGender" value="other" type="radio" /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Other</span></label>
-                      <p class="text-err theme-is-err">Error message</p>
+                      <label for="" class="main main--auth">Gender<span class="required obj-required">*</span></label>
+                      <label class="radio"><input name="gender" value="male" type="radio"　onChange={this.onChange} /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Male</span></label>
+                      <label class="radio"><input name="gender" value="female" type="radio"　onChange={this.onChange} /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Female</span></label>
+                      <label class="radio"><input name="gender" value="other" type="radio"　onChange={this.onChange} /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Other</span></label>
+                      <p className="iErr">{errors.gender}</p>
                       <p class="text-help">Help text....</p>
                     </div>
                     <div class="form-group form-group--text form-group--text-birthday">
@@ -328,7 +328,7 @@ class CreateProfile extends Component {
                         className="theme-is-err"
                         id="frmBirthday"
                         placeholder="MM-DD-YYYY"
-                        name="frmBirthday"
+                        name="birth"
                         value={this.state.birth}
                         onChange={this.onChange}
                       />
@@ -341,7 +341,7 @@ class CreateProfile extends Component {
                         className="theme-is-err"
                         id="frmStreetaddress"
                         placeholder=""
-                        name="frmStreetaddress"
+                        name="streetAddress"
                         value={this.state.streetAddress}
                         onChange={this.onChange}
                       />
@@ -354,7 +354,7 @@ class CreateProfile extends Component {
                         className="theme-is-err"
                         id="frmCity"
                         placeholder=""
-                        name="frmCity"
+                        name="cityAddress"
                         value={this.state.cityAddress}
                         onChange={this.onChange}
                       />
@@ -362,12 +362,12 @@ class CreateProfile extends Component {
                       <p class="text-help">Help text....</p>
                     </div>
                     <div class="form-group form-group--text form-group--text-postalCode">
-                      <label for="frmPostalCode" class="main main--auth">Postal Code</label>
+                      <label for="frmPostalCode" class="main main--auth">Postal Code<span class="required obj-required">*</span></label>
                       <TextFieldGroup
                         className="theme-is-err"
                         id="frmPostalCode"
                         placeholder=""
-                        name="frmPostalCode"
+                        name="postalCode"
                         value={this.state.postalCode}
                         onChange={this.onChange}
                       />
@@ -375,11 +375,12 @@ class CreateProfile extends Component {
                       <p class="text-help">Help text....</p>
                     </div>
                     <div class="form-group form-group--select form-group--select-country">
-                      <label for="frmCountry" class="main main--auth">Country</label>
+                      <label for="frmCountry" class="main main--auth">Country<span class="required obj-required">*</span></label>
                       <div class="select-wrap">
                         <SelectListGroupOfCountry
                           className="theme-is-err"
-
+                          name="country"
+                          id="frmCountry"
                           value={this.state.country}
                           onChange={this.onChange}
                         />
@@ -388,11 +389,11 @@ class CreateProfile extends Component {
                       <p class="text-help">Help text....</p>
                     </div>
                     <div class="form-group form-group--select form-group--text form-group--select-phone form-group--text-phone">
-                      <label for="frmPhone1" class="main main--auth">Phone Number</label>
+                      <label for="frmPhone1" class="main main--auth">Phone Number<span class="required obj-required">*</span></label>
                       <div class="select-wrap">
                         <SelectListGroup
                           className="theme-is-err"
-                          name="frmPhone1"
+                          name="phoneNumber1"
                           id="frmPhone1"
                           value={this.state.phoneNumber1}
                           onChange={this.onChange}
@@ -402,7 +403,7 @@ class CreateProfile extends Component {
                         className="theme-is-err"
                         id="frmPhone2"
                         placeholder=""
-                        name="frmPhone2"
+                        name="phoneNumber2"
                         value={this.state.phoneNumber2}
                         onChange={this.onChange}
                       />
@@ -416,7 +417,7 @@ class CreateProfile extends Component {
                         className="theme-is-err"
                         id="frmIdnum"
                         placeholder=""
-                        name="frmIdnum"
+                        name="idNumber"
                         value={this.state.idNumber}
                         onChange={this.onChange}
                       />
@@ -429,11 +430,11 @@ class CreateProfile extends Component {
                         className="theme-is-err"
                         id="frmErc"
                         placeholder=""
-                        name="frmErc"
-                        value={this.state.ethreumAddress}
+                        name="ethereumAddress"
+                        value={this.state.ethereumAddress}
                         onChange={this.onChange}
                       />
-                      <p class="iErr">{errors.ethreumAddress}</p>
+                      <p class="iErr">{errors.ethereumAddress}</p>
                       <p class="text-help">Help text....</p>
                     </div>
                     <div class="form-group form-group--text form-group--text-erc">
@@ -442,7 +443,7 @@ class CreateProfile extends Component {
                         className="theme-is-err"
                         id="frmBit"
                         placeholder=""
-                        name="frmBit"
+                        name="bitcoinAddress"
                         value={this.state.bitcoinAddress}
                         onChange={this.onChange}
                       />
@@ -500,12 +501,8 @@ class CreateProfile extends Component {
                           name="aml"
                           value="true"
                           onChange={this.onChangeCheckBoxAml}
-                          className="theme-is-err"
+                          className="chkbox"
                         />
-                        <span class="faSet">
-                          <span class="fa fa-check-square check" aria-hidden="true"></span>
-                          <span class="fa fa-square no-check" aria-hidden="true"></span>
-                        </span>
                         <span class="text-label">I agree to </span>
                       </label>
                       <a href="">the AML Authentication</a>
@@ -554,6 +551,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { createProfile })(
+export default connect(mapStateToProps, { createProfile, checkProfile })(
   withRouter(CreateProfile)
 );

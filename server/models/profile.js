@@ -20,23 +20,32 @@ const profileSchema = new Schema({
       type: String,
       required: true
     },
-    sex: {
+    gender: {
       type: String
     },
     country: {
       type: String
     },
-    address: {
+    phoneNumber1: {
       type: String
     },
-    documentType: {
-      type: String
-    },
-    socialSecurityId: {
+    phoneNumber2: {
       type: String
     },
     birth: {
       type: String,
+    },
+    postalCode: {
+      type: String
+    },
+    cityAddress: {
+      type: String
+    },
+    streetAddress: {
+      type: String
+    },
+    idNumber: {
+      type: String
     },
     passport: {
       type: String,

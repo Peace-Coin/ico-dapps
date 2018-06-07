@@ -30,6 +30,7 @@ import TempolaryEntry from '../components/auth/tempolaryentry';
 import Dashborad from '../components/dashboard/Dashboard';
 import Profile from '../components/dashboard/profile/Profile';
 import CreateProfile from '../components/dashboard/profile/CreateProfile';
+import ConfirmProfile from '../components/dashboard/profile/ConfirmProfile';
 import Auth from '../components/auth/Auth';
 import PlayGround from '../components/playground/PlayGround';
 
@@ -68,6 +69,11 @@ class AppRouter extends Component {
                 exact
                 path="/dashboard/profile/create-profile"
                 component={RequireAuth(CreateProfile)}
+              />
+              <Route
+                exact
+                path="/dashboard/profile/confirm-profile"
+                component={RequireAuth(ConfirmProfile)}
               />
               <Route exact path="/" component={Landing} />
               <Route component={NotFound404} />

@@ -12,4 +12,10 @@ export {
 } from './authAction';
 
 // PROFILE ACTION
-export { createProfile, changeEthreumAddress, changeBitcoinAddress, clearError } from './profileAction';
+export {
+  checkProfile,
+  createProfile,
+  changeEthreumAddress,
+  changeBitcoinAddress,
+  clearError
+} from './profileAction';
