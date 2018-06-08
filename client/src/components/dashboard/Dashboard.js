@@ -518,14 +518,14 @@ class Dashboard extends Component {
                 <h3 class="title_content title_content__a title_content-raised">Raised</h3>
                 <p class="content__main content__main-raised">
                   <span class="coin coin-usd">
-                    <span class="unit coin__unit">$</span>
-                    <span class="num coin__num">{this.props.rates.totalUsdAmount}</span>
+                    <span class="num coin__num">{this.state.weiRaised}</span>
+                    <span class="unit coin__unit"> ETH</span>
                   </span>
                 </p>
                 <p class="content__sub content__sub-raised">
                   <span class="coin coin-eth">
-                    <span class="num coin__num">{this.state.weiRaised}</span>
-                    <span class="unit coin__unit">ETH</span>
+                    <span class="unit coin__unit">$</span>
+                    <span class="num coin__num">{this.props.rates.totalUsdAmount}</span>
                   </span>
                 </p>
                 <div class="l-content--bar">

@@ -27,11 +27,33 @@ const customStyles = {
 class ConfirmProfile extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      profile: this.props.location.state.profile
-    };
+
+    console.log(this.props)
+
+    if(this.props.location.state == undefined || this.props.location.state.profile == undefined){
+
+      this.state = {
+        profile: {},
+        errorFlg: true
+      };
+
+    }else{
+
+      this.state = {
+        profile: this.props.location.state.profile,
+        errorFlg: false
+      };
+    }
 
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+
+    if(this.state.errorFlg){
+
+      this.props.history.push('/dashboard/profile');
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,22 +67,22 @@ class ConfirmProfile extends Component {
 
     // Propaties
     const profileData = {
-      firstName: this.props.firstName,
-      lastName: this.props.lastName,
-      gender: this.props.gender,
-      phoneNumber1: this.props.phoneNumber1,
-      phoneNumber2: this.props.phoneNumber2,
-      postalCode: this.props.postalCode,
-      cityAddress: this.props.cityAddress,
-      streetAddress: this.props.streetAddress,
-      idNumber: this.props.idNumber,
-      birth: this.props.birth,
-      country: this.props.country,
-      passport: this.props.passport,
-      certificateResidence: this.props.certificateResidence,
-      picture: this.props.picture,
-      ethereumAddress: this.props.ethereumAddress,
-      aml: this.props.aml,
+      firstName: this.state.profile.firstName,
+      lastName: this.state.profile.lastName,
+      gender: this.state.profile.gender,
+      phoneNumber1: this.state.profile.phoneNumber1,
+      phoneNumber2: this.state.profile.phoneNumber2,
+      postalCode: this.state.profile.postalCode,
+      cityAddress: this.state.profile.cityAddress,
+      streetAddress: this.state.profile.streetAddress,
+      idNumber: this.state.profile.idNumber,
+      birth: this.state.profile.birth,
+      country: this.state.profile.country,
+      passport: this.state.profile.passport,
+      certificateResidence: this.state.profile.certificateResidence,
+      picture: this.state.profile.picture,
+      ethereumAddress: this.state.profile.ethereumAddress,
+      aml: this.state.profile.aml,
     };
 
     // Create Profile
@@ -70,64 +92,66 @@ class ConfirmProfile extends Component {
   render() {
 
     return (
+      <div className="peaceCoinIco authenticate confirmation">
       <div id="mainContent" role="main">
       <div id="pageContent">
         <div class="l-sec sec_auth">
           <h1 class="title_sec title_sec__a title_sec-auth">Authenticate</h1>
           <div class="l-content l-content--navi l-content--navi-auth themeA clearfix"><span class="step step--text">Input</span><span class="step step--obj"><i class="fa fa-angle-right" aria-hidden="true"></i></span><span class="step step--text now">Confirmation</span><span class="step step--obj"><i class="fa fa-angle-right" aria-hidden="true"></i></span><span class="step step--text">Complete</span></div>
           <div class="l-content l-content--form l-content--form-auth">
-            <form id="form_auth">
-              <div class="form-group form-group--text form-group--text-email">
-                <label for="frmEmail" class="main main--auth">E-mail</label>
-                <p class="text">abe@peace-coin.org</p>
-              </div>
+            <form id="form_auth" onSubmit={this.onSubmit}>
               <div class="form-group form-group--text form-group--text-name">
                 <label for="frmName1" class="main main--auth">Name</label>
-                <p class="text">Taro Yamada</p>
+                <p class="text">{this.state.profile.firstName} {this.state.profile.lastName}</p>
               </div>
               <div class="form-group form-group--radio form-group--radio-gender">
                 <label for="" class="main main--auth">Gender</label>
-                <p class="text">Male</p>
+                <p class="text">{this.state.profile.gender}</p>
               </div>
               <div class="form-group form-group--text form-group--text-birthday">
                 <label for="frmBirthday" class="main main--auth">Birthday</label>
-                <p class="text">T1978/12/4</p>
+                <p class="text">{this.state.profile.birth}</p>
               </div>
               <div class="form-group form-group--text form-group--text-streetaddress">
                 <label for="frmStreetaddress" class="main main--auth">Street Address</label>
-                <p class="text">streetaddress</p>
+                <p class="text">{this.state.profile.streetAddress}</p>
               </div>
               <div class="form-group form-group--text form-group--text-city">
                 <label for="frmCity" class="main main--auth">City</label>
-                <p class="text">Tokyo-to</p>
+                <p class="text">{this.state.profile.cityAddress}</p>
               </div>
               <div class="form-group form-group--text form-group--text-postalCode">
                 <label for="frmPostalCode" class="main main--auth">Postal Code</label>
-                <p class="text">1660014</p>
+                <p class="text">{this.state.profile.postalCode}</p>
               </div>
               <div class="form-group form-group--select form-group--select-country">
                 <label for="frmCountry" class="main main--auth">Country</label>
-                <p class="text">
+                <p >
                 <SelectListGroupOfCountry
                   className="theme-is-err"
                   name="country"
                   id="frmCountry"
-                  value={this.props.country}
+                  value={this.state.profile.country}
                   disabled="true"
+                  style={{fontSize: '1.5em'}}
                 />
                 </p>
               </div>
               <div class="form-group form-group--select form-group--text form-group--select-phone form-group--text-phone">
                 <label for="frmPhone1" class="main main--auth">Phone Number</label>
-                <p class="text">+81 8011112222</p>
+                <p class="text">{this.state.profile.phoneNumber1} {this.state.profile.phoneNumber2}</p>
               </div>
               <div class="form-group form-group--text form-group--text-idNum">
                 <label for="frmIdnum" class="main main--auth">ID Number</label>
-                <p class="text">fkaofoafoaddkkdk</p>
+                <p class="text">{this.state.profile.idNumber}</p>
               </div>
               <div class="form-group form-group--text form-group--text-erc">
                 <label for="frmErc" class="main main--auth">ERC20 Address</label>
-                <p class="text">ERC20 Address*ERC20</p>
+                <p class="text">{this.state.profile.ethereumAddress}</p>
+              </div>
+              <div class="form-group form-group--text form-group--text-erc">
+                <label for="frmErc" class="main main--auth">BITCOIN Address</label>
+                <p class="text">{this.state.profile.bitcoinAddress}</p>
               </div>
               <div class="form-group form-group--file form-group--file-photoIdDocu help">
                 <label for="frmPhotoIdDocu" class="main main--auth">Photo ID document</label>
@@ -135,15 +159,30 @@ class ConfirmProfile extends Component {
               </div>
               <div class="form-group form-group--file form-group--file-addressProof">
                 <label for="frmAddressProof" class="main main--auth">Address proof image</label>
-                <p class="img"><img src={this.state.profile.passport} /></p>
+                <p class="img"><img src={this.state.profile.certificateResidence} /></p>
               </div>
               <div class="form-group form-group--file form-group--file-selfyImage">
                 <label for="frmSelfyImage" class="main main--auth">Selfy image</label>
-                <p class="img"><img src={this.state.profile.passport} /></p>
+                <p class="img"><img src={this.state.profile.picture} /></p>
+              </div>
+
+              <div class="form-group form-group--check form-group--check-aml">
+                <label>
+                  <CheckBoxGroup
+                    name="aml"
+                    value="true"
+                    onChange={this.onChangeCheckBoxAml}
+                    className="chkbox"
+                    disabled="true"
+                    checkedFlg="true"
+                  />
+                  <span class="text-label">I agree to </span>
+                </label>
+                <a >the AML Authentication</a>
               </div>
 
               <div class="l-sec sec_btnSet sec_btnSet-auth">
-                <div class="form-group form-group--btn form-group--btn-submit">
+                <div class="form-group form-group--btn form-group--btn-confirmation">
                   <button class="btn btn--cl-1 btn--size-1" type="submit" name="action" value="Confirmation">Submit</button>
                 </div>
               </div>
@@ -152,7 +191,7 @@ class ConfirmProfile extends Component {
         </div>
       </div>
     </div>
-
+  </div>
     );
   }
 }

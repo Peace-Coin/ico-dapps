@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled, className, id }) => {
+const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled, className, id, style}) => {
 
   return (
       <select
@@ -11,6 +11,7 @@ const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled,
         value={value}
         onChange={onChange}
         disabled={disabled}
+        style={style}
       >
       <option value="AF">Afghanistan</option>
       <option value="AL">Albania</option>

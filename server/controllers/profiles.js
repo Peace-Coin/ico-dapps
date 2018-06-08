@@ -31,19 +31,15 @@ module.exports = {
 
     // KYC Information
     profileFields.Profile = {};
-    if (req.body.firstName)
-      profileFields.Profile.firstName = req.body.firstName;
-    if (req.body.lastName) profileFields.Profile.lastName = req.body.lastName;
-
+    profileFields.Profile.firstName = req.body.firstName;
+    profileFields.Profile.lastName = req.body.lastName;
     profileFields.Profile.gender = req.body.gender;
-
     profileFields.Profile.phoneNumber1 = req.body.phoneNumber1;
     profileFields.Profile.phoneNumber2 = req.body.phoneNumber2;
     profileFields.Profile.postalCode = req.body.postalCode;
     profileFields.Profile.cityAddress = req.body.cityAddress;
     profileFields.Profile.streetAddress = req.body.streetAddress;
     profileFields.Profile.idNumber = req.body.idNumber;
-
     profileFields.Profile.birth = req.body.birth;
     profileFields.Profile.country = req.body.country;
     profileFields.Profile.passport = req.body.passport;
@@ -53,6 +49,8 @@ module.exports = {
     profileFields.Profile.bitcoinAddress = req.body.bitcoinAddress;
     profileFields.Profile.aml = req.body.aml;
     profileFields.Profile.status = '1';
+
+    //console.log(profileFields.Profile)
 
     Profile.findOne({ user: req.user.id }).then(profile => {
       if (profile) {

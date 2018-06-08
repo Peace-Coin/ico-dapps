@@ -67,6 +67,7 @@ class Navbar extends Component {
       // show a link to sign out
       return (
         <li className="nav-item">
+          <NavLink to="/dashboard">Dashboard</NavLink>
           <NavLink to="/dashboard/profile">Profile</NavLink>
           <NavLink to="/signout">Sign Out</NavLink>
         </li>

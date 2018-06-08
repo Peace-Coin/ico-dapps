@@ -186,34 +186,34 @@ module.exports = {
         }),
       passport: Joi.string()
         .required()
-        .max(15000000)
+        .max(5000000)
         .label('Photo ID document')
         .options({
           language: {
             string: {
-              max: 'less than 10MB byte size'
+              max: 'less than 3MB byte size'
             }
           }
         }),
       certificateResidence: Joi.string()
         .required()
-        .max(15000000)
+        .max(5000000)
         .label('Address proof image')
         .options({
           language: {
             string: {
-              max: 'less than 10MB byte size'
+              max: 'less than 3MB byte size'
             }
           }
         }),
       picture: Joi.string()
         .required()
-        .max(15000000)
+        .max(5000000)
         .label('Selfy image')
         .options({
           language: {
             string: {
-              max: 'less than 10MB byte size'
+              max: 'less than 3MB byte size'
             }
           }
         }),

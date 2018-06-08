@@ -10,6 +10,7 @@ import Modal from 'react-modal';
 import TextFieldGroup from '../../UI/TextFieldGroup';
 import { withRouter } from 'react-router-dom';
 import { changeEthreumAddress, changeBitcoinAddress, clearError } from '../../../actions/profileAction';
+import { NavLink } from 'react-router-dom';
 
 const customStyles = {
   content: {
@@ -52,6 +53,13 @@ class Profile extends Component {
 
   componentDidMount() {
     this.props.getCurrentProfile();
+
+    const { profile } = this.props.profile;
+
+    if(profile === null || !Object.keys(profile).length){
+
+      this.props.history.push('/dashboard/profile/create-profile');
+    }
   }
 
   onChange(e) {
@@ -149,7 +157,7 @@ class Profile extends Component {
     } else {
       if (Object.keys(profile).length > 0) {
         profileContent = (
-          <div>
+          <div className="peaceCoinIco authenticate confirmation">
             <Modal
               isOpen={this.state.EthereumAddressModalIsOpen}
               onAfterOpen={this.afterEthereumAddressModal}
@@ -210,62 +218,133 @@ class Profile extends Component {
                 </button>
               </div>
             </Modal>
-            <p>The Document is submitted for your KYC Process</p>
-            <p>status : {profile.Profile.statusName}</p>
-            <p>firstName : {profile.Profile.firstName}</p>
-            <p>lastName : {profile.Profile.lastName}</p>
-            <p>address : {profile.Profile.address}</p>
-            <p>birth : {profile.Profile.birth}</p>
-            <p>country :
-              <SelectListGroupOfCountry
-                value={profile.Profile.country}
-                disabled="true"
-              />
-            </p>
-            <p>passport : <img src={profile.Profile.passport} /></p>
-            <p>Certificate of Residence : <img src={profile.Profile.certificateResidence} /></p>
-            <p>picture : <img src={profile.Profile.picture} /></p>
-            <p>Ethereum Address : {profile.Profile.ethereumAddress} <input type='button' value='Change' onClick={this.openEthereumAddressModal} /></p>
-            <p>Bitcoin Address : {profile.Profile.bitcoinAddress} <input type='button' value='Change' onClick={this.openBitcoinAddressModal} /></p>
-            <p>AML(anti-money laundering)? :
-              <CheckBoxGroup
-              checkedFlg={profile.Profile.aml}
-              disabled="true"
-            />
-            </p>
+            <div id="mainContent" role="main">
+            <div id="pageContent">
+              <div class="l-sec sec_auth">
+                <h1 class="title_sec title_sec__a title_sec-auth">Authenticate (status : {profile.Profile.statusName})</h1>
+                <div class="l-content l-content--navi l-content--navi-auth themeA clearfix">
+                  <span class="step step--text">Input</span>
+                  <span class="step step--obj">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </span>
+                  <span class="step step--text">Confirmation</span>
+                  <span class="step step--obj">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </span>
+                  <span class="step step--text now">Complete</span>
+                </div>
+                <div class="l-content l-content--form l-content--form-auth">
+                  <form id="form_auth">
+                    <div class="form-group form-group--text form-group--text-name">
+                      <label for="frmName1" class="main main--auth">Name</label>
+                      <p class="text">{profile.Profile.firstName} {profile.Profile.lastName}</p>
+                    </div>
+                    <div class="form-group form-group--radio form-group--radio-gender">
+                      <label for="" class="main main--auth">Gender</label>
+                      <p class="text">{profile.Profile.gender}</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-birthday">
+                      <label for="frmBirthday" class="main main--auth">Birthday</label>
+                      <p class="text">{profile.Profile.birth}</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-streetaddress">
+                      <label for="frmStreetaddress" class="main main--auth">Street Address</label>
+                      <p class="text">{profile.Profile.streetAddress}</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-city">
+                      <label for="frmCity" class="main main--auth">City</label>
+                      <p class="text">{profile.Profile.cityAddress}</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-postalCode">
+                      <label for="frmPostalCode" class="main main--auth">Postal Code</label>
+                      <p class="text">{profile.Profile.postalCode}</p>
+                    </div>
+                    <div class="form-group form-group--select form-group--select-country">
+                      <label for="frmCountry" class="main main--auth">Country</label>
+                      <p >
+                      <SelectListGroupOfCountry
+                        className="theme-is-err"
+                        name="country"
+                        id="frmCountry"
+                        value={profile.Profile.country}
+                        disabled="true"
+                        style={{fontSize: '1.5em'}}
+                      />
+                      </p>
+                    </div>
+                    <div class="form-group form-group--select form-group--text form-group--select-phone form-group--text-phone">
+                      <label for="frmPhone1" class="main main--auth">Phone Number</label>
+                      <p class="text">{profile.Profile.phoneNumber1} {profile.Profile.phoneNumber2}</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-idNum">
+                      <label for="frmIdnum" class="main main--auth">ID Number</label>
+                      <p class="text">{profile.Profile.idNumber}</p>
+                    </div>
+                    <div class="form-group form-group--text form-group--text-erc">
+                      <label for="frmErc" class="main main--auth">ERC20 Address</label>
+                      <p class="text">{profile.Profile.ethereumAddress}</p><input type='button' value='Change' onClick={this.openEthereumAddressModal} />
+                    </div>
+                    <div class="form-group form-group--text form-group--text-erc">
+                      <label for="frmErc" class="main main--auth">BITCOIN Address</label>
+                      <p class="text">{profile.Profile.bitcoinAddress}</p><input type='button' value='Change' onClick={this.openBitcoinAddressModal} />
+                    </div>
+                    <div class="form-group form-group--file form-group--file-photoIdDocu help">
+                      <label for="frmPhotoIdDocu" class="main main--auth">Photo ID document</label>
+                      <p class="img"><img src={profile.Profile.passport} /></p>
+                    </div>
+                    <div class="form-group form-group--file form-group--file-addressProof">
+                      <label for="frmAddressProof" class="main main--auth">Address proof image</label>
+                      <p class="img"><img src={profile.Profile.certificateResidence} /></p>
+                    </div>
+                    <div class="form-group form-group--file form-group--file-selfyImage">
+                      <label for="frmSelfyImage" class="main main--auth">Selfy image</label>
+                      <p class="img"><img src={profile.Profile.picture} /></p>
+                    </div>
+
+                    <div class="form-group form-group--check form-group--check-aml">
+                      <label>
+                        <CheckBoxGroup
+                          name="aml"
+                          value="true"
+                          onChange={this.onChangeCheckBoxAml}
+                          className="chkbox"
+                          disabled="true"
+                          checkedFlg="true"
+                        />
+                        <span class="text-label">I agree to </span>
+                      </label>
+                      <a >the AML Authentication</a>
+                    </div>
+
+                  </form>
+
+
+                    <div class="l-sec sec_btnSet sec_btnSet-auth">
+                      <NavLink to="/dashboard/profile/create-profile">
+                      <div class="form-group form-group--btn form-group--btn-confirmation">
+                        <input class="btn btn--cl-1 btn--size-1" type="button" name="action" value="Re Entry" />
+                      </div>
+                      </NavLink>
+                    </div>
+
+                </div>
+              </div>
+            </div>
+            </div>
           </div>
+
         );
       } else {
         // User is logined in but has no profile
         profileContent = (
           <div>
-            <p> Welcome </p>
-            <p>You have not yet setup a kyc info, please add info</p>
-            <p>
-            <Link to="/dashboard/profile/create-profile">
-              FILL KYC/AML FORM
-            </Link>
-            </p>
-            <p>
-            <Link to="/dashboard">
-              Back
-            </Link>
-            </p>
           </div>
         );
       }
     }
 
     return (
-      <div style={{fontSize: '16px'}}>
-        <Link to="/dashboard">
-          Back
-        </Link>
-        <h1>-----</h1>
-        {changeProfileLink}
-        <h1>-----</h1>
-        <h1>Profile</h1>
-        <h1>-----</h1>
+      <div >
         {profileContent}
       </div>
     );

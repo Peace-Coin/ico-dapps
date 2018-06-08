@@ -49,14 +49,19 @@ export const checkProfile = (profileData, history) => dispatch => {
 
 // POST: Create Profile
 export const createProfile = (profileData, history) => dispatch => {
+
+  console.log('profileData')
+  console.log(profileData)
+
   axios
     .post('/api/profile', profileData)
     .then(res => history.push('/dashboard/profile'))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
+    .catch(err => {
+
+      console.log(err)
+      history.push('/dashboard')
+
+    }
     );
 };
 
