@@ -50,7 +50,6 @@ class Dashboard extends Component {
       tokenAmount: 0,
       loading: true,
 
-
       ethereumModalIsOpen: false,
       bitcoinModalIsOpen: false,
       smartContractAddressIsOpen: false,
@@ -237,19 +236,27 @@ class Dashboard extends Component {
 
     }catch(e){
 
-      console.log('e')
-      console.log(e)
-
       //PeaceUtil 小数点以下誤差吸収ライブラリ
       var BigNumber = require('bignumber.js');
 
       //eth raised = weiRaised * exchange_length
       let weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
 
+      const goal = await PeaceCoinCrowdsale.methods.goal().call();
+
+      let goalPar = weiRaised / goal * 100;
+      goalPar = Math.round(goalPar);
+
+      this.setState({
+        goalPar: goalPar
+      })
+
       //weiRaised = PeaceUtil.multiply(weiRaised, conf.EXCHANGE_WEI_ETH_RATE);
       weiRaised = new BigNumber(weiRaised).times(conf.EXCHANGE_WEI_ETH_RATE).toPrecision()
 
-      this.props.getRate('', weiRaised, this.props.history);
+      let goalEth = new BigNumber(goal).times(conf.EXCHANGE_WEI_ETH_RATE).toPrecision();
+
+      this.props.getRate('', weiRaised, goalEth, this.props.history);
 
       weiRaised = String(weiRaised).replace(
         /(\d)(?=(\d\d\d)+(?!\d))/g,
@@ -553,20 +560,11 @@ class Dashboard extends Component {
           <div class="l-sec sec_transactions">
             <h2 class="title_sec title_sec__a title_sec-transactions">Transactions</h2>
             <div class="l-content l-content--transactionsList">
-              <div class="info clearfix">
-                <p class="transactions--item__label"></p>
-                <p class="transactions--item__hash">Hash Address</p>
-                <p class="transactions--item__datetime">Data time</p>
-                <p class="transactions--item__price">Price</p>
-                <p class="transactions--item__status">Status</p>
-              </div>
               <ul class="list_transactions">
                 <PurchaseHistory address={this.state.investor} rates={this.props.rates} />
               </ul>
             </div>
           </div>
-
-
         </div>
       </div>
       </div>

@@ -1,10 +1,23 @@
 /** 以下、紺野調整 */
 
+#root{
+
+  z-index: 0;
+}
+
 .iErr{
 
   color: #FF8116;
   padding: 5px;
   font-size: 16px;
+}
+
+.selectReadOnly{
+  font-size: '1.5em' !important;
+  background-color: '#00b0c3' !important;
+  color: 'white' !important;
+  border: '0px solid grey' !important;
+  border-radius: 0px !important;
 }
 
 .is-active {
@@ -57,6 +70,14 @@ input[type="checkbox"]+.faSet .fa.no-check {
 }
 
 /** 以下、古谷さんCSS */
+
+.form-group.help .text-help img {
+    display: block;
+    width: 320px;
+    margin-top: 10px;
+    border: 3px solid #00b0c3;
+    box-sizing: border-box;
+}
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;

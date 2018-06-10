@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import conf from '../../../config/conf.json';
 
 const ETHERSCAN_API_URL = 'http://api-rinkeby.etherscan.io';
-const CONTRACT_ADDRESS = conf.PeaceCoinCrowdsaleTokenAddress;
-//const CONTRACT_ADDRESS = '0x32179efc8b8ae3e966b28f2e209b37426b1661cd';
+const CONTRACT_ADDRESS = '0x32179efc8b8ae3e966b28f2e209b37426b1661cd';
 const API_KEY = 'CZS8EXSB7GDIDBFN91D8QNVZZF13N9VTGF';
 
 class PurchaseHistory extends Component {
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +18,7 @@ class PurchaseHistory extends Component {
   }
 
   async componentDidMount() {
+
     const { address } = this.props;
 
     fetch(
@@ -26,12 +27,13 @@ class PurchaseHistory extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ histories: data.result });
+
       });
 
     const { rates } = this.props;
     this.setState({
       rates: rates
-    });
+    })
   }
 
   render() {

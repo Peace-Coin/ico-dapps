@@ -11,8 +11,6 @@ const config = require('../config/mailer');
 
 signToken = user => {
 
-  console.log('user -> ' + user);
-
   let handleName = 'guest';
 
   if(user.local != undefined){
@@ -46,9 +44,14 @@ module.exports = {
     // Check if there is a user with the same mail
     const foundUser = await User.findOne({ 'local.email': email });
     if (foundUser) {
-      return res.status(400).json({
-        error: 'Email is already in use'
-      });
+
+      let error = {
+        validation: {
+          email: 'Email is already in use'
+        }
+      }
+
+      return res.status(400).json(error);
     }
 
     // Generate Rondom Token for email confirmation
@@ -82,6 +85,7 @@ module.exports = {
 
   signIn: async (req, res, next) => {
     const token = signToken(req.user);
+
     res.status(200).json({
       success: true,
       token: token,

@@ -128,12 +128,12 @@ class ConfirmProfile extends Component {
                 <label for="frmCountry" class="main main--auth">Country</label>
                 <p >
                 <SelectListGroupOfCountry
-                  className="theme-is-err"
+                  className="text"
                   name="country"
                   id="frmCountry"
                   value={this.state.profile.country}
                   disabled="true"
-                  style={{fontSize: '1.5em'}}
+                  style={{fontSize: '1.5em', backgroundColor: '#00b0c3', color: 'white', border: '0px solid grey', borderRadius: '0px'}}
                 />
                 </p>
               </div>

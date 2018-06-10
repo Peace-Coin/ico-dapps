@@ -53,6 +53,9 @@ class Profile extends Component {
 
   componentDidMount() {
     this.props.getCurrentProfile();
+  }
+
+  componentDidUpdate(){
 
     const { profile } = this.props.profile;
 
@@ -133,21 +136,6 @@ class Profile extends Component {
 
     // Change Profile
     let changeProfileLink;
-
-    if (profile != null){
-
-      var conf = require('../../../config/conf.json');
-
-      //when status is not approve
-      if(Object.keys(profile).length > 0 && profile.Profile.status != conf.KYC_APPROVED_STATUS){
-
-        changeProfileLink = (
-          <Link to="/dashboard/profile/create-profile">
-            FILL KYC/AML FORM
-          </Link>
-        );
-      }
-    }
 
     // Profile Contents
     let profileContent;
@@ -263,12 +251,12 @@ class Profile extends Component {
                       <label for="frmCountry" class="main main--auth">Country</label>
                       <p >
                       <SelectListGroupOfCountry
-                        className="theme-is-err"
+                        className=""
                         name="country"
                         id="frmCountry"
                         value={profile.Profile.country}
                         disabled="true"
-                        style={{fontSize: '1.5em'}}
+                        style={{fontSize: '1.5em', backgroundColor: '#00b0c3', color: 'white', border: '0px solid grey', borderRadius: '0px'}}
                       />
                       </p>
                     </div>

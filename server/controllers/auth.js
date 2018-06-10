@@ -7,12 +7,6 @@ module.exports = {
 
     const { userid, name, address, birth, country, ethereumAddress, aml, terms, passport, certificateResidence, picture } = req.value.body;
 
-    console.log('userid -> ' + userid);
-    console.log('passport -> ' + passport);
-
-    //ファイルbyte上限チェック
-    //二重登録チェック
-
     // creae a new auth
     const newAuth = new Auth({
       _id: userid,

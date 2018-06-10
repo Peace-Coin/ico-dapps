@@ -123,9 +123,6 @@ class CreateProfile extends Component {
       aml: this.state.aml,
     };
 
-    console.log('this.state.passport.length')
-    console.log(this.state.passport.length)
-
     // Create Profile
     this.props.checkProfile(profileData, this.props.history);
   }
@@ -491,7 +488,7 @@ class CreateProfile extends Component {
                         <p class="iErr">{errors.phoneNumber2}</p>
                         <p class="text-help">Help text....</p>
                       </div>
-                      <div class="form-group form-group--text form-group--text-idNum">
+                      <div class="form-group form-group--text form-group--text-idNum help">
                         <label for="frmIdnum" class="main main--auth">ID Number<span class="required obj-required">*</span></label>
                         <TextFieldGroup
                           className="theme-is-err"
@@ -502,7 +499,7 @@ class CreateProfile extends Component {
                           onChange={this.onChange}
                         />
                         <p class="iErr">{errors.idNumber}</p>
-                        <p class="text-help">Help text....</p>
+                        <p class="text-help">ex.Passport, Driver's license</p>
                       </div>
                       <div class="form-group form-group--text form-group--text-erc">
                         <label for="frmErc" class="main main--auth">ERC20 Address<span class="required obj-required">*</span></label>
@@ -545,7 +542,7 @@ class CreateProfile extends Component {
                         <p class="iErr">{errors.passport}</p>
                         <p class="text-help">ex.Passport, Driver’s license</p>
                       </div>
-                      <div class="form-group form-group--file form-group--file-addressProof">
+                      <div class="form-group form-group--file form-group--file-addressProof help">
                         <label for="frmAddressProof" class="main main--auth">Address proof image<span class="required obj-required">*</span></label>
                         <div class="file-wrap theme-is-err">
                           <img src={this.state.uploadFileImage2} />
@@ -558,9 +555,9 @@ class CreateProfile extends Component {
                           />
                         </div>
                         <p class="iErr">{errors.certificateResidence}</p>
-                        <p class="text-help">Help text....</p>
+                        <p class="text-help">Proof of address must be no order than 3 month.</p>
                       </div>
-                      <div class="form-group form-group--file form-group--file-selfyImage">
+                      <div class="form-group form-group--file form-group--file-selfyImage help">
                         <label for="frmSelfyImage" class="main main--auth">Selfy image<span class="required obj-required">*</span></label>
                         <div class="file-wrap theme-is-err">
                           <img src={this.state.uploadFileImage3} />
@@ -573,8 +570,9 @@ class CreateProfile extends Component {
                           />
                         </div>
                         <p class="iErr">{errors.picture}</p>
-                        <p class="text-help">Help text....</p>
+                        <p class="text-help">Picture of yourself holding Photo ID.<img src="/img/selfy.jpg" /></p>
                       </div>
+
                       <div class="form-group form-group--check form-group--check-aml">
                         <label>
                           <CheckBoxGroup

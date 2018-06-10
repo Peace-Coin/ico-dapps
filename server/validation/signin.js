@@ -1,14 +1,18 @@
 const Joi = require('joi');
+const helper = require('./helper');
 
 module.exports = {
   validateSignin: schema => {
     return (req, res, next) => {
       const result = Joi.validate(req.body, schema, {
-        abortEarly: true
+        abortEarly: false
       });
 
       if (result.error) {
-        return res.status(400).json({ message: result.error.message });
+        const validation = helper.validationErrorMessage(result.error.details);
+        return res.status(400).json({
+          validation: validation
+        });
       }
 
       if (!req.value) {
@@ -23,11 +27,29 @@ module.exports = {
     authSchema: Joi.object().keys({
       email: Joi.string()
         .email()
-        .error(new Error('Email & Password does not match'))
+        .label('email')
         .required(),
       password: Joi.string()
-        .error(new Error('Email & Password does not match'))
+        // .regex(
+        //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!-/:-@[-`{-~])[!-~]{8,48}/
+        // )
+        .regex(/^[a-zA-Z0-9!"\#$%&@()*+,-./_]*$/)
+        .label('password')
+        .max(48)
+        .min(8)
         .required()
+        .options({
+          language: {
+            string: {
+              max: 'less than 48 char',
+              min: 'more than 8 char',
+              regex: {
+                base:
+                  'fails to match the required pattern: half-width alphanumeric and number and [!"#$%&@()*+,-./_]'
+              }
+            }
+          }
+        })
     })
   }
 };
