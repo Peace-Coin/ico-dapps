@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import conf from '../../../config/conf.json';
 
 const ETHERSCAN_API_URL = 'http://api-rinkeby.etherscan.io';
-const CONTRACT_ADDRESS = '0x32179efc8b8ae3e966b28f2e209b37426b1661cd';
+const CONTRACT_ADDRESS = conf.PeaceCoinCrowdsaleTokenAddress;
+//const CONTRACT_ADDRESS = '0x32179efc8b8ae3e966b28f2e209b37426b1661cd';
 const API_KEY = 'CZS8EXSB7GDIDBFN91D8QNVZZF13N9VTGF';
 
 class PurchaseHistory extends Component {
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +18,6 @@ class PurchaseHistory extends Component {
   }
 
   async componentDidMount() {
-
     const { address } = this.props;
 
     fetch(
@@ -27,17 +26,15 @@ class PurchaseHistory extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ histories: data.result });
-
       });
 
     const { rates } = this.props;
     this.setState({
       rates: rates
-    })
+    });
   }
 
   render() {
-
     const { histories } = this.state;
 
     var BigNumber = require('bignumber.js');
@@ -47,22 +44,19 @@ class PurchaseHistory extends Component {
 
     let rates = this.state.rates;
 
-    if(histories.map != undefined){
+    if (histories.map != undefined) {
+      for (let i in histories) {
+        var date = new Date(histories[i].timeStamp * 1000);
 
-      for(let i in histories) {
-
-        var date = new Date(histories[i].timeStamp * 1000 );
-
-        var year  = date.getFullYear();
+        var year = date.getFullYear();
         var month = date.getMonth() + 1;
-        var day  = date.getDate();
-        var hour = ( '0' + date.getHours() ).slice(-2);
-        var min  = ( '0' + date.getMinutes() ).slice(-2);
-        var sec   = ( '0' + date.getSeconds() ).slice(-2);
+        var day = date.getDate();
+        var hour = ('0' + date.getHours()).slice(-2);
+        var min = ('0' + date.getMinutes()).slice(-2);
+        var sec = ('0' + date.getSeconds()).slice(-2);
 
         histories[i].dateTime1 = year + '/' + month + '/' + day;
         histories[i].dateTime2 = hour + ':' + min + ':' + sec;
-
       }
 
       records = histories.map(history => (
@@ -73,23 +67,27 @@ class PurchaseHistory extends Component {
           <p className="transactions--item__hash">{history.hash}</p>
           <p className="transactions--item__datetime">
             {' '}
-            <span className="date">
-              {history.dateTime1}
-
-            </span>
-            <span className="time cl_themeA-2">
-              {history.dateTime2}
-              </span>
+            <span className="date">{history.dateTime1}</span>
+            <span className="time cl_themeA-2">{history.dateTime2}</span>
           </p>
           <p className="transactions--item__price">
             {' '}
             <span className="coin coin-pce">
-              <span className="num coin__num">{new BigNumber(history.value).times(conf.EXCHANGE_WEI_ETH_RATE).toPrecision()}</span>
+              <span className="num coin__num">
+                {new BigNumber(history.value)
+                  .times(conf.EXCHANGE_WEI_ETH_RATE)
+                  .toPrecision()}
+              </span>
               <span className="unit coin__unit">{history.tokenSymbol}</span>
             </span>
             <span className="coin coin-usd cl_themeA-2">
               <span className="unit coin__unit">$</span>
-              <span className="num coin__num">{new BigNumber(history.value).times(conf.EXCHANGE_WEI_ETH_RATE).times(rates.usdRate).toPrecision()}</span>
+              <span className="num coin__num">
+                {new BigNumber(history.value)
+                  .times(conf.EXCHANGE_WEI_ETH_RATE)
+                  .times(rates.usdRate)
+                  .toPrecision()}
+              </span>
             </span>
           </p>
           <p className="transactions--item__status">
@@ -105,11 +103,7 @@ class PurchaseHistory extends Component {
         </li>
       ));
     }
-    return (
-      <record>
-        {records}
-      </record>
-    );
+    return <record>{records}</record>;
   }
 }
 

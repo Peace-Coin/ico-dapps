@@ -26,6 +26,8 @@ module.exports = {
     };
   },
 
+  //.regex(/^[a-zA-Z0-9!"\#$%&@()*+,-./_]*$/)
+
   // Password using Regular Expression
   // ^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!-/:-@[-`{-~])[!-~]{8,48}
   // More than 8 char and less than 48 char
@@ -41,22 +43,25 @@ module.exports = {
         .label('email')
         .required(),
       password: Joi.string()
-      .required()
-      .regex(/^[a-zA-Z0-9!"\#$%&@()*+,-./_]*$/)
-      .max(48)
-      .min(8)
-      .label('password')
-      .options({
-        language: {
-          string: {
-            max: 'less than 48 char',
-            min: 'more than 8 char',
-            regex: {
-              base: 'fails to match the required pattern: half-width alphanumeric and number and [!"\#$%&@()*+,-./_]'
+        .required()
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!-/:-@[-`{-~])[!-~]{8,48}/
+        )
+        .max(48)
+        .min(8)
+        .label('password')
+        .options({
+          language: {
+            string: {
+              max: 'less than 48 char',
+              min: 'more than 8 char',
+              regex: {
+                base:
+                  'fails to match the required pattern: half-width alphanumeric and number and [!"#$%&@()*+,-./_]'
+              }
             }
-          },
-        }
-      }),
+          }
+        })
     })
   }
 };

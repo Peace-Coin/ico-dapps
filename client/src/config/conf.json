@@ -1,6 +1,7 @@
 {
-  "PeaceCoinCrowdsaleAddress": "0xe726a229c513ec66f34d2edff3ac9461772656cb",
-  "PeaceCoinCrowdsaleTokenAddress": "0x32179efc8b8ae3e966b28f2e209b37426b1661cd",
+  "PeaceCoinCrowdsaleAddress": "0x9c15766481674111aac8ed27eec579e43abb27a5",
+  "PeaceCoinCrowdsaleTokenAddress":
+    "0x2ad2148e29398f33e8b9a23f4f9c2e5b2ee673aa",
   "GasPrice": "24x",
   "GasLimit": "21000",
   "EthGasPrice": "28",

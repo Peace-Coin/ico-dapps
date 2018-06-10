@@ -67,7 +67,7 @@ export const signupUser = ({ email, password }) => {
       .catch(err => {
         dispatch({
           type: AUTH_ERROR,
-          payload: 'Could not signup, please make sure data is correct.'
+          payload: 'Could not signup, please make sure infomation is correct.'
         });
       });
   };
