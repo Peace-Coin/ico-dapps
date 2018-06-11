@@ -30,6 +30,11 @@ router.route('/secret').get(passportJWT, ProfilesController.secret);
 // @access private
 router.route('/').get(passportJWT, ProfilesController.getProfileByUserId);
 
+// @reute  GET api/profile/status
+// @desc   Get user profile status
+// @access private
+router.route('/status').get(passportJWT, ProfilesController.getProfileStatus);
+
 // @reute  POST api/profile
 // @desc   Create user profile
 // @access Private

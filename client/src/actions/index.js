@@ -15,6 +15,7 @@ export {
 export {
   checkProfile,
   createProfile,
+  getProfileStatus,
   changeEthreumAddress,
   changeBitcoinAddress,
   clearError

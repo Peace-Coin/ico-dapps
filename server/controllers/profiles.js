@@ -18,7 +18,6 @@ module.exports = {
   },
 
   checkProfile: async (req, res, next) => {
-
     res.json(req.body);
   },
 
@@ -60,13 +59,13 @@ module.exports = {
           { $set: profileFields },
           { new: true }
         ).then(profile => {
-
           res.json(CodeNameUtil.getProfileStatus(profile));
-        })
-
+        });
       } else {
         // Save Profile
-        new Profile(profileFields).save().then(profile => res.json(CodeNameUtil.getProfileStatus(profile)));
+        new Profile(profileFields)
+          .save()
+          .then(profile => res.json(CodeNameUtil.getProfileStatus(profile)));
       }
     });
   },
@@ -80,35 +79,34 @@ module.exports = {
     profileFields.Profile = {};
     profileFields.Profile.ethereumAddress = req.body.ethereumAddress;
 
-    Profile.findOne({ user: req.user.id }).then(profile => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        profile.Profile.ethereumAddress = profileFields.Profile.ethereumAddress;
 
-      profile.Profile.ethereumAddress = profileFields.Profile.ethereumAddress;
+        if (profile) {
+          // Update
+          Profile.findOneAndUpdate(
+            { user: req.user.id },
+            { $set: profile }
+          ).then(profile => {
+            Profile.findOne({ user: req.user.id })
+              .then(profile => {
+                if (!profile) {
+                  errors.noprofile = 'There is no profile for this user';
+                  res.status(404).json(errors);
+                }
 
-      if (profile) {
-        // Update
-        Profile.findOneAndUpdate(
-          { user: req.user.id },
-          { $set: profile }
-        ).then(profile => {
-
-          Profile.findOne({ user: req.user.id })
-            .then(profile => {
-              if (!profile) {
-                errors.noprofile = 'There is no profile for this user';
-                res.status(404).json(errors);
-              }
-
-              res.json(CodeNameUtil.getProfileStatus(profile));
-            })
-            .catch(err => res.status(404).json(err));
-        });
-      }
-    }).catch(err => res.status(500).json(err));
+                res.json(CodeNameUtil.getProfileStatus(profile));
+              })
+              .catch(err => res.status(404).json(err));
+          });
+        }
+      })
+      .catch(err => res.status(500).json(err));
   },
 
   // changeBitcoinAddress
   changeBitcoinAddress: async (req, res, next) => {
-
     // Basic Info
     const profileFields = {};
     profileFields.user = req.user.id;
@@ -116,30 +114,30 @@ module.exports = {
     profileFields.Profile = {};
     profileFields.Profile.bitcoinAddress = req.body.bitcoinAddress;
 
-    Profile.findOne({ user: req.user.id }).then(profile => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        profile.Profile.bitcoinAddress = profileFields.Profile.bitcoinAddress;
 
-      profile.Profile.bitcoinAddress = profileFields.Profile.bitcoinAddress;
+        if (profile) {
+          // Update
+          Profile.findOneAndUpdate(
+            { user: req.user.id },
+            { $set: profile }
+          ).then(profile => {
+            Profile.findOne({ user: req.user.id })
+              .then(profile => {
+                if (!profile) {
+                  errors.noprofile = 'There is no profile for this user';
+                  res.status(404).json(errors);
+                }
 
-      if (profile) {
-        // Update
-        Profile.findOneAndUpdate(
-          { user: req.user.id },
-          { $set: profile }
-        ).then(profile => {
-
-          Profile.findOne({ user: req.user.id })
-            .then(profile => {
-              if (!profile) {
-                errors.noprofile = 'There is no profile for this user';
-                res.status(404).json(errors);
-              }
-
-              res.json(CodeNameUtil.getProfileStatus(profile));
-            })
-            .catch(err => res.status(404).json(err));
-        });
-      }
-    }).catch(err => res.status(500).json(err));
+                res.json(CodeNameUtil.getProfileStatus(profile));
+              })
+              .catch(err => res.status(404).json(err));
+          });
+        }
+      })
+      .catch(err => res.status(500).json(err));
   },
 
   // Get Profile
@@ -148,11 +146,26 @@ module.exports = {
       .then(profile => {
         if (!profile) {
           errors.noprofile = 'There is no profile for this user';
-          res.status(404).json(errors);
+          res.status(400).json(errors);
         }
-
         res.json(CodeNameUtil.getProfileStatus(profile));
       })
       .catch(err => res.status(404).json(err));
   },
+
+  // Get Profile Status
+  getProfileStatus: async (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        if (!profile) {
+          res.json({ profileStatus: 0 });
+        }
+        res.json({
+          profileStatus: 1,
+          ethereumAddress: profile.Profile.ethereumAddress + '',
+          bitcoinAddress: profile.Profile.bitcoinAddress + ''
+        });
+      })
+      .catch(err => res.status(404).json(err));
+  }
 };

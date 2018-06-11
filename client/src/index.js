@@ -16,7 +16,7 @@ import ReactDOM from 'react-dom';
 import store from './shared/store';
 import App from './app';
 
-import { AUTH_USER } from './actions/types';
+// import { AUTH_USER } from './actions/types';
 import { Provider } from 'react-redux';
 
 import { setCurrentUser } from './actions/authAction';

@@ -5,7 +5,6 @@ import profileReducer from './profileReducers';
 import errorReducer from './errorReducers';
 import dashboardReducer from './dashboardReducers';
 
-
 const rootReducer = combineReducers({
   form: form,
   auth: authReducer,

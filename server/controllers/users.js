@@ -10,25 +10,19 @@ const verifyHtml = require('../services/mailer/template/verifyHtml');
 const config = require('../config/mailer');
 
 signToken = user => {
-
   let handleName = 'guest';
 
-  if(user.local != undefined){
-
-    handleName = user.local.email
-
-  }else if(user.google != undefined){
-
-    handleName = user.google.email
-
-  }else if(user.facebook != undefined){
-
-    handleName = user.facebook.email
+  if (user.local != undefined) {
+    handleName = user.local.email;
+  } else if (user.google != undefined) {
+    handleName = user.google.email;
+  } else if (user.facebook != undefined) {
+    handleName = user.facebook.email;
   }
 
   return JWT.sign(
     {
-      iss: 'thebind',
+      iss: 'ico-dapps',
       sub: user.id,
       iat: new Date().getTime(), // Current Time
       exp: new Date().setDate(new Date().getDate() + 1), // Current time + 1 day ahead
@@ -44,12 +38,11 @@ module.exports = {
     // Check if there is a user with the same mail
     const foundUser = await User.findOne({ 'local.email': email });
     if (foundUser) {
-
       let error = {
         validation: {
           email: 'Email is already in use'
         }
-      }
+      };
 
       return res.status(400).json(error);
     }

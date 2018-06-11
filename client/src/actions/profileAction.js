@@ -1,5 +1,6 @@
 import {
   GET_PROFILE,
+  GET_PROFILE_STATUS,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
@@ -24,7 +25,25 @@ export const getCurrentProfile = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_PROFILE,
-        payload: {}
+        payload: null
+      })
+    );
+};
+
+// GET: Profile Status
+export const getProfileStatus = () => dispatch => {
+  axios
+    .get('/api/profile/status')
+    .then(res =>
+      dispatch({
+        type: GET_PROFILE_STATUS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILE_STATUS,
+        payload: null
       })
     );
 };
@@ -49,20 +68,16 @@ export const checkProfile = (profileData, history) => dispatch => {
 
 // POST: Create Profile
 export const createProfile = (profileData, history) => dispatch => {
-
-  console.log('profileData')
-  console.log(profileData)
+  console.log('profileData');
+  console.log(profileData);
 
   axios
     .post('/api/profile', profileData)
     .then(res => history.push('/dashboard/profile'))
     .catch(err => {
-
-      console.log(err)
-      history.push('/dashboard')
-
-    }
-    );
+      console.log(err);
+      history.push('/dashboard');
+    });
 };
 
 // POST: Change EthreumAddress
@@ -101,11 +116,11 @@ export const changeBitcoinAddress = (bitcoinAddress, history) => dispatch => {
     );
 };
 
-export const clearError = (history) => dispatch => {
+export const clearError = history => dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
     payload: ''
-  })
+  });
 };
 
 // Profile Lodading

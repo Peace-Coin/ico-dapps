@@ -11,7 +11,6 @@ import RequireAuth from '../components/auth/authentication';
 
 // Layout Parts
 import Navbar from '../components/layouts/Navbar';
-import Footer from '../components/layouts/Footer';
 
 // Account Signup & Signin
 import Signin from '../components/auth/signin';
@@ -85,7 +84,10 @@ class AppRouter extends Component {
   }
 }
 
-export default connect(null, actions)(AppRouter);
+export default connect(
+  null,
+  actions
+)(AppRouter);
 
 // import PrivateRoute from './PrivateRoute';
 // <Switch>
