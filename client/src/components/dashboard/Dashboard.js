@@ -195,11 +195,11 @@ class Dashboard extends Component {
 
       ethAmount = new BigNumber(tokenAmount)
         .times(conf.EXCHANGE_WEI_ETH_RATE)
+        .div(rate)
         .toPrecision();
 
       tokenAmount = new BigNumber(tokenAmount)
         .times(conf.EXCHANGE_WEI_ETH_RATE)
-        .times(rate)
         .toPrecision();
 
       //eth raised = weiRaised * exchange_length
