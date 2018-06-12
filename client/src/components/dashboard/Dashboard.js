@@ -73,7 +73,10 @@ class Dashboard extends Component {
       },
 
       profile: {},
-      goalPar: 0
+      goalPar: 0,
+
+      errorMessage: '',
+      errorIsOpen: false
     };
 
     this.openEthereumModal = this.openEthereumModal.bind(this);
@@ -96,6 +99,10 @@ class Dashboard extends Component {
     this.countDowm = this.countDowm.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
+
+    this.openErrorModal = this.openErrorModal.bind(this);
+    this.afterErrorModal = this.afterErrorModal.bind(this);
+    this.closeErrorModal = this.closeErrorModal.bind(this);
   }
 
   async componentDidMount() {
@@ -299,6 +306,17 @@ class Dashboard extends Component {
     this.setState({ loading: false });
   }
 
+  openErrorModal() {
+
+    this.setState({ errorIsOpen: true });
+  }
+
+  afterErrorModal() {}
+
+  closeErrorModal() {
+    this.setState({ errorIsOpen: false });
+  }
+
   openEthereumModal() {
     //KYC 登録済みであること 承認状態は問わない
     if (this.props.profile.profileStatus.profileStatus !== 0) {
@@ -306,6 +324,7 @@ class Dashboard extends Component {
       this.setState({ errorMessage: '' });
     } else {
       this.setState({ errorMessage: 'PLEASE KYC FINISHED !' });
+      this.setState({ errorIsOpen: true });
     }
   }
 
@@ -327,9 +346,11 @@ class Dashboard extends Component {
         this.setState({ errorMessage: '' });
       } else {
         this.setState({ errorMessage: 'PLEASE ENTRY BITCOIN ADDRESS !' });
+        this.setState({ errorIsOpen: true });
       }
     } else {
       this.setState({ errorMessage: 'PLEASE KYC FINISHED !' });
+      this.setState({ errorIsOpen: true });
     }
   }
 
@@ -369,9 +390,6 @@ class Dashboard extends Component {
     } else {
       dashboardContent = (
         <div class="peaceCoinIco dashboard">
-          <div style={{ backgroundColor: 'red', fontSize: '18px' }}>
-            {this.state.errorMessage}
-          </div>
           <div>
             <div>
               <Modal
@@ -442,6 +460,54 @@ class Dashboard extends Component {
                         <button
                           style={{ border: '1px solid grey' }}
                           onClick={this.closeSmartContractAddressModal}
+                          type="button"
+                          class="modaal-close"
+                          id="modaal-close"
+                          aria-label="Close (Press escape to close)"
+                        >
+                          <span>Close</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+            </div>
+
+            <div>
+              <Modal
+                isOpen={this.state.errorIsOpen}
+                onAfterOpen={this.afterErrorModal}
+                onRequestClose={this.closeErrorModal}
+                style={customStyles}
+                contentLabel="ErrorModal"
+              >
+                <div
+                  class="modaal-wrapper modaal-inline l-content_modal--smartContract themeB"
+                  id="modaal_152816659947189668a73f3483"
+                >
+                  <div class="modaal-outer-wrapper">
+                    <div class="modaal-inner-wrapper">
+                      <div class="modaal-container">
+                        <div
+                          class="modaal-content modaal-focus"
+                          aria-hidden="false"
+                          aria-label="Dialog Window (Press escape to close)"
+                          role="dialog"
+                          tabindex="0"
+                        >
+                          <div class="modaal-content-container">
+                            <h3 style={{ color: 'red', fontSize: '18px' }} class="title_content title_content__a title_content__a-modal title_content-smartContract">
+                              Error
+                            </h3>
+                            <p class="text">
+                              {this.state.errorMessage}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          style={{ border: '1px solid grey' }}
+                          onClick={this.closeErrorModal}
                           type="button"
                           class="modaal-close"
                           id="modaal-close"
