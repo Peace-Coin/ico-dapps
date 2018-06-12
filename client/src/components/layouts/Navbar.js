@@ -24,25 +24,38 @@ class Navbar extends Component {
 
     this.toggleLang = this.toggleLang.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
-    this.toggleReset = this.toggleReset.bind(this);
+    this.popupClose = this.popupClose.bind(this);
+
+    this.alertChangeLanguage = this.alertChangeLanguage.bind(this);
+  }
+
+  alertChangeLanguage(){
+
+    alert("This page doesn't support Japanese yet. ");
   }
 
   componentDidMount() {
     getProfileStatus();
+
+    document.addEventListener('click', this.popupClose);
   }
 
-  toggleReset() {
-    if (this.state.langStatusOpenFlg) {
+  popupClose(e) {
+
+    if( e.target.closest('.l-selector') == null){
+
       this.setState({
         langStatus2:
           'selector__item selector__item-list selector__item-list-lang theme-list-selector is-hidden'
       });
       this.setState({ langStatusOpenFlg: false });
+
       this.setState({
         menuStatus2:
           'selector__item selector__item-list selector__item-list-lang theme-list-selector is-hidden'
       });
       this.setState({ menuStatusOpenFlg: false });
+
     }
   }
 
@@ -266,7 +279,7 @@ class Navbar extends Component {
                   <span className="text">English</span>
                 </li>
                 <li>
-                  <a href="#" className="text">
+                  <a onClick={this.alertChangeLanguage} className="text">
                     Japanese
                   </a>
                 </li>
@@ -275,7 +288,7 @@ class Navbar extends Component {
           </div>
           <div
             onClick={this.toggleMenu}
-            className="l-selector l-selector--right  l-selector--user"
+            className="l-selector l-selector--right l-selector--user"
           >
             <div className={this.state.menuStatus1}>
               <svg className="ico-svg acount">
