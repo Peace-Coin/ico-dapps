@@ -38,10 +38,11 @@ export const signinUser = ({ email, password }) => {
         history.push('/dashboard');
       })
       .catch(err => {
-        // dispatch({
-        //   type: AUTH_ERROR,
-        //   payload: err
-        // });
+
+        dispatch({
+          type: AUTH_ERROR,
+          payload: 'Invalid emaill or password'
+        });
       });
   };
 };
@@ -67,7 +68,7 @@ export const signupUser = ({ email, password }) => {
       .catch(err => {
         dispatch({
           type: AUTH_ERROR,
-          payload: 'Could not signup, please make sure infomation is correct.'
+          payload: err.response.data
         });
       });
   };

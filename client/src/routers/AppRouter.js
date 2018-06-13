@@ -41,6 +41,7 @@ class AppRouter extends Component {
           <React.Fragment>
             <Navbar />
             <Switch>
+              <Route exact path="/" component={Signin} />
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/verify/:id" component={Verify} />
               <Route exact path="/signin" component={Signin} />

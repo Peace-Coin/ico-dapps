@@ -95,7 +95,8 @@ class Navbar extends Component {
     let kycaml;
 
     if (
-      this.props.profile.profileStatus.profileStatus === null ||
+      this.props.profile.profileStatus == null || 
+      this.props.profile.profileStatus.profileStatus == null ||
       this.props.profile.profileStatus.profileStatus === 0
     ) {
       kycaml = (
