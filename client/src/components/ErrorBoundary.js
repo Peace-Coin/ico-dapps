@@ -16,13 +16,14 @@ const customStyles = {
   }
 };
 
-class NotFound404 extends Component {
+class ErrorBoundary extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
       modalIsOpen: true,
+      hasError: false,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -32,6 +33,15 @@ class NotFound404 extends Component {
 
   componentDidMount() {
   }
+
+  componentDidCatch(error, info) {
+     // Display fallback UI
+     this.setState({ hasError: true });
+     // You can also log the error to an error reporting service
+     console.log('Date -> ' + new Date())
+     console.log('error -> ' + error)
+     console.log('info -> ' + info)
+   }
 
   openModal() {
     this.setState({ modalIsOpen: true });
@@ -43,6 +53,9 @@ class NotFound404 extends Component {
   }
 
   render() {
+
+    if (this.state.hasError) {
+
     return (
       <div>
         <Modal
@@ -71,7 +84,7 @@ class NotFound404 extends Component {
                         Information
                       </h3>
                       <p class="text">
-                        Not Found 404
+                        An error occurred while processing your request.
                       </p>
                     </div>
                   </div>
@@ -82,10 +95,13 @@ class NotFound404 extends Component {
         </Modal>
       </div>
     );
+
+  }
+  return this.props.children;
   }
 }
 
 export default connect(
   null,
   actions
-)(NotFound404);
+)(ErrorBoundary);

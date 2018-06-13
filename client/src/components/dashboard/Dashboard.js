@@ -45,6 +45,7 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       investor: '',
+      bitcoinAddress: '',
       tokenAmount: 0,
       loading: true,
 
@@ -114,7 +115,12 @@ class Dashboard extends Component {
 
       let investor = this.state.profile.Profile.ethereumAddress;
 
-      this.setState({ investor: investor });
+      let bitcoinAddress = this.state.profile.Profile.bitcoinAddress;
+
+      this.setState({
+        investor: investor,
+        bitcoinAddress: bitcoinAddress,
+      });
     });
 
     try {
@@ -410,13 +416,71 @@ class Dashboard extends Component {
                 isOpen={this.state.bitcoinModalIsOpen}
                 onAfterOpen={this.afterBitcoinOpenModal}
                 onRequestClose={this.closeBitcoinModal}
-                style={popupStyles}
+                style={customStyles}
                 contentLabel="BITCOIN"
               >
-                <div>
-                  <h3>1. head title</h3>
+                <div
+                  class="modaal-wrapper modaal-inline l-content_modal--smartContract themeB"
+                  id="modaal_152816659947189668a73f3483"
+                >
+                  <div class="modaal-outer-wrapper">
+                    <div class="modaal-inner-wrapper">
+                      <div class="modaal-container">
+                        <div
+                          class="modaal-content modaal-focus"
+                          aria-hidden="false"
+                          aria-label="Dialog Window (Press escape to close)"
+                          role="dialog"
+                          tabindex="0"
+                        >
+                          <div
+                            class="modaal-content-container"
+                            style={{ verticalAlign: 'top',textAlign: 'left' }}
+                          >
+                            <h2 style={{ verticalAlign: 'top',textAlign: 'left' }} class="tab_content title_content title_content__a title_content__a-modal title_content-ethereum">
+                              Buy using BITCOIN
+                            </h2>
 
-                  <button onClick={this.closeBitcoinModal}>close</button>
+                            <div style={{height: '15px'}}></div>
+                            <div style={{height: '15px'}}></div>
+
+                            <div>
+                              <span style={{textAlign: 'left', fontSize: '16px', padding: '5px'}}>Your BITCOIN Wallet Address</span>
+                              <p></p>
+                              <span class="address">{this.state.bitcoinAddress}</span>
+                            </div>
+
+                            <div style={{height: '15px'}}></div>
+
+                            <div>
+                              <span style={{textAlign: 'left', fontSize: '16px', padding: '5px'}}>Your ERC20 Address</span>
+                              <p></p>
+                              <span class="address">{this.state.investor}</span>
+                            </div>
+
+                            <div style={{height: '15px'}}></div>
+
+                            <h3 style={{ verticalAlign: 'top',textAlign: 'left' }} class="title_content title_content__a title_content__a-modal title_content-smartContract">
+                              Payment Address <br /> (Peace Coin BITCOIN Wallet Address)
+                            </h3>
+                            <span class="address">
+                              {this.state.conf.PeaceCoinBitCoinAddress}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          style={{ border: '1px solid grey' }}
+                          onClick={this.closeBitcoinModal}
+                          type="button"
+                          class="modaal-close"
+                          id="modaal-close"
+                          aria-label="Close (Press escape to close)"
+                        >
+                          <span>Close</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Modal>
             </div>
