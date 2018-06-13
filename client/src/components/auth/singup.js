@@ -33,7 +33,7 @@ const popupStyles = {
 };
 
 const renderInput = field => (
-  <div>
+  <span>
     <input
       {...field.input}
       type={field.type}
@@ -41,7 +41,27 @@ const renderInput = field => (
     />
     {field.meta.touched &&
       field.meta.error && <p className="iErr">{field.meta.error}</p>}
-  </div>
+  </span>
+);
+
+const renderTermInput = field => (
+
+  <span>
+
+    <input
+      {...field.input}
+      type={field.type}
+      autoComplete={field.autoComplete}
+    />
+  </span>
+);
+
+const renderTermError= field => (
+
+  <span>
+    {field.meta.touched &&
+      field.meta.error && <p className="iErr">{field.meta.error}</p>}
+  </span>
 );
 
 class Signup extends Component {
@@ -53,7 +73,6 @@ class Signup extends Component {
 
       modalIsOpen: true,
       amlIsOpen: false,
-      term: false,
       termCheckedFlg: false,
       errors: {},
       loading: false,
@@ -62,8 +81,6 @@ class Signup extends Component {
     this.openAmlModal = this.openAmlModal.bind(this);
     this.afterAmlModal = this.afterAmlModal.bind(this);
     this.closeAmlModal = this.closeAmlModal.bind(this);
-
-    this.onChangeCheckBoxTerm = this.onChangeCheckBoxTerm.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,6 +107,7 @@ class Signup extends Component {
   }
 
   openAmlModal() {
+
     this.setState({amlIsOpen: true});
     this.setState({modalIsOpen: false});
   }
@@ -114,30 +132,8 @@ class Signup extends Component {
 
     this.setState({ errors: {} });
 
-    if(!this.state.term){
-
-      this.setState({
-
-        errors: {
-          term: 'Please check I agree the Terms of use'
-        }
-      })
-
-      this.setState({ loading: false });
-
-    }else{
-
-      this.setState({
-
-        errors: {
-          term: ''
-        }
-      })
-
-      // Call action creator to sign up the user
-      this.props.signupUser(formProps);
-    }
-
+    // Call action creator to sign up the user
+    this.props.signupUser(formProps);
   }
 
   renderAlert() {
@@ -289,14 +285,20 @@ class Signup extends Component {
                         <p class="iErr">{errors.passwordConfirm}</p>
                         <p class="text-help">Help text....</p>
                       </div>
-                      <div class="form-group form-group--check form-group--check-term"> <label>
-                        <CheckBoxGroup
+                      <div class="form-group form-group--check form-group--check-term">
+                        <Field
+                          type="checkbox"
                           name="term"
+                          component={renderTermInput}
                           value="true"
-                          onChange={this.onChangeCheckBoxTerm}
                           className="chkbox"
+                          onClick={this.openAmlModal}
                         />
-                        <span class="text-label">I agree to </span></label><a onClick={this.openAmlModal} >the Terms of use</a>
+                        <label><span class="text-label">I agree to </span></label><a onClick={this.openAmlModal} >the Terms of use <span class="required obj-required">*</span></a>
+                        <Field
+                          name="term"
+                          component={renderTermError}
+                        />
                         <p class="iErr">{errors.term}</p>
                         <p class="text-help">Help text....</p>
                       </div>
@@ -337,12 +339,10 @@ function validate(formProps) {
     errors.passwordConfirm = 'Please enter an password confrimation';
   }
   if (formProps.password !== formProps.passwordConfirm) {
-    errors.password = 'Passwords must match';
+    errors.passwordConfirm = 'password must match';
   }
-
-  if(errors.length > 0){
-
-    this.setState({ loading: false });
+  if (!formProps.term) {
+    errors.term = 'Please check I agree the Terms of use';
   }
 
   return errors;
