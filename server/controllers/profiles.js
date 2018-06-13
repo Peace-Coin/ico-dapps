@@ -49,8 +49,6 @@ module.exports = {
     profileFields.Profile.aml = req.body.aml;
     profileFields.Profile.status = '1';
 
-    //console.log(profileFields.Profile)
-
     Profile.findOne({ user: req.user.id }).then(profile => {
       if (profile) {
         // Update

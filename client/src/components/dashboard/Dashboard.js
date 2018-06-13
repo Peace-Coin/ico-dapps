@@ -647,7 +647,7 @@ class Dashboard extends Component {
                       </p>
                       <p class="content__sub content__sub-raised">
                         <span class="coin coin-eth">
-                          <span class="unit coin__unit">$</span>
+                          <span class="unit coin__unit">$ </span>
                           <span class="num coin__num">
                             {this.props.rates.totalUsdAmount}
                           </span>
@@ -656,16 +656,16 @@ class Dashboard extends Component {
                       <div class="l-content--bar">
                         <div class="l-content--bar__info">
                           <span class="coin coin-usd coin--now">
-                            <span class="unit coin__unit">$</span>
+                            <span class="unit coin__unit"></span>
                             <span class="num coin__num">
-                              {this.props.rates.goalUsd}
+
                             </span>
                           </span>
                           <span class="coin coin-usd coin--goal">
                             <span class="sub">Goal</span>
                             <span class="unit coin__unit">$</span>
                             <span class="num coin__num">
-                              {this.props.rates.goalBitcoin} B
+                              {this.props.rates.goalUsdBillionAmount}B
                             </span>
                           </span>
                         </div>

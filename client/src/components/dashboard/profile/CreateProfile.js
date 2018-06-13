@@ -32,7 +32,7 @@ class CreateProfile extends Component {
       firstName: '',
       lastName: '',
       gender: '',
-      phoneNumber1: '',
+      phoneNumber1: '+1',
       phoneNumber2: '',
       birth: '',
       postalCode: '',
@@ -61,6 +61,12 @@ class CreateProfile extends Component {
       loading: false,
 
       amlIsOpen: false,
+
+      selectedMale: false,
+      selectedFemale: false,
+      selectedOther: false,
+
+      amlCheckedFlg: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -72,6 +78,8 @@ class CreateProfile extends Component {
     this.openAmlModal = this.openAmlModal.bind(this);
     this.afterAmlModal = this.afterAmlModal.bind(this);
     this.closeAmlModal = this.closeAmlModal.bind(this);
+
+    this.onChangeGenderRadio = this.onChangeGenderRadio.bind(this);
   }
 
   openAmlModal() {
@@ -120,6 +128,7 @@ class CreateProfile extends Component {
       certificateResidence: this.state.certificateResidence,
       picture: this.state.picture,
       ethereumAddress: this.state.ethereumAddress,
+      bitcoinAddress: this.state.bitcoinAddress,
       aml: this.state.aml,
     };
 
@@ -133,20 +142,38 @@ class CreateProfile extends Component {
 
   onChangeCheckBoxAml(e) {
 
-    if(this.state.aml === ''){
-
-      this.setState({ [e.target.name]: e.target.value });
-
-    }else{
-
       if(this.state.aml === 'true'){
 
         this.setState({ [e.target.name]: 'false' });
+        this.setState({ amlCheckedFlg: false });
 
       }else{
 
         this.setState({ [e.target.name]: 'true' });
+        this.setState({ amlCheckedFlg: true });
       }
+
+  }
+
+  onChangeGenderRadio(e) {
+
+    this.setState({ [e.target.name]: e.target.value });
+
+    this.setState({ selectedMale: false });
+    this.setState({ selectedFemale: false });
+    this.setState({ selectedOther: false });
+
+    if(e.target.value === 'male'){
+
+      this.setState({ selectedMale: true });
+
+    }else if (e.target.value === 'female'){
+
+      this.setState({ selectedFemale: true });
+
+    }else if (e.target.value === 'other'){
+
+      this.setState({ selectedOther: true });
     }
   }
 
@@ -393,9 +420,9 @@ class CreateProfile extends Component {
                       </div>
                       <div class="form-group form-group--radio form-group--radio-gender">
                         <label for="" class="main main--auth">Gender<span class="required obj-required">*</span></label>
-                        <label class="radio"><input name="gender" value="male" type="radio"　onChange={this.onChange} /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Male</span></label>
-                        <label class="radio"><input name="gender" value="female" type="radio"　onChange={this.onChange} /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Female</span></label>
-                        <label class="radio"><input name="gender" value="other" type="radio"　onChange={this.onChange} /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Other</span></label>
+                        <label class="radio"><input name="gender" value="male" type="radio" checked={this.state.selectedMale}　onChange={this.onChangeGenderRadio} /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Male</span></label>
+                        <label class="radio"><input name="gender" value="female" type="radio" checked={this.state.selectedFemale}　onChange={this.onChangeGenderRadio} /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Female</span></label>
+                        <label class="radio"><input name="gender" value="other" type="radio" checked={this.state.selectedOther}　onChange={this.onChangeGenderRadio} /><span class="fa-stack" aria-hidden="true"><i class="fa fa-circle fa-stack-1x" aria-hidden="true"></i><i class="fa fa-circle-o fa-stack-1x" aria-hidden="true"></i></span><span class="text-label">Other</span></label>
                         <p className="iErr">{errors.gender}</p>
                         <p class="text-help">Help text....</p>
                       </div>
@@ -579,11 +606,15 @@ class CreateProfile extends Component {
                             name="aml"
                             value="true"
                             onChange={this.onChangeCheckBoxAml}
+                            checkedFlg={this.state.amlCheckedFlg}
                             className="chkbox"
                           />
                           <span class="text-label">I agree to </span>
                         </label>
                         <a onClick={this.openAmlModal}>the AML Authentication</a>
+                        <label>
+                          <span class="required obj-required">*</span>
+                        </label>
                         <p className="iErr">{errors.aml}</p>
                         <p class="text-help">Help text....</p>
                       </div>

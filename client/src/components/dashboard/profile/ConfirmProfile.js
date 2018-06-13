@@ -28,8 +28,6 @@ class ConfirmProfile extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props)
-
     if(this.props.location.state == undefined || this.props.location.state.profile == undefined){
 
       this.state = {
@@ -82,6 +80,7 @@ class ConfirmProfile extends Component {
       certificateResidence: this.state.profile.certificateResidence,
       picture: this.state.profile.picture,
       ethereumAddress: this.state.profile.ethereumAddress,
+      bitcoinAddress: this.state.profile.bitcoinAddress,
       aml: this.state.profile.aml,
     };
 
