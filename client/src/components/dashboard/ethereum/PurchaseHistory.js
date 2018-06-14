@@ -32,7 +32,7 @@ class PurchaseHistory extends Component {
   }
 
   render() {
-    const { histories } = this.state;
+    let { histories } = this.state;
 
     var BigNumber = require('bignumber.js');
     var conf = require('../../../config/conf.json');
@@ -42,7 +42,10 @@ class PurchaseHistory extends Component {
 
     let rates = this.state.rates;
 
-    if (histories.map != undefined) {
+    if (histories.map != undefined && histories.length > 0) {
+
+      histories = histories.slice().reverse();
+
       for (let i in histories) {
         var date = new Date(histories[i].timeStamp * 1000);
 
@@ -60,7 +63,7 @@ class PurchaseHistory extends Component {
       header = (
         <div class="info clearfix">
           <p class="transactions--item__label" />
-          <p class="transactions--item__hash">Hash Address</p>
+          <p style={{fontSize: '13px'}} class="transactions--item__hash">Hash Address</p>
           <p class="transactions--item__datetime">Data time</p>
           <p class="transactions--item__price">Price</p>
           <p class="transactions--item__status">Status</p>

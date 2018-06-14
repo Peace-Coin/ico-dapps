@@ -45,6 +45,7 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       investor: '',
+      bitcoinAddress: '',
       tokenAmount: 0,
       loading: true,
 
@@ -73,7 +74,10 @@ class Dashboard extends Component {
       },
 
       profile: {},
-      goalPar: 0
+      goalPar: 0,
+
+      errorMessage: '',
+      errorIsOpen: false
     };
 
     this.openEthereumModal = this.openEthereumModal.bind(this);
@@ -96,6 +100,10 @@ class Dashboard extends Component {
     this.countDowm = this.countDowm.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
+
+    this.openErrorModal = this.openErrorModal.bind(this);
+    this.afterErrorModal = this.afterErrorModal.bind(this);
+    this.closeErrorModal = this.closeErrorModal.bind(this);
   }
 
   async componentDidMount() {
@@ -107,7 +115,12 @@ class Dashboard extends Component {
 
       let investor = this.state.profile.Profile.ethereumAddress;
 
-      this.setState({ investor: investor });
+      let bitcoinAddress = this.state.profile.Profile.bitcoinAddress;
+
+      this.setState({
+        investor: investor,
+        bitcoinAddress: bitcoinAddress,
+      });
     });
 
     try {
@@ -188,11 +201,11 @@ class Dashboard extends Component {
 
       ethAmount = new BigNumber(tokenAmount)
         .times(conf.EXCHANGE_WEI_ETH_RATE)
+        .div(rate)
         .toPrecision();
 
       tokenAmount = new BigNumber(tokenAmount)
         .times(conf.EXCHANGE_WEI_ETH_RATE)
-        .times(rate)
         .toPrecision();
 
       //eth raised = weiRaised * exchange_length
@@ -299,6 +312,17 @@ class Dashboard extends Component {
     this.setState({ loading: false });
   }
 
+  openErrorModal() {
+
+    this.setState({ errorIsOpen: true });
+  }
+
+  afterErrorModal() {}
+
+  closeErrorModal() {
+    this.setState({ errorIsOpen: false });
+  }
+
   openEthereumModal() {
     //KYC 登録済みであること 承認状態は問わない
     if (this.props.profile.profileStatus.profileStatus !== 0) {
@@ -306,6 +330,7 @@ class Dashboard extends Component {
       this.setState({ errorMessage: '' });
     } else {
       this.setState({ errorMessage: 'PLEASE KYC FINISHED !' });
+      this.setState({ errorIsOpen: true });
     }
   }
 
@@ -327,9 +352,11 @@ class Dashboard extends Component {
         this.setState({ errorMessage: '' });
       } else {
         this.setState({ errorMessage: 'PLEASE ENTRY BITCOIN ADDRESS !' });
+        this.setState({ errorIsOpen: true });
       }
     } else {
       this.setState({ errorMessage: 'PLEASE KYC FINISHED !' });
+      this.setState({ errorIsOpen: true });
     }
   }
 
@@ -369,9 +396,6 @@ class Dashboard extends Component {
     } else {
       dashboardContent = (
         <div class="peaceCoinIco dashboard">
-          <div style={{ backgroundColor: 'red', fontSize: '18px' }}>
-            {this.state.errorMessage}
-          </div>
           <div>
             <div>
               <Modal
@@ -392,13 +416,71 @@ class Dashboard extends Component {
                 isOpen={this.state.bitcoinModalIsOpen}
                 onAfterOpen={this.afterBitcoinOpenModal}
                 onRequestClose={this.closeBitcoinModal}
-                style={popupStyles}
+                style={customStyles}
                 contentLabel="BITCOIN"
               >
-                <div>
-                  <h3>1. head title</h3>
+                <div
+                  class="modaal-wrapper modaal-inline l-content_modal--smartContract themeB"
+                  id="modaal_152816659947189668a73f3483"
+                >
+                  <div class="modaal-outer-wrapper">
+                    <div class="modaal-inner-wrapper">
+                      <div class="modaal-container">
+                        <div
+                          class="modaal-content modaal-focus"
+                          aria-hidden="false"
+                          aria-label="Dialog Window (Press escape to close)"
+                          role="dialog"
+                          tabindex="0"
+                        >
+                          <div
+                            class="modaal-content-container"
+                            style={{ verticalAlign: 'top',textAlign: 'left' }}
+                          >
+                            <h2 style={{ verticalAlign: 'top',textAlign: 'left' }} class="tab_content title_content title_content__a title_content__a-modal title_content-ethereum">
+                              Buy using BITCOIN
+                            </h2>
 
-                  <button onClick={this.closeBitcoinModal}>close</button>
+                            <div style={{height: '15px'}}></div>
+                            <div style={{height: '15px'}}></div>
+
+                            <div>
+                              <span style={{textAlign: 'left', fontSize: '16px', padding: '5px'}}>Your BITCOIN Wallet Address</span>
+                              <p></p>
+                              <span class="address">{this.state.bitcoinAddress}</span>
+                            </div>
+
+                            <div style={{height: '15px'}}></div>
+
+                            <div>
+                              <span style={{textAlign: 'left', fontSize: '16px', padding: '5px'}}>Your ERC20 Address</span>
+                              <p></p>
+                              <span class="address">{this.state.investor}</span>
+                            </div>
+
+                            <div style={{height: '15px'}}></div>
+
+                            <h3 style={{ verticalAlign: 'top',textAlign: 'left' }} class="title_content title_content__a title_content__a-modal title_content-smartContract">
+                              Payment Address <br /> (Peace Coin BITCOIN Wallet Address)
+                            </h3>
+                            <span class="address">
+                              {this.state.conf.PeaceCoinBitCoinAddress}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          style={{ border: '1px solid grey' }}
+                          onClick={this.closeBitcoinModal}
+                          type="button"
+                          class="modaal-close"
+                          id="modaal-close"
+                          aria-label="Close (Press escape to close)"
+                        >
+                          <span>Close</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Modal>
             </div>
@@ -442,6 +524,54 @@ class Dashboard extends Component {
                         <button
                           style={{ border: '1px solid grey' }}
                           onClick={this.closeSmartContractAddressModal}
+                          type="button"
+                          class="modaal-close"
+                          id="modaal-close"
+                          aria-label="Close (Press escape to close)"
+                        >
+                          <span>Close</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+            </div>
+
+            <div>
+              <Modal
+                isOpen={this.state.errorIsOpen}
+                onAfterOpen={this.afterErrorModal}
+                onRequestClose={this.closeErrorModal}
+                style={customStyles}
+                contentLabel="ErrorModal"
+              >
+                <div
+                  class="modaal-wrapper modaal-inline l-content_modal--smartContract themeB"
+                  id="modaal_152816659947189668a73f3483"
+                >
+                  <div class="modaal-outer-wrapper">
+                    <div class="modaal-inner-wrapper">
+                      <div class="modaal-container">
+                        <div
+                          class="modaal-content modaal-focus"
+                          aria-hidden="false"
+                          aria-label="Dialog Window (Press escape to close)"
+                          role="dialog"
+                          tabindex="0"
+                        >
+                          <div class="modaal-content-container">
+                            <h3 style={{ color: 'red', fontSize: '18px' }} class="title_content title_content__a title_content__a-modal title_content-smartContract">
+                              Error
+                            </h3>
+                            <p class="text">
+                              {this.state.errorMessage}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          style={{ border: '1px solid grey' }}
+                          onClick={this.closeErrorModal}
                           type="button"
                           class="modaal-close"
                           id="modaal-close"
@@ -581,7 +711,7 @@ class Dashboard extends Component {
                       </p>
                       <p class="content__sub content__sub-raised">
                         <span class="coin coin-eth">
-                          <span class="unit coin__unit">$</span>
+                          <span class="unit coin__unit">$ </span>
                           <span class="num coin__num">
                             {this.props.rates.totalUsdAmount}
                           </span>
@@ -590,16 +720,16 @@ class Dashboard extends Component {
                       <div class="l-content--bar">
                         <div class="l-content--bar__info">
                           <span class="coin coin-usd coin--now">
-                            <span class="unit coin__unit">$</span>
+                            <span class="unit coin__unit"></span>
                             <span class="num coin__num">
-                              {this.props.rates.goalUsd}
+
                             </span>
                           </span>
                           <span class="coin coin-usd coin--goal">
                             <span class="sub">Goal</span>
                             <span class="unit coin__unit">$</span>
                             <span class="num coin__num">
-                              {this.props.rates.goalBitcoin} B
+                              {this.props.rates.goalUsdBillionAmount}B
                             </span>
                           </span>
                         </div>

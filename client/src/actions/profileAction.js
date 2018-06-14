@@ -68,8 +68,6 @@ export const checkProfile = (profileData, history) => dispatch => {
 
 // POST: Create Profile
 export const createProfile = (profileData, history) => dispatch => {
-  console.log('profileData');
-  console.log(profileData);
 
   axios
     .post('/api/profile', profileData)

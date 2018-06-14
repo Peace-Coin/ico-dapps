@@ -300,22 +300,12 @@ class Profile extends Component {
                           ERC20 Address
                         </label>
                         <p class="text">{profile.Profile.ethereumAddress}</p>
-                        <input
-                          type="button"
-                          value="Change"
-                          onClick={this.openEthereumAddressModal}
-                        />
                       </div>
                       <div class="form-group form-group--text form-group--text-erc">
                         <label for="frmErc" class="main main--auth">
                           BITCOIN Address
                         </label>
                         <p class="text">{profile.Profile.bitcoinAddress}</p>
-                        <input
-                          type="button"
-                          value="Change"
-                          onClick={this.openBitcoinAddressModal}
-                        />
                       </div>
                       <div class="form-group form-group--file form-group--file-photoIdDocu help">
                         <label for="frmPhotoIdDocu" class="main main--auth">

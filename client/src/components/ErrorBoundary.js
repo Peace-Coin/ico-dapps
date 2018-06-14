@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/index';
+import * as actions from '../actions/index';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -16,13 +16,14 @@ const customStyles = {
   }
 };
 
-class Verify extends Component {
+class ErrorBoundary extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
       modalIsOpen: true,
+      hasError: false,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -31,9 +32,16 @@ class Verify extends Component {
   }
 
   componentDidMount() {
-    const secretToken = this.props.match.params.id;
-    this.props.verifyEmail(secretToken);
   }
+
+  componentDidCatch(error, info) {
+     // Display fallback UI
+     this.setState({ hasError: true });
+     // You can also log the error to an error reporting service
+     console.log('Date -> ' + new Date())
+     console.log('error -> ' + error)
+     console.log('info -> ' + info)
+   }
 
   openModal() {
     this.setState({ modalIsOpen: true });
@@ -42,12 +50,12 @@ class Verify extends Component {
   afterModal() {}
 
   closeModal() {
-    this.setState({ modalIsOpen: false });
-
-    this.props.history.push('/signin');
   }
 
   render() {
+
+    if (this.state.hasError) {
+
     return (
       <div>
         <Modal
@@ -76,20 +84,10 @@ class Verify extends Component {
                         Information
                       </h3>
                       <p class="text">
-                        Email is verified. Now You may login.
+                        An error occurred while processing your request.
                       </p>
                     </div>
                   </div>
-                  <button
-                    style={{ border: '1px solid grey' }}
-                    onClick={this.closeModal}
-                    type="button"
-                    class="modaal-close"
-                    id="modaal-close"
-                    aria-label="Close (Press escape to close)"
-                  >
-                    <span>Close</span>
-                  </button>
                 </div>
               </div>
             </div>
@@ -97,10 +95,13 @@ class Verify extends Component {
         </Modal>
       </div>
     );
+
+  }
+  return this.props.children;
   }
 }
 
 export default connect(
   null,
   actions
-)(Verify);
+)(ErrorBoundary);

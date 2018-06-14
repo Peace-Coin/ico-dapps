@@ -102,7 +102,7 @@ module.exports = {
         }),
       streetAddress: Joi.string()
         .required()
-        .regex(/^[a-zA-Z0-9./=-]*$/)
+        .regex(/^[a-zA-Z0-9./=-\s　]*$/)
         .max(50)
         .label('Street Address')
         .options({
@@ -117,7 +117,7 @@ module.exports = {
         }),
       cityAddress: Joi.string()
         .required()
-        .regex(/^[a-zA-Z0-9./=-]*$/)
+        .regex(/^[a-zA-Z0-9./=-\s　]*$/)
         .max(50)
         .label('City')
         .options({
