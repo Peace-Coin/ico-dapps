@@ -7,6 +7,7 @@ const { JWT_SECRET } = require('../config/keys');
 const randomstring = require('randomstring');
 const mailer = require('../services/mailer/mailer');
 const verifyHtml = require('../services/mailer/template/verifyHtml');
+const forgotPasswordHtml = require('../services/mailer/template/forgotPasswordHtml');
 const config = require('../config/mailer');
 
 signToken = user => {
@@ -32,6 +33,18 @@ signToken = user => {
   );
 };
 
+// PasswordResetToken = secret => {
+//   return JWT.sign(
+//     {
+//       iss: 'ico-dapps-temporary-token',
+//       sub: secret,
+//       iat: new Date().getTime(), // Current Time
+//       exp: new Date().setDate(new Date().getDate() + 1) // Current time + 1 day ahead
+//     },
+//     JWT_SECRET_FORGOT_PASSWORD
+//   );
+// };
+
 module.exports = {
   signUp: async (req, res, next) => {
     const { email, password } = req.value.body;
@@ -48,7 +61,7 @@ module.exports = {
     }
 
     // Generate Rondom Token for email confirmation
-    const secretToken = randomstring.generate();
+    const secretToken = randomstring.generate(128);
 
     // creae a new user
     const newUser = new User({
@@ -140,5 +153,95 @@ module.exports = {
     res.status(200).json({
       message: 'Account is Successfuly Verified!'
     });
+  },
+
+  // Reset Password
+  resetPassword: async (req, res, next) => {
+    const { email } = req.body;
+    // Check if there is a user with the same mail
+    const foundUser = await User.findOne({ 'local.email': email });
+    if (!foundUser) {
+      let error = {
+        validation: {
+          email: 'Email is not Found.'
+        }
+      };
+      return res.status(400).json(error);
+    }
+
+    // generate reset token
+    const secretToken = randomstring.generate(128);
+
+    // Save Secret Token
+    foundUser.local.secretToken = secretToken;
+    foundUser.save();
+
+    // send email reset url with it
+    const message = {
+      from: config.MAIL_SENDER,
+      to: foundUser.local.email,
+      subject: 'Password Reset Token',
+      html: forgotPasswordHtml(foundUser)
+    };
+    await mailer.sendEmail(message);
+
+    res.status(200).json({
+      message: 'Password Reset Request is accepted, Now You can Reset Password.'
+    });
+  },
+
+  // Update Password
+  updatePassword: async (req, res, next) => {
+    // Secret Token Check
+    const { secretToken, password } = req.body;
+    const foundUser = await User.findOne({ 'local.secretToken': secretToken });
+
+    if (!foundUser || secretToken === null || secretToken === '') {
+      return res.status(403).json({
+        error: 'Secret Token is invalidated.'
+      });
+    }
+
+    // Generate Rondom Token
+    const newSecretToken = randomstring.generate(128);
+
+    // Password & secretToken is updated
+    await foundUser.updatePassword(password);
+    foundUser.local.secretToken = newSecretToken;
+    foundUser.local.active = true;
+    foundUser.save();
+
+    // Check if the password is correct
+    const isMatch = await foundUser.isValidPassword(password);
+    // If not, handle it
+    if (!isMatch) {
+      return res.status(400).json({
+        message: 'Password does not match pattern.'
+      });
+    }
+
+    res.status(200).json({
+      message: 'Password is Updated.'
+    });
   }
+
+  // // Token Check for Update Password
+  // updatePasswordTokenCheck: async (req, res, next) => {
+  //   // Secret Token Check
+  //   const { secretToken } = req.body;
+  //   const foundUser = await User.findOne({ 'local.secretToken': secretToken });
+
+  //   if (!foundUser || secretToken === null || secretToken === '') {
+  //     return res.status(403).json({
+  //       error: 'Secret Token is invalidated.'
+  //     });
+  //   }
+
+  //   const token = PasswordResetToken(secretToken);
+
+  //   res.status(200).json({
+  //     success: true,
+  //     token: token
+  //   });
+  // }
 };

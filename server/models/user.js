@@ -85,6 +85,15 @@ usersSchema.methods.isValidPassword = async function(newPassword) {
   }
 };
 
+usersSchema.methods.updatePassword = async function(newPassword) {
+  // Generate a salt
+  const salt = await bcrypt.genSalt(10);
+  // Generate a password hash (salt + hash)
+  const passwordHash = await bcrypt.hash(newPassword, salt);
+  // Re-asign hashed version over original, plain text password
+  this.local.password = passwordHash;
+};
+
 // Create a model
 const User = mongoose.model('user', usersSchema);
 

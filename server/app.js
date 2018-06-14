@@ -10,6 +10,7 @@ const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 const auth = require('./routes/api/auth');
 const rate = require('./routes/api/rate');
+const ico = require('./routes/api/ico');
 
 // Express Instance
 const app = express();
@@ -23,7 +24,7 @@ mongoose.Promise = global.Promise;
 // Mongodb Connect
 mongoose
   .connect(db)
-  .then(() => console.log('MongoDB Connected'))
+  .then(() => console.log('MongoDB Connected.'))
   .catch(err => console.log(err));
 
 // Middleware
@@ -34,8 +35,8 @@ if (!process.env.NODE_ENV === 'test') {
 app.use(cors());
 
 //app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({ limit:'50mb',extended: true }));
-app.use(bodyParser.json({limit: '50mb', extended: true}));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: '50mb', extended: true }));
 
 // Routes
 if (process.env.NODE_ENV === 'playground') {
@@ -48,6 +49,7 @@ if (process.env.NODE_ENV === 'playground') {
   app.use('/api/posts', posts);
   app.use('/api/auth', auth);
   app.use('/api/rate', rate);
+  app.use('/api/ico', ico);
 }
 
 module.exports = app;

@@ -103,4 +103,14 @@ router.route('/secret').get(passportJWT, UsersController.secret);
 // @access private
 router.route('/restricted').get(passportJWT, UsersController.restricted);
 
+// @reute  GET api/users/reset/password
+// @desc   restrict the user
+// @access private
+router.route('/reset/password').post(UsersController.resetPassword);
+
+// @reute  GET api/users/update/password
+// @desc   restrict the user
+// @access private
+router.route('/update/password').post(UsersController.updatePassword);
+
 module.exports = router;
