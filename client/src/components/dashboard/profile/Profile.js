@@ -148,6 +148,28 @@ class Profile extends Component {
       profileContent = <Spinner />;
     } else {
       if (Object.keys(profile).length > 0) {
+
+        let reEntryLink;
+
+        //KYC 承認以外は再登録が可能
+        if(profile.Profile.status != '2'){
+
+          reEntryLink = (
+            <div class="l-sec sec_btnSet sec_btnSet-auth">
+              <NavLink to="/dashboard/profile/create-profile">
+                <div class="form-group form-group--btn form-group--btn-confirmation">
+                  <input
+                    class="btn btn--cl-1 btn--size-1"
+                    type="button"
+                    name="action"
+                    value="Re Entry"
+                  />
+                </div>
+              </NavLink>
+            </div>
+          );
+        }
+
         profileContent = (
           <div className="peaceCoinIco authenticate confirmation">
             <Modal
@@ -348,18 +370,7 @@ class Profile extends Component {
                       </div>
                     </form>
 
-                    <div class="l-sec sec_btnSet sec_btnSet-auth">
-                      <NavLink to="/dashboard/profile/create-profile">
-                        <div class="form-group form-group--btn form-group--btn-confirmation">
-                          <input
-                            class="btn btn--cl-1 btn--size-1"
-                            type="button"
-                            name="action"
-                            value="Re Entry"
-                          />
-                        </div>
-                      </NavLink>
-                    </div>
+                    {reEntryLink}
                   </div>
                 </div>
               </div>

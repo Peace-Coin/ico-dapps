@@ -22,6 +22,7 @@ import Verify from '../components/auth/verify';
 import Landing from '../components/pages/Landing';
 import HelpPage from '../components/pages/HelpPage';
 import NotFound404 from '../components/NotFound404';
+
 import Contact from '../components/pages/Contact';
 import TempolaryEntry from '../components/auth/tempolaryentry';
 
@@ -30,11 +31,15 @@ import Dashborad from '../components/dashboard/Dashboard';
 import Profile from '../components/dashboard/profile/Profile';
 import CreateProfile from '../components/dashboard/profile/CreateProfile';
 import ConfirmProfile from '../components/dashboard/profile/ConfirmProfile';
+import CompleteProfile from '../components/dashboard/profile/CompleteProfile';
+
 import Auth from '../components/auth/Auth';
 import PlayGround from '../components/playground/PlayGround';
 
 class AppRouter extends Component {
   render() {
+
+
     return (
       <BrowserRouter>
         <Router history={history}>
@@ -74,6 +79,11 @@ class AppRouter extends Component {
                 exact
                 path="/dashboard/profile/confirm-profile"
                 component={RequireAuth(ConfirmProfile)}
+              />
+              <Route
+                exact
+                path="/dashboard/profile/complete-profile"
+                component={RequireAuth(CompleteProfile)}
               />
               <Route exact path="/" component={Landing} />
               <Route component={NotFound404} />

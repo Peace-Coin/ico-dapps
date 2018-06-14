@@ -233,9 +233,10 @@ module.exports = {
           }
         }),
         bitcoinAddress: Joi.string()
-          .regex(/^[a-zA-Z0-9]*$/)
+          .allow('')
           .max(250)
-          .label('Ethereum Address')
+          .regex(/^[a-zA-Z0-9]*$/)
+          .label('BITCOIN Address')
           .options({
             language: {
               string: {

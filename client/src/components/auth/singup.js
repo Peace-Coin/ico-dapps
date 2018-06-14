@@ -294,7 +294,7 @@ class Signup extends Component {
                           className="chkbox"
                           onClick={this.openAmlModal}
                         />
-                        <label><span class="text-label">I agree to </span></label><a onClick={this.openAmlModal} >the Terms of use <span class="required obj-required">*</span></a>
+                        <label><span class="text-label">I agree to </span></label><a style={{cursor: 'pointer'}} onClick={this.openAmlModal} >the Terms of use <span class="required obj-required">*</span></a>
                         <Field
                           name="term"
                           component={renderTermError}

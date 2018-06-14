@@ -95,7 +95,7 @@ class Navbar extends Component {
     let kycaml;
 
     if (
-      this.props.profile.profileStatus == null || 
+      this.props.profile.profileStatus == null ||
       this.props.profile.profileStatus.profileStatus == null ||
       this.props.profile.profileStatus.profileStatus === 0
     ) {
@@ -279,11 +279,6 @@ class Navbar extends Component {
                 <li className="current">
                   <span className="text">English</span>
                 </li>
-                <li>
-                  <a onClick={this.alertChangeLanguage} className="text">
-                    Japanese
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
@@ -315,6 +310,21 @@ class Navbar extends Component {
 //     authenticated: state.auth.authenticated
 //   };
 // }
+
+//以下、多言語化の際のリスト
+// <div className={this.state.langStatus2}>
+//   <ul>
+//     <li className="current">
+//       <span className="text">English</span>
+//     </li>
+//     <li>
+//       <a onClick={this.alertChangeLanguage} className="text">
+//         Japanese
+//       </a>
+//     </li>
+//   </ul>
+// </div>
+
 
 const mapStateToProps = state => ({
   auth: state.auth,

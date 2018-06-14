@@ -71,7 +71,7 @@ export const createProfile = (profileData, history) => dispatch => {
 
   axios
     .post('/api/profile', profileData)
-    .then(res => history.push('/dashboard/profile'))
+    .then(res => history.push('/dashboard/profile/complete-profile'))
     .catch(err => {
       console.log(err);
       history.push('/dashboard');

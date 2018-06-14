@@ -39,7 +39,7 @@ class CreateProfile extends Component {
       cityAddress: '',
       streetAddress: '',
       idNumber: '',
-      country: '',
+      country: 'AF',
       passport: '',
       certificateResidence: '',
       picture: '',

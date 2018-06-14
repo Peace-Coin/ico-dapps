@@ -77,7 +77,9 @@ class Dashboard extends Component {
       goalPar: 0,
 
       errorMessage: '',
-      errorIsOpen: false
+      errorIsOpen: false,
+      infoMessage: '',
+      infoIsOpen: false,
     };
 
     this.openEthereumModal = this.openEthereumModal.bind(this);
@@ -104,7 +106,12 @@ class Dashboard extends Component {
     this.openErrorModal = this.openErrorModal.bind(this);
     this.afterErrorModal = this.afterErrorModal.bind(this);
     this.closeErrorModal = this.closeErrorModal.bind(this);
+
+    this.openInfoModal = this.openInfoModal.bind(this);
+    this.afterInfoModal = this.afterInfoModal.bind(this);
+    this.closeInfoModal = this.closeInfoModal.bind(this);
   }
+
 
   async componentDidMount() {
     this.props.getProfileStatus();
@@ -323,6 +330,23 @@ class Dashboard extends Component {
     this.setState({ errorIsOpen: false });
   }
 
+  openInfoModal() {
+
+    this.setState({
+       infoIsOpen: true,
+       infoMessage: 'Sorry. This feature is not currently available'
+     });
+  }
+
+  afterInfoModal() {}
+
+  closeInfoModal() {
+    this.setState({
+      infoIsOpen: false,
+      infoMessage: ''
+    });
+  }
+
   openEthereumModal() {
     //KYC 登録済みであること 承認状態は問わない
     if (this.props.profile.profileStatus.profileStatus !== 0) {
@@ -341,23 +365,28 @@ class Dashboard extends Component {
   }
 
   openBitcoinModal() {
-    //KYC 認証済みであること 承認状態は問わない
-    if (this.props.profile.profileStatus.profileStatus !== 0) {
-      if (
-        this.props.profile.profileStatus.bitcoinAddress !== 'undefined' ||
-        this.props.profile.profileStatus.bitcoinAddress !== null ||
-        this.props.profile.profileStatus.bitcoinAddress !== ''
-      ) {
-        this.setState({ bitcoinModalIsOpen: true });
-        this.setState({ errorMessage: '' });
-      } else {
-        this.setState({ errorMessage: 'PLEASE ENTRY BITCOIN ADDRESS !' });
-        this.setState({ errorIsOpen: true });
-      }
-    } else {
-      this.setState({ errorMessage: 'PLEASE KYC FINISHED !' });
-      this.setState({ errorIsOpen: true });
-    }
+
+    //プレセール中は以下を有効
+    this.openInfoModal()
+
+    //プレセール中は以下をコメントアウト
+    // //KYC 認証済みであること 承認状態は問わない
+    // if (this.props.profile.profileStatus.profileStatus !== 0) {
+    //   if (
+    //     this.props.profile.profileStatus.bitcoinAddress !== 'undefined' ||
+    //     this.props.profile.profileStatus.bitcoinAddress !== null ||
+    //     this.props.profile.profileStatus.bitcoinAddress !== ''
+    //   ) {
+    //     this.setState({ bitcoinModalIsOpen: true });
+    //     this.setState({ errorMessage: '' });
+    //   } else {
+    //     this.setState({ errorMessage: 'PLEASE ENTRY BITCOIN ADDRESS !' });
+    //     this.setState({ errorIsOpen: true });
+    //   }
+    // } else {
+    //   this.setState({ errorMessage: 'PLEASE KYC FINISHED !' });
+    //   this.setState({ errorIsOpen: true });
+    // }
   }
 
   afterBitcoinOpenModal() {}
@@ -586,6 +615,54 @@ class Dashboard extends Component {
               </Modal>
             </div>
 
+            <div>
+              <Modal
+                isOpen={this.state.infoIsOpen}
+                onAfterOpen={this.afterInfoModal}
+                onRequestClose={this.closeInfoModal}
+                style={customStyles}
+                contentLabel="InfoModal"
+              >
+                <div
+                  class="modaal-wrapper modaal-inline l-content_modal--smartContract themeB"
+                  id="modaal_152816659947189668a73f3483"
+                >
+                  <div class="modaal-outer-wrapper">
+                    <div class="modaal-inner-wrapper">
+                      <div class="modaal-container">
+                        <div
+                          class="modaal-content modaal-focus"
+                          aria-hidden="false"
+                          aria-label="Dialog Window (Press escape to close)"
+                          role="dialog"
+                          tabindex="0"
+                        >
+                          <div class="modaal-content-container">
+                            <h3 class="title_content title_content__a title_content__a-modal title_content-smartContract">
+                              Information
+                            </h3>
+                            <p class="text">
+                              {this.state.infoMessage}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          style={{ border: '1px solid grey' }}
+                          onClick={this.closeInfoModal}
+                          type="button"
+                          class="modaal-close"
+                          id="modaal-close"
+                          aria-label="Close (Press escape to close)"
+                        >
+                          <span>Close</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+            </div>
+
             <div id="mainContent" role="main">
               <div id="pageContent">
                 <div class="l-sec sec_token">
@@ -729,7 +806,7 @@ class Dashboard extends Component {
                             <span class="sub">Goal</span>
                             <span class="unit coin__unit">$</span>
                             <span class="num coin__num">
-                              {this.props.rates.goalUsdBillionAmount}B
+                              {this.state.conf.GOAL_BILLION_USD}B
                             </span>
                           </span>
                         </div>
@@ -744,7 +821,7 @@ class Dashboard extends Component {
                         </div>
                       </div>
                     </div>
-                    <div class="l-content--SClink">
+                    <div style={{cursor: 'pointer'}} class="l-content--SClink">
                       <a
                         onClick={this.openSmartContractAddressModal}
                         class="modallink-smartContract"

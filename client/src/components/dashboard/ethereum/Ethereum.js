@@ -7,7 +7,20 @@ import React, { Component } from 'react';
 // import PeaceCoinCrowdsaleToken from '../../../ethereum/ico-interface/PeaceCoinCrowdsaleToken';
 import PeaceCoinCrowdsale from '../../../ethereum/ico-interface/PeaceCoinCrowdsale';
 import web3 from '../../../ethereum/web3';
+import Modal from 'react-modal';
 //import {Parent} from '../Dashboard';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white'
+  }
+};
 
 export default class Ethereum extends Component {
   constructor(props) {
@@ -33,20 +46,82 @@ export default class Ethereum extends Component {
 
       myEtherWalletUrl: '', //href
 
-      errMessage: '',
-
       baseRate: 0,
-      bonus: 0
+      bonus: 0,
+
+      infoMessage: '',
+      infoIsOpen: false,
+
+      errorMessage: '',
+      errorIsOpen: false,
     };
 
     this.onChangeByAmount = this.onChangeByAmount.bind(this);
     this.buyToken = this.buyToken.bind(this);
+
+    this.openMetamask = this.openMetamask.bind(this);
+    this.openMyEthereumWallet = this.openMyEthereumWallet.bind(this);
+
+    this.openInfoModal = this.openInfoModal.bind(this);
+    this.afterInfoModal = this.afterInfoModal.bind(this);
+    this.closeInfoModal = this.closeInfoModal.bind(this);
+
+    this.openErrorModal = this.openErrorModal.bind(this);
+    this.afterErrorModal = this.afterErrorModal.bind(this);
+    this.closeErrorModal = this.closeErrorModal.bind(this);
+  }
+
+
+  openMetamask(e){
+
+    //プレセール中は以下をコメントアウト
+    //this.buyToken(e);
+
+    //プレセール中は以下を有効
+    this.openInfoModal()
+  }
+
+  openMyEthereumWallet(e){
+
+    //プレセール中は以下をコメントアウト
+    //var win = window.open(this.state.myEtherWalletUrl, '_blank');
+
+    //プレセール中は以下を有効
+    this.openInfoModal()
+  }
+
+  openInfoModal() {
+
+    this.setState({
+       infoIsOpen: true,
+       infoMessage: 'Sorry. This feature is not currently available'
+     });
+  }
+
+  afterInfoModal() {}
+
+  closeInfoModal() {
+    this.setState({
+      infoIsOpen: false,
+      infoMessage: ''
+    });
+  }
+
+  openErrorModal() {
+
+    this.setState({ errorIsOpen: true });
+  }
+
+  afterErrorModal() {}
+
+  closeErrorModal() {
+    this.setState({ errorIsOpen: false });
   }
 
   async componentDidMount() {
     let rate = await PeaceCoinCrowdsale.methods.rate().call();
-    let accounts = await web3.eth.getAccounts();
-    let investor = accounts[0];
+
+    let investor = this.props.ethreumAddress;
 
     this.setState({
       eth: String(Number(1) * this.state.rate).replace(
@@ -86,11 +161,15 @@ export default class Ethereum extends Component {
 
   buyToken(e) {
     this.setState({
-      errMessage: ''
+      errorMessage: '',
+      errorIsOpen: false,
     });
 
     if (isFinite(this.state.amount) && this.state.amount > 0) {
       e.preventDefault();
+
+      try{
+
       PeaceCoinCrowdsale.methods
         .buyTokens(this.state.investor)
         .send({
@@ -99,17 +178,29 @@ export default class Ethereum extends Component {
         })
         .then(res => {
           this.setState({
-            errMessage: ''
+            errorMessage: '',
+            errorIsOpen: false,
           });
         })
         .catch(err => {
           this.setState({
-            errMessage: 'PLEASE CHECK METAMASK LOGIN or INSTALL METAMASK TOOL'
+            errorMessage: 'Please check Metamask login and install Metamask',
+            errorIsOpen: true,
           });
         });
+
+      }catch(err){
+
+        this.setState({
+          errorMessage: 'Please check Metamask address',
+          errorIsOpen: true,
+        });
+      }
+
     } else {
       this.setState({
-        errMessage: 'AMOUNT > 0 !'
+        errorMessage: 'Please check Amount ETH',
+        errorIsOpen: true,
       });
     }
   }
@@ -248,20 +339,19 @@ export default class Ethereum extends Component {
                     <div class="l-sec sec_btnSet sec_btnSet--modal sec_btnSet--modal-buyCoin">
                       <div class="form-group form-group--btn form-group--btn-buyCoin clearfix">
                         <div class="l-content--buybtnSet__item l-content--buybtnSet__item-L borderBox">
-                          <a href={this.state.myEtherWalletUrl}>
-                            <input
-                              class="btn btn--cl-1 btn--size-1"
-                              type="button"
-                              name="action"
-                              value="myetherwallet"
-                            />
-                          </a>
+                          <input
+                            class="btn btn--cl-1 btn--size-1"
+                            type="button"
+                            onClick={this.openMyEthereumWallet}
+                            name="action"
+                            value="myetherwallet"
+                          />
                         </div>
                         <div class="l-content--buybtnSet__item l-content--buybtnSet__item-R borderBox">
                           <input
                             class="btn btn--cl-1 btn--size-1"
                             type="button"
-                            onClick={this.buyToken}
+                            onClick={this.openMetamask}
                             name="action"
                             value="metamask"
                             value="Metamask"
@@ -287,6 +377,100 @@ export default class Ethereum extends Component {
         </div>
         <div style={{ backgroundColor: 'red', color: 'white' }}>
           {this.state.errMessage}
+        </div>
+        <div>
+          <Modal
+            isOpen={this.state.infoIsOpen}
+            onAfterOpen={this.afterInfoModal}
+            onRequestClose={this.closeInfoModal}
+            style={customStyles}
+            contentLabel="InfoModal"
+          >
+            <div
+              class="modaal-wrapper modaal-inline l-content_modal--smartContract themeB"
+              id="modaal_152816659947189668a73f3483"
+            >
+              <div class="modaal-outer-wrapper">
+                <div class="modaal-inner-wrapper">
+                  <div class="modaal-container">
+                    <div
+                      class="modaal-content modaal-focus"
+                      aria-hidden="false"
+                      aria-label="Dialog Window (Press escape to close)"
+                      role="dialog"
+                      tabindex="0"
+                    >
+                      <div class="modaal-content-container">
+                        <h3 class="title_content title_content__a title_content__a-modal title_content-smartContract">
+                          Information
+                        </h3>
+                        <p class="text">
+                          {this.state.infoMessage}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      style={{ border: '1px solid grey' }}
+                      onClick={this.closeInfoModal}
+                      type="button"
+                      class="modaal-close"
+                      id="modaal-close"
+                      aria-label="Close (Press escape to close)"
+                    >
+                      <span>Close</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </div>
+        <div>
+          <Modal
+            isOpen={this.state.errorIsOpen}
+            onAfterOpen={this.afterErrorModal}
+            onRequestClose={this.closeErrorModal}
+            style={customStyles}
+            contentLabel="ErrorModal"
+          >
+            <div
+              class="modaal-wrapper modaal-inline l-content_modal--smartContract themeB"
+              id="modaal_152816659947189668a73f3483"
+            >
+              <div class="modaal-outer-wrapper">
+                <div class="modaal-inner-wrapper">
+                  <div class="modaal-container">
+                    <div
+                      class="modaal-content modaal-focus"
+                      aria-hidden="false"
+                      aria-label="Dialog Window (Press escape to close)"
+                      role="dialog"
+                      tabindex="0"
+                    >
+                      <div class="modaal-content-container">
+                        <h3 style={{ color: 'red', fontSize: '18px' }} class="title_content title_content__a title_content__a-modal title_content-smartContract">
+                          Error
+                        </h3>
+                        <p class="text">
+                          {this.state.errorMessage}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      style={{ border: '1px solid grey' }}
+                      onClick={this.closeErrorModal}
+                      type="button"
+                      class="modaal-close"
+                      id="modaal-close"
+                      aria-label="Close (Press escape to close)"
+                    >
+                      <span>Close</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Modal>
         </div>
       </div>
     );
