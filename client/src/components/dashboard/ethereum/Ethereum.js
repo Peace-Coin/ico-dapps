@@ -119,7 +119,7 @@ export default class Ethereum extends Component {
   }
 
   async componentDidMount() {
-    let rate = await PeaceCoinCrowdsale.methods.rate().call();
+    let rate = await PeaceCoinCrowdsale.methods.getCurrentRate().call();
 
     let investor = this.props.ethreumAddress;
 
@@ -134,7 +134,7 @@ export default class Ethereum extends Component {
     var conf = require('../../../config/conf.json');
     let gasLimit = conf.GasLimit;
     let gasPrice = conf.GasPrice;
-    let baseRate = conf.BASE_RATE;
+    let baseRate = await PeaceCoinCrowdsale.methods.rate().call();
 
     let myEtherWalletUrl =
       'https://www.myetherwallet.com/?to=' +

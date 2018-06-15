@@ -138,7 +138,7 @@ class Dashboard extends Component {
       const decimals = await PeaceCoinCrowdsaleToken.methods.decimals().call();
 
       // Crowdsale
-      let rate = await PeaceCoinCrowdsale.methods.rate().call();
+      let rate = await PeaceCoinCrowdsale.methods.getCurrentRate().call();
 
       const token = await PeaceCoinCrowdsale.methods.token().call();
       const wallet = await PeaceCoinCrowdsale.methods.wallet().call();
