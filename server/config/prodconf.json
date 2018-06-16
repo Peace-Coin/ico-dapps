@@ -1,0 +1,4 @@
+{
+  "VERIFY_PASSWORD_URL": "https://ico.peace-coin.org/verify/",
+  "CHANGE_PASSWORD_URL": "https://ico.peace-coin.org/update-password/"
+}
