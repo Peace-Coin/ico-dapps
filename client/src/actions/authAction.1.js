@@ -40,7 +40,7 @@ export const signinUser = ({ email, password }) => {
       .catch(err => {
         dispatch({
           type: AUTH_ERROR,
-          payload: 'Invalid emaill or password'
+          payload: 'Invalid email or password'
         });
       });
   };

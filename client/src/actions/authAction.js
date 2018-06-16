@@ -38,10 +38,9 @@ export const signinUser = ({ email, password }) => {
         history.push('/dashboard');
       })
       .catch(err => {
-
         dispatch({
           type: AUTH_ERROR,
-          payload: 'Invalid emaill or password'
+          payload: 'Invalid email or password'
         });
       });
   };
