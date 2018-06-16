@@ -19,6 +19,18 @@ const popupStyles = {
   }
 };
 
+const renderInput = field => (
+  <div>
+    <input
+      {...field.input}
+      type={field.type}
+      autoComplete={field.autoComplete}
+    />
+    {field.meta.touched &&
+      field.meta.error && <p className="iErr">{field.meta.error}</p>}
+  </div>
+);
+
 class Signin extends Component {
 
   constructor(props) {
@@ -73,18 +85,6 @@ class Signin extends Component {
         password: '',
       }
     }
-
-    const renderInput = field => (
-      <div>
-        <input
-          {...field.input}
-          type={field.type}
-          autoComplete={field.autoComplete}
-        />
-        {field.meta.touched &&
-          field.meta.error && <p className="iErr">{field.meta.error}</p>}
-      </div>
-    );
 
     const loading = this.state.loading;
 
