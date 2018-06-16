@@ -2,7 +2,7 @@ module.exports = verifyHtml => {
 
   var conf;
 
-  if (process.env.NODE_ENV === 'playground') {
+  if (process.env.NODE_ENV === 'production') {
 
     conf = require('../../../config/prodconf.json');
 
