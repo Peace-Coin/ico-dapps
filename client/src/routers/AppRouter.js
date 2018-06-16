@@ -18,6 +18,11 @@ import Signup from '../components/auth/singup';
 import Signout from '../components/auth/signout';
 import Verify from '../components/auth/verify';
 
+import PasswordReset from '../components/auth/passwordReset';
+import PasswordUpdate from '../components/auth/passwordUpdate';
+import PasswordComplete from '../components/auth/passwordComplete';
+
+
 // Auth Free Pages
 import Landing from '../components/pages/Landing';
 import HelpPage from '../components/pages/HelpPage';
@@ -55,6 +60,11 @@ class AppRouter extends Component {
               <Route exact path="/help" component={HelpPage} />
               <Route exact path="/tempolaryentry" component={TempolaryEntry} />
               <Route exact path="/auth" component={RequireAuth(Auth)} />
+
+              <Route exact path="/reset-password" component={PasswordReset} />
+              <Route exact path="/update-password/:id" component={PasswordUpdate} />
+              <Route exact path="/complete-password" component={PasswordComplete} />
+
               <Route
                 exact
                 path="/PlayGround"

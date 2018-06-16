@@ -1,0 +1,4 @@
+{
+  "VERIFY_PASSWORD_URL": "http://localhost:3000/verify/",
+  "CHANGE_PASSWORD_URL": "http://localhost:3000/update-password/"
+}

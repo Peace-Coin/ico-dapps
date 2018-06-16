@@ -74,6 +74,43 @@ export const signupUser = ({ email, password }) => {
   };
 };
 
+export const resetPassword = ({ email }) => {
+  return dispatch => {
+    axios
+      .post('/api/users/reset/password', {
+        email: email
+      })
+      .then(res => {
+        history.push('/tempolaryentry');
+      })
+      .catch(err => {
+        dispatch({
+          type: AUTH_ERROR,
+          payload: err.response.data
+        });
+      });
+  };
+};
+
+export const changePassword = ({ secretToken, password }) => {
+  return dispatch => {
+    axios
+      .post('/api/users/update/password', {
+        secretToken: secretToken,
+        password: password
+      })
+      .then(res => {
+        history.push('/complete-password');
+      })
+      .catch(err => {
+        dispatch({
+          type: AUTH_ERROR,
+          payload: err.response.data
+        });
+      });
+  };
+};
+
 export const signoutUser = () => {
   localStorage.removeItem('token');
   setAuthToken(false);

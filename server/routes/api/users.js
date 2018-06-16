@@ -7,6 +7,9 @@ const passportConf = require('../../services/passport');
 // Validation
 const { validateSignup, signupSchema } = require('../../validation/signup');
 const { validateSignin, signinSchema } = require('../../validation/signin');
+const { validateResetPassword, resetPasswordSchema } = require('../../validation/resetpassword');
+const { validateChangePassword, changePasswordSchema } = require('../../validation/changepassword');
+
 
 // Controllers
 const UsersController = require('../../controllers/users');
@@ -106,11 +109,15 @@ router.route('/restricted').get(passportJWT, UsersController.restricted);
 // @reute  GET api/users/reset/password
 // @desc   restrict the user
 // @access private
-router.route('/reset/password').post(UsersController.resetPassword);
+router.route('/reset/password').post(
+  validateResetPassword(resetPasswordSchema.authSchema),
+  UsersController.resetPassword);
 
 // @reute  GET api/users/update/password
 // @desc   restrict the user
 // @access private
-router.route('/update/password').post(UsersController.updatePassword);
+router.route('/update/password').post(
+  validateChangePassword(changePasswordSchema.authSchema),
+  UsersController.updatePassword);
 
 module.exports = router;

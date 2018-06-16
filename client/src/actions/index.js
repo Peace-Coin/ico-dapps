@@ -8,7 +8,9 @@ export {
   setAuthRedirectPath,
   verifyEmail,
   confirmAuth,
-  entryAuth
+  entryAuth,
+  resetPassword,
+  changePassword
 } from './authAction';
 
 // PROFILE ACTION
