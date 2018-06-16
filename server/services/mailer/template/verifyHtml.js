@@ -1,6 +1,15 @@
 module.exports = verifyHtml => {
 
-  var conf = require('../../../config/conf.json');
+  var conf;
+
+  if (process.env.NODE_ENV === 'playground') {
+
+    conf = require('../../../config/prodconf.json');
+
+  }else{
+
+    conf = require('../../../config/devconf.json');
+  }
 
   let url = conf.VERIFY_PASSWORD_URL + verifyHtml.local.secretToken
 
