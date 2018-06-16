@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start-prod": "cross-env NODE_ENV=production node index.js",
     "start-dev": "cross-env NODE_ENV=development nodemon ./index.js",
-    "start-play": "cross-env NODE_ENV=playground nodemon ./index.js",
     "test": "cross-env NODE_ENV=test mocha --timeout 5000 __tests__/server/**/*.test.js",
     "report": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --timeout 5000 __tests__/server/**/*.test.js",
     "text-report": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --timeout 5000 __tests__/server/**/*.test.js",

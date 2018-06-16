@@ -47,6 +47,9 @@ signToken = user => {
 
 module.exports = {
   signUp: async (req, res, next) => {
+    console.log(process.env.NODE_ENV);
+    console.log(process.env.NODE_ENV === 'production');
+
     const { email, password } = req.value.body;
     // Check if there is a user with the same mail
     const foundUser = await User.findOne({ 'local.email': email });

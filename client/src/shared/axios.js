@@ -1,7 +1,8 @@
 import axiosBase from 'axios';
+import { getURL } from './utility';
 
 const axios = axiosBase.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: getURL(),
   headers: {
     Authorization: `${localStorage.getItem('token')}`
   }

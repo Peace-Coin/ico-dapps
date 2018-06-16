@@ -27,6 +27,8 @@ mongoose
   .then(() => console.log('MongoDB Connected.'))
   .catch(err => console.log(err));
 
+console.log('environment: ', process.env.NODE_ENV);
+
 // Middleware
 if (!process.env.NODE_ENV === 'test') {
   app.use(morgan('dev'));
@@ -39,18 +41,12 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb', extended: true }));
 
 // Routes
-if (process.env.NODE_ENV === 'playground') {
-  // app.use('/api/users/signin', function(req, res) {
-  //   res.send('Response from app.use');
-  // });
-} else {
-  app.use('/api/users', users);
-  app.use('/api/profile', profile);
-  app.use('/api/posts', posts);
-  app.use('/api/auth', auth);
-  app.use('/api/rate', rate);
-  app.use('/api/ico', ico);
-}
+app.use('/api/users', users);
+app.use('/api/profile', profile);
+app.use('/api/posts', posts);
+app.use('/api/auth', auth);
+app.use('/api/rate', rate);
+app.use('/api/ico', ico);
 
 module.exports = app;
 
