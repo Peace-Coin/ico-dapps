@@ -1,4 +1,5 @@
 {
   "VERIFY_PASSWORD_URL": "https://ico.peace-coin.org/verify/",
-  "CHANGE_PASSWORD_URL": "https://ico.peace-coin.org/update-password/"
+  "CHANGE_PASSWORD_URL": "https://ico.peace-coin.org/update-password/",
+  "DOMAIN_URL": "https://ico.peace-coin.org/"
 }
