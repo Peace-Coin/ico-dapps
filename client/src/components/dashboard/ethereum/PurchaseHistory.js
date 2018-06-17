@@ -20,10 +20,12 @@ class PurchaseHistory extends Component {
     fetch(
       `${ETHERSCAN_API_URL}/api?module=account&action=tokentx&contractaddress=${CONTRACT_ADDRESS}&address=${address}&page=1&offset=100&sort=asc&apikey=${API_KEY}`
     )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ histories: data.result });
-      });
+    .then(res => res.json())
+    .then(data => {
+      this.setState({ histories: data.result });
+    }).catch(err => {
+      console.log(err);
+    });
 
     const { rates } = this.props;
     this.setState({
