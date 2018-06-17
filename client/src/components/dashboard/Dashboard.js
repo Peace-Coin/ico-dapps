@@ -348,8 +348,11 @@ class Dashboard extends Component {
   }
 
   openEthereumModal() {
+    
     //KYC 登録済みであること 承認状態は問わない
-    if (this.props.profile.profileStatus.profileStatus !== 0) {
+    if (this.props.profile.profileStatus != undefined
+      && this.props.profile.profileStatus != null
+      && this.props.profile.profileStatus.profileStatus !== 0) {
       this.setState({ ethereumModalIsOpen: true });
       this.setState({ errorMessage: '' });
     } else {
