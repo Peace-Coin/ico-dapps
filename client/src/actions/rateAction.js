@@ -35,6 +35,7 @@ export const getRate = (ethAmount, weiRaised, goalEth, history) => dispatch => {
     })
     .catch(err => {
 
+      console.log(err);
       //history.push('/error', err)
     });
 };
