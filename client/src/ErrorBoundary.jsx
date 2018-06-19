@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-//import { Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as actions from '../actions/index';
+import React from "react";
+import PropTypes from "prop-types";
+import axios from './shared/axios';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -16,32 +15,30 @@ const customStyles = {
   }
 };
 
-class ErrorBoundary extends React.Component {
+export default class ErrorBoundary extends React.Component {
+
+  static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.arrayOf(PropTypes.node)
+    ]).isRequired,
+    render: PropTypes.func.isRequired
+  };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      modalIsOpen: true,
       hasError: false,
+      error: null,
+      errorInfo: null,
+      modalIsOpen: true,
     };
 
     this.openModal = this.openModal.bind(this);
     this.afterModal = this.afterModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
-
-  componentDidMount() {
-  }
-
-  componentDidCatch(error, info) {
-     // Display fallback UI
-     this.setState({ hasError: true });
-     // You can also log the error to an error reporting service
-     console.log('Date -> ' + new Date())
-     console.log('error -> ' + error)
-     console.log('info -> ' + info)
-   }
 
   openModal() {
     this.setState({ modalIsOpen: true });
@@ -52,11 +49,32 @@ class ErrorBoundary extends React.Component {
   closeModal() {
   }
 
+  componentDidCatch(error, errorInfo) {
+    this.setState({ hasError: true, error, errorInfo });
+
+
+    axios.post('/api/users/send/error', {
+      err: String(error),
+      info: JSON.stringify(errorInfo),
+    }).then(res => {
+
+      console.log('send mail success')
+
+    }).catch(err => {
+
+      console.log('send mail error')
+      console.log(err)
+    });
+
+    // if we have Bugsnag in this environment, we can notify our error tracker
+    if (window.Bugsnag) {
+      window.Bugsnag.notify(error);
+    }
+  }
+
   render() {
-
     if (this.state.hasError) {
-
-    return (
+      return (
       <div>
         <Modal
           isOpen={this.state.modalIsOpen}
@@ -84,7 +102,7 @@ class ErrorBoundary extends React.Component {
                         Information
                       </h3>
                       <p class="text">
-                        An error occurred while processing your request.
+                        An error occurred in this system
                       </p>
                     </div>
                   </div>
@@ -94,14 +112,8 @@ class ErrorBoundary extends React.Component {
           </div>
         </Modal>
       </div>
-    );
-
-  }
-  return this.props.children;
+      );
+    }
+    return this.props.children;
   }
 }
-
-export default connect(
-  null,
-  actions
-)(ErrorBoundary);

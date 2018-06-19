@@ -2,12 +2,12 @@
  * Materialize css
  * http://materializecss.com/getting-started.html
  * import 'materialize-css/dist/css/materialize.min.css';
- * 
+ *
  * Bootstratp css
  * https://github.com/facebook/create-react-app/issues/301
  * https://stackoverflow.com/questions/40037657/how-to-include-bootstrap-css-and-js-in-reactjs-app
  * import 'bootstrap/dist/css/bootstrap.css';
- * 
+ *
  */
 import './styles/styles.css';
 
@@ -22,6 +22,8 @@ import { Provider } from 'react-redux';
 import { setCurrentUser } from './actions/authAction';
 import setAuthToken from './shared/setAuthToken';
 import jwt_decode from 'jwt-decode';
+import ErrorBoundary from './ErrorBoundary';
+
 
 // Get Token from local storage
 const token = localStorage.getItem('token');
@@ -37,8 +39,10 @@ if (token) {
 }
 
 ReactDOM.render(
+<ErrorBoundary>
   <Provider store={store}>
     <App />
-  </Provider>,
+  </Provider>
+  </ErrorBoundary>,
   document.querySelector('#root')
 );

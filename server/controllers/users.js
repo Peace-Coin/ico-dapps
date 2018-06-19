@@ -47,8 +47,6 @@ signToken = user => {
 
 module.exports = {
   signUp: async (req, res, next) => {
-    console.log(process.env.NODE_ENV);
-    console.log(process.env.NODE_ENV === 'production');
 
     const { email, password } = req.value.body;
     // Check if there is a user with the same mail
@@ -179,6 +177,10 @@ module.exports = {
     foundUser.local.secretToken = secretToken;
     foundUser.save();
 
+    console.log('config.MAIL_SENDER')
+    console.log(config.MAIL_SENDER)
+
+
     // send email reset url with it
     const message = {
       from: config.MAIL_SENDER,
@@ -190,6 +192,31 @@ module.exports = {
 
     res.status(200).json({
       message: 'Password Reset Request is accepted, Now You can Reset Password.'
+    });
+  },
+
+  sendError: async (req, res, next) => {
+
+    const { err, info } = req.body;
+
+    let body = `
+      <div>
+        <div>${new Date()}</div>
+        <div>${err}</div>
+        <div>${info}</div>
+      </div>
+    `;
+
+    // send email reset url with it
+    const message = {
+      from: config.MAIL_SENDER,
+      to: 'mana19880108@gmail.com',
+      subject: 'Peace Coin ICO System Error',
+      html: body
+    };
+    await mailer.sendEmail(message);
+
+    res.status(200).json({
     });
   },
 

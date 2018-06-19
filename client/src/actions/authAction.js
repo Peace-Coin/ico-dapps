@@ -17,6 +17,9 @@ import jwt_decode from 'jwt-decode';
 import { Route, Redirect } from 'react-router-dom';
 
 export const signinUser = ({ email, password }) => {
+
+  localStorage.removeItem('token');
+
   return dispatch => {
     axios
       .post('/api/users/signin', {

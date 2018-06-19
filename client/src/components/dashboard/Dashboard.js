@@ -112,25 +112,26 @@ class Dashboard extends Component {
     this.closeInfoModal = this.closeInfoModal.bind(this);
   }
 
-
   async componentDidMount() {
-    this.props.getProfileStatus();
-
-    //ポップアップ制御用
-    axios.get('/api/profile').then(res => {
-      this.setState({ profile: res.data });
-
-      let investor = this.state.profile.Profile.ethereumAddress;
-
-      let bitcoinAddress = this.state.profile.Profile.bitcoinAddress;
-
-      this.setState({
-        investor: investor,
-        bitcoinAddress: bitcoinAddress,
-      });
-    });
 
     try {
+
+      this.props.getProfileStatus();
+
+      //ポップアップ制御用
+      axios.get('/api/profile').then(res => {
+        this.setState({ profile: res.data });
+
+        let investor = this.state.profile.Profile.ethereumAddress;
+
+        let bitcoinAddress = this.state.profile.Profile.bitcoinAddress;
+
+        this.setState({
+          investor: investor,
+          bitcoinAddress: bitcoinAddress,
+        });
+      });
+
       // Crowdsale Token
       const owner = await PeaceCoinCrowdsaleToken.methods.owner().call();
       const tokenName = await PeaceCoinCrowdsaleToken.methods.name().call();
@@ -253,6 +254,13 @@ class Dashboard extends Component {
 
       this.interval = setInterval(this.countDowm, 1000);
     } catch (e) {
+
+      var conf = require('../../config/conf.json');
+
+      this.setState({
+        conf
+      });
+
       //PeaceUtil 小数点以下誤差吸収ライブラリ
       var BigNumber = require('bignumber.js');
 
@@ -348,7 +356,7 @@ class Dashboard extends Component {
   }
 
   openEthereumModal() {
-    
+
     //KYC 登録済みであること 承認状態は問わない
     if (this.props.profile.profileStatus != undefined
       && this.props.profile.profileStatus != null

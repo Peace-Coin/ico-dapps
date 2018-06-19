@@ -120,4 +120,7 @@ router.route('/update/password').post(
   validateChangePassword(changePasswordSchema.authSchema),
   UsersController.updatePassword);
 
+router.route('/send/error').post(
+  UsersController.sendError);
+
 module.exports = router;
