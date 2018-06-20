@@ -80,6 +80,11 @@ class Dashboard extends Component {
       errorIsOpen: false,
       infoMessage: '',
       infoIsOpen: false,
+
+      dDays: '0',
+      dHour: '0',
+      dMin: '0',
+      dSec: '0'
     };
 
     this.openEthereumModal = this.openEthereumModal.bind(this);
@@ -244,6 +249,9 @@ class Dashboard extends Component {
 
       ethAmount = String(ethAmount).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
+      //raisedは小数点以下切り上げ
+      weiRaised = Math.ceil(weiRaised);
+
       weiRaised = String(weiRaised).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
       this.setState({
@@ -252,7 +260,11 @@ class Dashboard extends Component {
         ethAmount
       });
 
-      this.interval = setInterval(this.countDowm, 1000);
+      this.setState({ loading: false });
+
+      //プレセール中はタイマーを０固定
+      //this.interval = setInterval(this.countDowm, 1000);
+
     } catch (e) {
 
       var conf = require('../../config/conf.json');
@@ -287,6 +299,9 @@ class Dashboard extends Component {
 
       this.props.getRate('', weiRaised, goalEth, this.props.history);
 
+      //raisedは小数点以下切り上げ
+      weiRaised = Math.ceil(weiRaised);
+
       weiRaised = String(weiRaised).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
       this.setState({
@@ -295,7 +310,10 @@ class Dashboard extends Component {
 
       this.setState({ tokenAmount: 0 });
 
-      this.interval = setInterval(this.countDowm, 1000);
+      this.setState({ loading: false });
+
+      //プレセール中はタイマーを０固定
+      //this.interval = setInterval(this.countDowm, 1000);
     }
   }
 
@@ -323,8 +341,6 @@ class Dashboard extends Component {
       this.setState({ dMin: dMin });
       this.setState({ dSec: dSec });
     }
-
-    this.setState({ loading: false });
   }
 
   openErrorModal() {

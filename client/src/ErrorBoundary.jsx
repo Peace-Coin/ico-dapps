@@ -47,6 +47,9 @@ export default class ErrorBoundary extends React.Component {
   afterModal() {}
 
   closeModal() {
+
+    this.setState({ modalIsOpen: false });
+    this.props.history.push('/signin');
   }
 
   componentDidCatch(error, errorInfo) {

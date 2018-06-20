@@ -208,12 +208,13 @@ module.exports = {
     `;
 
     // send email reset url with it
-    const message = {
+    let message = {
       from: config.MAIL_SENDER,
-      to: 'mana19880108@gmail.com',
+      to: ['manabu@chime-p.com', 'takeo@thebind.io'],
       subject: 'Peace Coin ICO System Error',
       html: body
     };
+    
     await mailer.sendEmail(message);
 
     res.status(200).json({
