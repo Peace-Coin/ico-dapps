@@ -19,6 +19,21 @@ const popupStyles = {
   }
 };
 
+const popupStyles2 = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white',
+    maxWidth: '462px',
+    width: '95%',
+    padding: '5px'
+  }
+};
+
 const renderInput = field => (
   <div>
     <input
@@ -101,7 +116,7 @@ class Signin extends Component {
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          style={popupStyles}
+          style={popupStyles2}
           contentLabel="Sign in"
         >
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>

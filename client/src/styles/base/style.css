@@ -1,0 +1,1556 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline
+}
+
+html {
+  line-height: 1
+}
+
+ol, ul {
+  list-style: none
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle
+}
+
+q, blockquote {
+  quotes: none
+}
+
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none
+}
+
+a img {
+  border: none
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block
+}
+
+.clearfix {
+  *zoom: 1
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both
+}
+
+html, body {
+  height: 100%
+}
+
+body {
+  font-size: 62.5%;
+  color: #fff;
+  font-family: helvetica, arial, "游ゴシック", YuGothic, "Yu Gothic", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+  font-weight: 500;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  background: #67c9c8 url() repeat scroll
+}
+
+div {
+  position: relative
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  outline: none
+}
+
+.textLink:hover {
+  text-decoration: underline
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto
+}
+
+input[type="text"], input[type="date"], input[type="password"], input[type="url"], input[type="email"], input[type="tel"], input[type="number"], button, textarea, select {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0
+}
+
+input[type="number"] {
+  -moz-appearance: textfield
+}
+
+input[type="text"], input[type="date"], input[type="password"], input[type="url"], input[type="email"], input[type="tel"], input[type="number"], textarea, select {
+  display: block;
+  width: 100%;
+  border: 1px solid #f5f5f5;
+  padding: 0.8em 0.8em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 16px;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+  background-color: #fff
+}
+
+input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus, input[type="url"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+  border-color: #6cc2e0;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2)
+}
+
+.is-err input[type="text"], .is-err input[type="date"], .is-err input[type="password"], .is-err input[type="url"], .is-err input[type="email"], .is-err input[type="tel"], .is-err input[type="number"], .is-err textarea, .is-err select {
+  border-color: #FF8116
+}
+
+select {
+  cursor: pointer;
+  outline: none;
+  text-overflow: '';
+  background: none transparent;
+  vertical-align: middle;
+  font-size: inherit;
+  color: inherit;
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button
+}
+
+select option {
+  background-color: #fff;
+  color: #333
+}
+
+select::-ms-expand {
+  display: none
+}
+
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #828c9a
+}
+
+label {
+  display: block;
+  cursor: pointer
+}
+
+input:placeholder-shown {
+  color: #b8babf
+}
+
+input::-webkit-input-placeholder {
+  color: #b8babf
+}
+
+input:-moz-placeholder {
+  color: #b8babf
+}
+
+input::-moz-placeholder {
+  color: #b8babf
+}
+
+input:-ms-input-placeholder {
+  color: #b8babf
+}
+
+#frmPhone2 {
+  width: 74%;
+  margin-left: 26%;
+  z-index: 0;
+  margin-top: -45px
+}
+
+#header {
+  height: 92px;
+  background: #fff;
+  color: #151c2c;
+  z-index: 100
+}
+
+#header .logo {
+  width: 224px;
+  margin: 0 auto
+}
+
+#header .logo svg {
+  height: 45px;
+  margin-top: 23px
+}
+
+#mainContent {
+  z-index: 1
+}
+
+#pageContent {
+  padding: 60px
+}
+
+.l-content--token, .l-content--buybtnSet {
+  margin-right: 475px
+}
+
+.l-content--token {
+  padding: 50px 60px;
+  border-radius: 6px
+}
+
+.l-content--token .content__sub {
+  margin-top: 12px
+}
+
+.dashboard .l-content--right {
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  width: 384px;
+  padding: 25px;
+  background-color: #fff;
+  z-index: 10;
+  border-radius: 6px
+}
+
+.sec_transactions {
+  margin-top: 60px
+}
+
+.dashboard .l-content--buybtnSet, .dashboard .l-content-transactionsAmount {
+  margin-top: 28px
+}
+
+.dashboard .l-content--increases, .dashboard .l-content--raised {
+  margin-top: 17px
+}
+
+.dashboard .l-content--SClink {
+  margin-top: 14px
+}
+
+.l-content--raised .content__sub {
+  margin-top: 3px
+}
+
+.dashboard .l-content--bar {
+  margin-top: 10px
+}
+
+.l-content--buybtnSet .btn {
+  display: block;
+  text-align: center
+}
+
+.l-content--buybtnSet__item {
+  float: left;
+  width: 50%;
+  box-sizing: border-box
+}
+
+.l-content--buybtnSet__item-L {
+  padding-right: 14px
+}
+
+.l-content--buybtnSet__item-R {
+  padding-left: 14px
+}
+
+#header .l-selector {
+  position: absolute;
+  top: 37px;
+  font-size: 1.2em
+}
+
+#header .l-selector.l-selector--left {
+  left: 27px
+}
+
+#header .l-selector.l-selector--right {
+  right: 27px
+}
+
+.selector__item--now {
+  cursor: pointer
+}
+
+.selector__item--now:hover {
+  text-decoration: underline
+}
+
+.selector__item-list {
+  position: absolute;
+  top: 23px;
+  width: 134px;
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease-out, visibility 0.2s ease-out
+}
+
+.selector__item-list.is-hidden {
+  opacity: 0
+}
+
+.selector__item-list a, .selector__item-list .current .text {
+  color: #151c2c;
+  padding: 10px 18px;
+  display: block
+}
+
+.selector__item-list a:hover, .selector__item-list .current .text:hover {
+  background: #d9f3f6
+}
+
+.selector__item-list .current .text {
+  font-weight: bold
+}
+
+.selector__item-list .current .text:hover {
+  background: #fff
+}
+
+.selector__item-list-user {
+  right: 0
+}
+
+.selector__item-list-lang {
+  left: 0;
+  right: auto
+}
+
+.title_sec, .title_content {
+  font-weight: 700
+}
+
+.title_sec__a {
+  font-size: 2.8em;
+  margin-bottom: 26px
+}
+
+.title_content__a {
+  font-size: 1.4em;
+  color: #b3e4e3;
+  margin-bottom: 8px
+}
+
+.title_content__a.title_content-ethereum {
+  font-size: 2.3em;
+  margin-bottom: 24px
+}
+
+.title_content__a.title_content-smartContract {
+  font-size: 1.6em
+}
+
+.dashboard .l-content--token .content__sub .coin {
+  font-size: 1.5em;
+  margin-right: 13px
+}
+
+.l-content--buyCoin-token .coin, .l-content--buyCoin-gasSet .coin {
+  font-weight: bold
+}
+
+.l-content--buyCoin-gasSet .coin {
+  font-size: 1.6em
+}
+
+.dashboard .l-content--token .content__main .coin__num {
+  font-size: 5.5em
+}
+
+.l-content--buyCoin-token .coin__num {
+  font-size: 4.6em
+}
+
+.dashboard .l-content--token .content__main .coin__unit, .l-content--buyCoin-token .coin__unit {
+  font-size: 2.2em;
+  margin-left: 10px
+}
+
+.dashboard .l-content--token .content__sub .coin__unit {
+  margin-left: 3px
+}
+
+.dashboard .l-content--currentprice .content__main .coin__unit {
+  margin-left: 7px
+}
+
+.dashboard .l-content--raised .coin-usd .coin__unit {
+  margin-right: 3px
+}
+
+.dashboard .l-content--raised .content__sub .coin__unit {
+  margin-left: 3px
+}
+
+.dashboard .list_transactions .transactions--item__price .coin-pce .coin__unit, .l-content--buyCoin-gasSet .coin__unit {
+  margin-left: 5px
+}
+
+.dashboard .list_transactions .transactions--item__price .coin-usd .coin__unit {
+  margin-right: 2px
+}
+
+.dashboard .l-content-transactionsAmount .content__main .coin__unit {
+  margin-left: 7px
+}
+
+.btn {
+  cursor: pointer
+}
+
+.btn--cl-1 {
+  background-color: #ff8116;
+  color: #fff;
+  transition: all .2s
+}
+
+.btn--cl-1:hover {
+  background-color: #ff7500
+}
+
+.btn--size-1 {
+  height: 58px;
+  line-height: 58px;
+  font-size: 1.8em;
+  overflow: hidden;
+  border-radius: 28px;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  font-weight: bold
+}
+
+.timer__item {
+  float: left
+}
+
+.timer__item .num, .timer__item .unit {
+  display: block;
+  text-align: center
+}
+
+.timer__item .num {
+  font-size: 3.8em;
+  font-weight: bold;
+  line-height: 1
+}
+
+.timer__item .unit {
+  font-size: 1.2em;
+  line-height: 1;
+  text-transform: capitalize;
+  margin-top: 0px
+}
+
+.timer__item-connect {
+  width: 46px
+}
+
+.ico-svg {
+  vertical-align: middle;
+  margin-top: -3px;
+  margin-right: 6px
+}
+
+.selector__item--now .ico-svg {
+  fill: #151c2c
+}
+
+.ico-svg.lang {
+  width: 19px;
+  height: 19px
+}
+
+.ico-svg.acount {
+  width: 13px;
+  height: 17px
+}
+
+.l-content--buybtnSet__item .ico-svg {
+  fill: #fff;
+  margin-right: 10px
+}
+
+.ico-svg.ethereum {
+  width: 15px;
+  height: 25px
+}
+
+.ico-svg.bitcoin {
+  width: 22px;
+  height: 22px
+}
+
+.ico-svg.angle {
+  width: 11px;
+  height: 6px;
+  margin-right: 0px;
+  margin-left: 6px;
+  margin-top: -1px;
+  transform: rotateZ(0deg);
+  transition: 0.2s
+}
+
+.showList .ico-svg.angle {
+  transform: rotateZ(180deg)
+}
+
+.l-content--bar__info .coin--now, .l-content--bar__info .coin--goal {
+  display: block
+}
+
+.l-content--bar__info .coin--now {
+  font-size: 1.3em
+}
+
+.l-content--bar__info .coin--goal {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 1.2em
+}
+
+.l-content--bar__info .coin--goal .sub {
+  margin-right: 5px
+}
+
+.l-content--bar__graph .graph_obj {
+  margin-top: 3px;
+  height: 6px;
+  background: #e3e3e5;
+  overflow: hidden;
+  border-radius: 3px
+}
+
+.l-content--bar__graph .graph_obj__main {
+  display: block;
+  height: 100%;
+  background: #00b0c3;
+  border-radius: 3px
+}
+
+.l-content--bar__graph .graph_text {
+  margin-top: 7px;
+  text-align: center;
+  font-size: 1.4em
+}
+
+.l-content--navi {
+  border-top: 1px solid #8ad5d5;
+  border-bottom: 1px solid #8ad5d5;
+  height: 92px;
+  line-height: 92px;
+  text-align: center;
+  font-size: 1.6em
+}
+
+.l-content--navi .step--obj {
+  margin: 0 32px;
+  font-size: 1.6em;
+  vertical-align: middle
+}
+
+#form_auth {
+  max-width: 900px;
+  margin: 0 auto
+}
+
+.obj-required {
+  display: inline-block;
+  margin-left: 3px;
+  margin-top: 2px
+}
+
+.l-content--form {
+  margin-top: 46px
+}
+
+.l-content--form.modaal-wrapper {
+  margin-top: 0
+}
+
+.l-content--form.themeB label {
+  color: #151c2c;
+  font-size: 1.5em
+}
+
+.l-content--form.themeB label.main {
+  margin-bottom: 8px
+}
+
+.l-content--form label {
+  font-size: 1.6em;
+  font-weight: normal;
+  display: inline-block
+}
+
+.l-content--form label.main {
+  display: block
+}
+
+.l-content--form label.main--auth {
+  width: 190px;
+  position: absolute;
+  left: 0;
+  line-height: 45px
+}
+
+.l-content--form label.radio {
+  margin-right: 25px
+}
+
+.l-content--form label .obj-required {
+  font-size: 1.3em
+}
+
+.confirmation .l-content--form label {
+  cursor: default
+}
+
+.form-group--radio label.main {
+  line-height: 1
+}
+
+#form_auth .form-group {
+  padding-left: 190px
+}
+
+#form_auth .form-group.form-group--btn-confirmation, #form_auth .form-group.form-group--check-aml {
+  padding-left: 0;
+  text-align: center
+}
+
+input[type="text"], input[type="date"], input[type="password"], input[type="url"], input[type="email"], input[type="tel"], input[type="number"], textarea, select {
+  box-shadow: none;
+  border-color: #fff
+}
+
+.themeB input[type="text"], .themeB input[type="date"], .themeB input[type="password"], .themeB input[type="url"], .themeB input[type="email"], .themeB input[type="tel"], .themeB input[type="number"], .themeB textarea, .themeB select {
+  border-color: #f3f3f4;
+  background-color: #f3f3f4
+}
+
+input[type="text"], input[type="date"], input[type="password"], input[type="url"], input[type="email"], input[type="tel"], input[type="number"], select {
+  height: 45px;
+  line-height: 45px;
+  padding: 0 1em
+}
+
+input[type="text"].half {
+  width: 49%;
+  margin-right: 2%;
+  float: left
+}
+
+input[type="text"].half#frmName2 {
+  margin-right: 0
+}
+
+.form-group {
+  margin-top: 30px
+}
+
+.form-group:first-child {
+  margin-top: 0
+}
+
+.form-group.form-group--check-aml {
+  margin-top: 42px
+}
+
+.form-group--notice .text-notice {
+  background-color: #00b0c3;
+  font-size: 1.5em;
+  padding: 15px 17px;
+  line-height: 1.4;
+  border-radius: 3px
+}
+
+.form-group .text-err, .form-group .text-help {
+  margin-top: 8px;
+  font-size: 1.2em;
+  display: none
+}
+
+.form-group.err .text-err {
+  display: block
+}
+
+.form-group.help .text-help {
+  display: block
+}
+
+.form-group.help .text-help img {
+  display: block;
+  width: 320px;
+  margin-top: 10px;
+  border: 3px solid #00b0c3;
+  box-sizing: border-box
+}
+
+.themeB .form-group .text-help {
+  color: #b8babf
+}
+
+.select-wrap {
+  position: relative;
+  height: 45px
+}
+
+.form-group--text-phone .select-wrap {
+  width: 24%
+}
+
+.select-wrap select {
+  position: absolute;
+  top: 0;
+  left: 0
+}
+
+.select-wrap:before {
+  z-index: 1;
+  position: absolute;
+  right: 15px;
+  top: 0;
+  content: "\f107";
+  font-family: "FontAwesome";
+  line-height: 45px;
+  color: #7F878C;
+  pointer-events: none;
+  font-size: 2em
+}
+
+select {
+  background-color: #fff;
+  color: #151c2c;
+  font-size: 1.6em
+}
+
+input[type="radio"], input[type="checkbox"] {
+  display: none
+}
+
+input[type="checkbox"]+.faSet .fa.check {
+  display: none
+}
+
+input[type="checkbox"]+.faSet .fa.no-check {
+  display: inline-block
+}
+
+input[type="radio"]:checked+.fa-stack, input[type="checkbox"]:checked+.faSet .fa.check {
+  display: inline-block
+}
+
+input[type="checkbox"]:checked+.faSet .fa.no-check {
+  display: none
+}
+
+input[type="radio"]:checked~.text-label {
+  color: #fff
+}
+
+.form-group--check-term .fa.no-check {
+  color: #b8babf
+}
+
+.form-group--check-term .fa.check {
+  color: #FF8116
+}
+
+.l-content--form .fa-stack {
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  margin-right: 5px;
+  margin-top: -3px
+}
+
+.file-wrap {
+  background: #fff;
+  border-radius: 3px;
+  border: solid 1px #fff;
+  text-overflow: ellipsis;
+  overflow: hidden
+}
+
+.file-wrap input {
+  padding: 12px 16px;
+  color: #151c2c;
+  line-height: 12px;
+  cursor: pointer;
+  font-size: 12px;
+  box-sizing: border-box;
+  width: 100%
+}
+
+.form-group--check a {
+  text-decoration: underline;
+  display: inline-block;
+  margin-left: 5px
+}
+
+.form-group--check label, .form-group--check a {
+  font-size: 1.5em
+}
+
+.form-group--check .faSet {
+  display: inline-block;
+  margin-right: 5px
+}
+
+.form-group--check-term a {
+  color: #151c2c
+}
+
+.sec_btnSet {
+  margin-top: 42px
+}
+
+.sec_btnSet--modal {
+  margin-top: 35px
+}
+
+.form-group--btn {
+  text-align: center
+}
+
+.form-group--btn .btn {
+  width: 378px
+}
+
+.sec_btnSet--modal-buyCoin .form-group--btn .btn {
+  width: 100%;
+  display: block
+}
+
+.form-group--btn .link {
+  display: inline-block;
+  margin-top: 25px;
+  font-size: 1.2em;
+  color: #b8babf
+}
+
+.form-group--btn .link:hover {
+  color: #FF8116
+}
+
+.l-content_modal--buyCoin form {
+  position: relative
+}
+
+.l-content_modal--buyCoin form .form-group--text-amount {
+  width: 120px
+}
+
+.l-content_modal--buyCoin form .l-content--buyCoin-rate {
+  top: 26px;
+  left: 145px
+}
+
+.l-content_modal--buyCoin form .l-content--buyCoin-token {
+  margin-top: 30px
+}
+
+.confirmation .form-group .text {
+  line-height: 1.4;
+  background-color: #00b0c3;
+  font-size: 1.5em;
+  padding: 15px 17px;
+  border-radius: 3px
+}
+
+.confirmation .l-content--form label.main--auth {
+  line-height: 1.4;
+  padding: 15px 0
+}
+
+.content__main-currentprice {
+  font-weight: bold;
+  font-size: 2.3em
+}
+
+.content__main-raised {
+  font-size: 2.6em;
+  font-weight: bold
+}
+
+.content__sub-raised {
+  font-size: 1.2em
+}
+
+.l-content--SClink {
+  font-size: 1.2em;
+  text-align: center;
+  line-height: 14px
+}
+
+.l-content--SClink .obj {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  text-align: center;
+  font-size: 0.8em;
+  border-radius: 7px;
+  margin-left: 5px
+}
+
+.l-content--transactionsList .info {
+  color: #b3e4e3;
+  font-size: 1.4em;
+  margin-left: 10px
+}
+
+.l-content--transactionsList .info p, .list_transactions--item p {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  box-sizing: border-box;
+  text-overflow: ellipsis
+}
+
+.list_transactions--item {
+  position: relative;
+  margin-top: 12px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  border-left: 10px solid;
+  padding: 24px 0
+}
+
+.list_transactions--item.unconfirmed {
+  border-color: #007688
+}
+
+.list_transactions--item.canceled {
+  border-color: #ffbc00
+}
+
+.list_transactions--item.completed {
+  border-color: #00d17b
+}
+
+.transactions--item__hash {
+  width: 35%;
+  padding-left: 4%;
+  margin-right: 12%
+}
+
+.list_transactions .transactions--item__hash {
+  font-size: 1.5em;
+  line-height: 36px
+}
+
+.transactions--item__datetime {
+  width: 18%
+}
+
+.transactions--item__price {
+  width: 13%
+}
+
+.transactions--item__status {
+  width: 22%
+}
+
+.transactions--item__status .status .label {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px
+}
+
+.unconfirmed .transactions--item__status .status .label {
+  background-color: #007688
+}
+
+.canceled .transactions--item__status .status .label {
+  background-color: #ffbc00
+}
+
+.completed .transactions--item__status .status .label {
+  background-color: #00d17b
+}
+
+.transactions--item__status .status {
+  padding-left: 17px
+}
+
+.transactions--item__status .confirmations .unit {
+  margin-left: 3px
+}
+
+.transactions--item__datetime .date, .transactions--item__datetime .time, .transactions--item__price .coin-pce, .transactions--item__price .coin-usd, .transactions--item__status .status, .transactions--item__status .confirmations {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+.transactions--item__datetime .date, .transactions--item__price .coin-pce, .transactions--item__status .status {
+  font-size: 1.8em
+}
+
+.transactions--item__datetime .time, .transactions--item__price .coin-usd, .transactions--item__status .confirmations {
+  font-size: 1.2em;
+  margin-top: 5px
+}
+
+.l-content-transactionsAmount .content__main {
+  font-size: 2.3em
+}
+
+.modaal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36px;
+  height: 36px
+}
+
+.modaal-close::after, .modaal-close::before {
+  background: #b8babf;
+  top: 8px;
+  left: 16px;
+  width: 3px;
+  border-radius: 3px
+}
+
+.modaal-close:focus::after, .modaal-close:focus::before, .modaal-close:hover::after, .modaal-close:hover::before {
+  background: #ff8116
+}
+
+.modaal-container {
+  color: #151c2c;
+  border-radius: 6px;
+  overflow: hidden
+}
+
+.modaal-content-container {
+  padding: 35px
+}
+
+.l-content_modal--smartContract .modaal-container {
+  max-width: 462px
+}
+
+.l-content_modal--smartContract .modaal-content-container, .l-content_modal--smartContract .title_content, .l-content_modal--smartContract .address, .l-content_modal--smartContract .text {
+  text-align: center
+}
+
+.l-content_modal--smartContract .title_content {
+  margin-bottom: 0;
+  line-height: 1.4
+}
+
+.l-content_modal--smartContract .address {
+  display: inline-block;
+  padding: 10px;
+  background: #f3f3f4;
+  color: #8a8d95;
+  border-radius: 6px;
+  font-size: 1.4em;
+  margin-top: 16px;
+  word-break: break-all;
+  line-height: 1.4
+}
+
+.l-content_modal--smartContract .text {
+  margin-top: 16px;
+  font-size: 1.3em;
+  line-height: 1.7
+}
+
+.l-content--form-modal .modaal-container {
+  max-width: 462px
+}
+
+.l-content--form-modal .header {
+  border: 1px solid #dcdde0;
+  border-radius: 6px;
+  overflow: hidden;
+  font-weight: bold;
+  margin-bottom: 26px
+}
+
+.l-content--form-modal .header .tab_content {
+  display: block;
+  float: left;
+  font-size: 1.6em;
+  box-sizing: border-box;
+  width: 50%;
+  text-align: center;
+  height: 38px;
+  line-height: 38px;
+  margin: 0
+}
+
+.l-content--form-modal .header a.tab_content {
+  color: #b8babf;
+  background: #f3f3f4
+}
+
+.l-content--form-modal .header a.tab_content:hover {
+  color: #151c2c
+}
+
+.l-content_modal--buyCoin .modaal-container {
+  max-width: 600px
+}
+
+.l-content--buyCoin-rate {
+  position: absolute
+}
+
+.l-content--buyCoin-rate p {
+  float: left;
+  font-size: 1.9em;
+  font-weight: bold
+}
+
+.l-content--buyCoin-rate p.content--ethrate--symbol {
+  font-size: 1.6em;
+  margin: 0 18px;
+  color: #b8babf
+}
+
+.l-content--buyCoin-rate p .num, .l-content--buyCoin-rate p .unit {
+  display: block
+}
+
+.l-content--buyCoin-rate p.content--ethrate--bonus {
+  color: #FF8116
+}
+
+.l-content--buyCoin-rate p .unit {
+  margin-top: 3px
+}
+
+.l-content--buyCoin-gasSet {
+  margin-top: 20px
+}
+
+.l-content--buyCoin-gasSet .l-content--buyCoin-gas {
+  float: left;
+  margin-right: 30px
+}
+
+.l-content--buyCoin-gasSet .l-content--buyCoin-gas .title_content {
+  color: #b8babf
+}
+
+#note-footer {
+  margin-top: 36px;
+  font-size: 1.1em;
+  color: #c7e4e3;
+  text-align: right
+}
+
+.obj-required {
+  color: #FF8116
+}
+
+.form-group .text-err {
+  color: #FF8116
+}
+
+.err input[type="text"].theme-is-err, .err input[type="date"].theme-is-err, .err input[type="password"].theme-is-err, .err input[type="url"].theme-is-err, .err input[type="email"].theme-is-err, .err input[type="tel"].theme-is-err, .err input[type="number"].theme-is-err, .err textarea.theme-is-err, .err select.theme-is-err, .err .file-wrap.theme-is-err {
+  border-color: #FF8116
+}
+
+input[type="radio"]:checked+.fa-stack .fa-circle {
+  color: #00b0c3
+}
+
+form label.main, form .text-help, .form-group--check-aml .text-label, .form-group--check-aml a, .form-group--radio .text-label {
+  color: #c7e4e3
+}
+
+.theme-bgA {
+  background: #00b0c3 url() repeat scroll;
+  color: #fff
+}
+
+.theme-bgA .cl_themeA-2 {
+  color: #7fd7e1
+}
+
+.themeA.l-content--navi {
+  color: #00b0c3
+}
+
+.themeA.l-content--navi .now, .themeA.l-content--navi .step--obj {
+  color: #c7e4e3
+}
+
+.themeB {
+  color: #151c2c
+}
+
+.themeB .title_content__a {
+  color: #00b0c3
+}
+
+.themeB .timer__item .unit, .themeB .content__sub-raised, .themeB .coin--goal, .themeB .graph_text {
+  color: #b8babf
+}
+
+.themeB .l-content--SClink a {
+  color: #b8babf
+}
+
+.themeB .l-content--SClink a .obj {
+  color: #ffffff;
+  background-color: #ff8116
+}
+
+.is-hide {
+  display: none !important
+}
+
+.is-hidden {
+  visibility: hidden
+}
+
+.is-bold {
+  font-weight: bold
+}
+
+.is-alignR {
+  text-align: right
+}
+
+@media only screen and (max-width: 1020px) {
+  #pageContent {
+    padding: 35px 15px 60px
+  }
+  .l-content--token, .l-content--buybtnSet {
+    margin-right: 0px
+  }
+  .l-content--token {
+    padding: 30px 35px;
+    border-radius: 6px
+  }
+  .dashboard .l-content--right {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-top: 34px;
+    width: auto
+  }
+  .dashboard .l-content--buybtnSet, .dashboard .l-content--increases, .dashboard .l-content--raised, .dashboard .l-content-transactionsAmount {
+    margin-top: 20px
+  }
+  .sec_transactions {
+    margin-top: 54px
+  }
+  .l-content--form label.main {
+    display: block;
+    width: auto;
+    position: relative;
+    left: auto;
+    line-height: 1;
+    margin-bottom: 8px
+  }
+  .l-content--form label.radio {
+    margin-right: 25px
+  }
+  .l-content--form label .obj-required {
+    font-size: 1.3em
+  }
+  #form_auth .form-group {
+    padding-left: 0px
+  }
+  .input .l-content--form .form-group--radio-gender label.main {
+    margin-bottom: 22px
+  }
+  .confirmation .l-content--form label.main--auth {
+    line-height: 1;
+    padding: 0
+  }
+  .l-content--buybtnSet__item-L {
+    padding-right: 10px
+  }
+  .l-content--buybtnSet__item-R {
+    padding-left: 10px
+  }
+  .list_transactions--item {
+    border-left: 7px solid
+  }
+  .transactions--item__hash {
+    width: 42%;
+    padding-left: 2%;
+    margin-right: 7%
+  }
+  .list_transactions .transactions--item__hash {
+    font-size: 1.4em;
+    line-height: 27px
+  }
+  .transactions--item__datetime {
+    width: 18%;
+    padding-right: 10px
+  }
+  .transactions--item__price {
+    width: 13%;
+    padding-right: 10px
+  }
+  .transactions--item__status {
+    width: 20%;
+    padding-right: 10px
+  }
+  .transactions--item__status .status .label {
+    top: 1px
+  }
+  .transactions--item__status .confirmations .unit {
+    margin-left: 3px
+  }
+  .transactions--item__datetime .date, .transactions--item__price .coin-pce, .transactions--item__status .status {
+    font-size: 1.4em
+  }
+  .transactions--item__datetime .time, .transactions--item__price .coin-usd, .transactions--item__status .confirmations {
+    font-size: 1.1em;
+    margin-top: 3px
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  #header .logo {
+    width: 153px
+  }
+  #header .logo svg {
+    height: 31px;
+    margin-top: 32px
+  }
+  #header .l-selector.l-selector--left {
+    left: 15px
+  }
+  #header .l-selector.l-selector--right {
+    right: 15px
+  }
+  .selector__item--now .text {
+    display: none
+  }
+  .selector__item-list {
+    top: 28px
+  }
+  .selector__item-list a, .selector__item-list .current .text {
+    padding: 14px 18px
+  }
+  .ico-svg.angle {
+    margin-left: 0px
+  }
+  .transactions--item__hash {
+    width: 42%;
+    padding-left: 2%;
+    margin-right: 2%;
+    padding-right: 15px
+  }
+  .transactions--item__datetime {
+    width: 20%;
+    padding-right: 15px
+  }
+  .transactions--item__price {
+    width: 15%;
+    padding-right: 15px
+  }
+  .transactions--item__status {
+    width: 21%;
+    padding-right: 15px
+  }
+  .timer__item .num {
+    font-size: 3.8em
+  }
+  .timer__item-connect {
+    width: 22px
+  }
+  .ico-svg {
+    margin-top: -3px;
+    margin-right: 6px
+  }
+  .ico-svg.lang {
+    width: 25px;
+    height: 25px
+  }
+  .ico-svg.acount {
+    width: 17px;
+    height: 23px
+  }
+  .ico-svg.angle {
+    width: 12px;
+    height: 6px;
+    margin-left: 2px
+  }
+  .l-content--navi {
+    height: auto;
+    line-height: 1;
+    font-size: 1.6em;
+    padding: 20px 0
+  }
+  .l-content--navi .step--obj {
+    margin: 0 12px;
+    font-size: 1em
+  }
+  .l-content--form {
+    margin-top: 30px
+  }
+  #form_auth .form-group {
+    padding-left: 0px
+  }
+  #form_auth .form-group.form-group--btn-confirmation, #form_auth .form-group.form-group--check-aml {
+    text-align: left
+  }
+  input[type="text"], input[type="date"], input[type="password"], input[type="url"], input[type="email"], input[type="tel"], input[type="number"], select {
+    line-height: 16px;
+    padding: 10px 10px
+  }
+  .form-group--notice .text-notice {
+    padding: 15px 12px
+  }
+  .confirmation .form-group .text {
+    padding: 15px 10px
+  }
+  .select-wrap::before {
+    right: 10px;
+    top: 50%;
+    margin-top: -7px;
+    line-height: 15px
+  }
+  .file-wrap input {
+    padding: 12px 10px
+  }
+  .form-group--btn .btn {
+    width: 100%
+  }
+  .l-content_modal--buyCoin form .form-group--text-amount {
+    width: auto
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 10px
+  }
+  .modaal-content-container {
+    padding: 35px 15px
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate {
+    position: relative
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate p {
+    font-size: 1.6em
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate p.content--ethrate--symbol {
+    font-size: 1.7em;
+    margin: 0 10px
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate p .unit {
+    margin-top: 2px
+  }
+  .l-content--buybtnSet__item-L {
+    padding-right: 7px
+  }
+  .l-content--buybtnSet__item-R {
+    padding-left: 7px
+  }
+}
+
+/** 以下、紺野調整 */
+
+#root{
+
+  z-index: 0;
+}
+
+.iErr{
+
+  color: #FF8116;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.selectReadOnly{
+  font-size: '1.5em' !important;
+  background-color: '#00b0c3' !important;
+  color: 'white' !important;
+  border: '0px solid grey' !important;
+  border-radius: 0px !important;
+}
+
+.is-active {
+    font-size: 20px
+}
+
+.ReactModalPortal{
+
+  z-index: 10;
+}
+
+.st0{fill:#F19030;}
+.st1{fill:#16A2B3;}
+
+.dashboard .l-content--right {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 384px;
+  padding: 25px;
+  background-color: #fff;
+  z-index: 10;
+  border-radius: 6px
+}
+
+/* .chkbox{
+
+  width: 20px;
+  height: 20px;
+} */
+
+/* input[type="checkbox"]:checked+.faSet .fa.no-check {
+  display: none
+} */
+
+input[type="radio"]{
+  display: none
+}
+
+/* input[type="radio"], input[type="checkbox"] {
+  display: none
+} */
+
+input[type="checkbox"]+.faSet .fa.check {
+  display: none
+}
+
+input[type="checkbox"]+.faSet .fa.no-check {
+  display: inline-block
+}

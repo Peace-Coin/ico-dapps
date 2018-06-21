@@ -354,7 +354,7 @@ class Profile extends Component {
                         </p>
                       </div>
 
-                      <div class="form-group form-group--check form-group--check-aml">
+                      <div class="form-group form-group--check form-group--check-aml custom-aml-div">
                         <label>
                           <CheckBoxGroup
                             name="aml"

@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 import { NavLink } from 'react-router-dom';
 import CheckBoxGroup from '../UI/CheckBoxGroup';
 import Spinner from '../UI/Spinner';
+import Terms from './Terms';
 
 const customStyles = {
   content: {
@@ -16,7 +17,10 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    maxWidth: '462px',
+    width: '95%',
+    padding: '5px'
   }
 };
 
@@ -29,6 +33,21 @@ const popupStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     backgroundColor: 'white',
+  }
+};
+
+const popupStyles2 = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white',
+    maxWidth: '462px',
+    width: '95%',
+    padding: '5px'
   }
 };
 
@@ -186,41 +205,7 @@ class Signup extends Component {
                 <div class="modaal-container">
                   <div class="modaal-content modaal-focus" aria-hidden="false" aria-label="Dialog Window (Press escape to close)" role="dialog" tabindex="0">
                     <div class="modaal-content-container">
-                      <h3 class="title_content title_content__a title_content__a-modal title_content-smartContract">Sample Privacy and Terms</h3>
-                      <p class="text" style={{overflowY: 'scroll', height: '500px', textAlign: 'left'}}>
-                        By choosing “I agree” below you agree to Peace Coin of Service.
-                        <br /><br />
-                        You also agree to our Privacy Policy, which describes how we process your information, including these key points:
-                        <br /><br />
-                        Data we process when you Peace Coin
-                        <br /><br />
-                        When you set up a Peace Coin Account, we store information you give us like your name, email address, and telephone number.
-                        <br /><br />
-                        When you use Peace Coin to do things like write a message in mail, we store the information you create.
-                        <br /><br />
-                        We process information about that activity – including information like the video you watched, device IDs, IP addresses, cookie data, and location.
-                        <br /><br />
-                        Depending on your account settings, some of this data may be associated with your Peace Coin Account and we treat this data as personal information. You can control how we collect and use this data at My Account.
-                        <br /><br />
-                        Why we process it
-                        <br /><br />
-                        We process this data for the purposes described in our policy, including to:
-                        <br /><br />
-                        Help our services deliver more useful, customized content such as more relevant search results;
-                        <br /><br />
-                        Improve the quality of our services and develop new ones;
-                        <br /><br />
-                        Deliver personalized ads, both on Peace Coin services and on sites and apps that partner with Peace Coin;
-                        <br /><br />
-                        Improve security by protecting against fraud and abuse; and
-                        <br /><br />
-                        Conduct analytics and measurement to understand how our services are used.
-                        <br /><br />
-                        Combining data
-                        <br /><br />
-                        We also combine data among our services and across your devices for these purposes. For example, we show you ads based on information from your use of Search and mail, and we use data from trillions of search queries to build spell-correction models that we use across all of our services.
-
-                      </p>
+                      <Terms />
                     </div>
                   </div>
                   <button style={{border: '1px solid grey'}} onClick={this.closeAmlModal} type="button" class="modaal-close" id="modaal-close" aria-label="Close (Press escape to close)">
@@ -235,7 +220,7 @@ class Signup extends Component {
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          style={popupStyles}
+          style={popupStyles2}
           contentLabel="Sign up"
         >
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>

@@ -36,7 +36,8 @@ const popupStyles = {
     transform: 'translate(-50%, -50%)',
     backgroundColor: 'white',
     maxWidth: '600px',
-    width: '100%'
+    width: '95%',
+    padding: '5px'
   }
 };
 
@@ -249,8 +250,8 @@ class Dashboard extends Component {
 
       ethAmount = String(ethAmount).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
-      //raisedは小数点以下切り上げ
-      weiRaised = Math.ceil(weiRaised);
+      //raisedは小数点以下切り捨て
+      weiRaised = Math.round(weiRaised);
 
       weiRaised = String(weiRaised).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
@@ -299,8 +300,8 @@ class Dashboard extends Component {
 
       this.props.getRate('', weiRaised, goalEth, this.props.history);
 
-      //raisedは小数点以下切り上げ
-      weiRaised = Math.ceil(weiRaised);
+      //raisedは小数点以下切り捨て
+      weiRaised = Math.round(weiRaised);
 
       weiRaised = String(weiRaised).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
@@ -380,7 +381,7 @@ class Dashboard extends Component {
       this.setState({ ethereumModalIsOpen: true });
       this.setState({ errorMessage: '' });
     } else {
-      this.setState({ errorMessage: 'PLEASE KYC FINISHED !' });
+      this.setState({ errorMessage: 'First, please refer to the KYC/AML procedure.' });
       this.setState({ errorIsOpen: true });
     }
   }
@@ -450,6 +451,20 @@ class Dashboard extends Component {
     if (loading) {
       dashboardContent = <Spinner />;
     } else {
+
+      let bitcoinRateAmount = this.props.rates.bitcoinRateAmount;
+      let usdRateAmount = this.props.rates.usdRateAmount;
+
+      if(bitcoinRateAmount == undefined){
+
+        bitcoinRateAmount = 0;
+      }
+
+      if(usdRateAmount == undefined){
+
+        usdRateAmount = 0;
+      }
+
       dashboardContent = (
         <div class="peaceCoinIco dashboard">
           <div>
@@ -712,13 +727,13 @@ class Dashboard extends Component {
                       </span>
                       <span class="coin coin-btc">
                         <span class="num coin__num">
-                          {this.props.rates.bitcoinRateAmount}
+                          {bitcoinRateAmount}
                         </span>
                         <span class="unit coin__unit">BTC</span>
                       </span>
                       <span class="coin coin-usd">
                         <span class="num coin__num">
-                          {this.props.rates.usdRateAmount}
+                          {usdRateAmount}
                         </span>
                         <span class="unit coin__unit">USD</span>
                       </span>

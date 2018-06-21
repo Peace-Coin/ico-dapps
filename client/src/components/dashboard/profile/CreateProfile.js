@@ -15,13 +15,17 @@ import Modal from 'react-modal';
 import Spinner from '../../UI/Spinner';
 
 const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white',
+    maxWidth: '462px',
+    width: '95%',
+    padding: '5px'
   }
 };
 
@@ -83,7 +87,8 @@ class CreateProfile extends Component {
   }
 
   openAmlModal() {
-    this.setState({amlIsOpen: true});
+    //AMLの内容が定まるまで、いったんコメントアウト
+    this.setState({amlIsOpen: false});
   }
 
   afterAmlModal() {
@@ -129,7 +134,8 @@ class CreateProfile extends Component {
       picture: this.state.picture,
       ethereumAddress: this.state.ethereumAddress,
       bitcoinAddress: this.state.bitcoinAddress,
-      aml: this.state.aml,
+      //aml: this.state.aml,
+      aml: true,
     };
 
     // Create Profile
@@ -600,7 +606,7 @@ class CreateProfile extends Component {
                         <p class="text-help">Picture of yourself holding Photo ID.<img src="/img/selfy.jpg" /></p>
                       </div>
 
-                      <div class="form-group form-group--check form-group--check-aml">
+                      <div class="form-group form-group--check form-group--check-aml custom-aml-div">
                         <label>
                           <CheckBoxGroup
                             name="aml"
@@ -611,7 +617,7 @@ class CreateProfile extends Component {
                           />
                           <span class="text-label">I agree to </span>
                         </label>
-                        <a onClick={this.openAmlModal}>the AML Authentication</a>
+                        <a class="custom-aml-a" onClick={this.openAmlModal}>the AML Authentication</a>
                         <label>
                           <span class="required obj-required">*</span>
                         </label>

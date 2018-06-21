@@ -1,0 +1,233 @@
+@media only screen and (max-width: 1020px) {
+  #pageContent {
+    padding: 35px 15px 60px
+  }
+  .l-content--token, .l-content--buybtnSet {
+    margin-right: 0px
+  }
+  .l-content--token {
+    padding: 30px 35px;
+    border-radius: 6px
+  }
+  .dashboard .l-content--right {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-top: 34px;
+    width: auto
+  }
+  .dashboard .l-content--buybtnSet, .dashboard .l-content--increases, .dashboard .l-content--raised, .dashboard .l-content-transactionsAmount {
+    margin-top: 20px
+  }
+  .sec_transactions {
+    margin-top: 54px
+  }
+  .l-content--form label.main {
+    display: block;
+    width: auto;
+    position: relative;
+    left: auto;
+    line-height: 1;
+    margin-bottom: 8px
+  }
+  .l-content--form label.radio {
+    margin-right: 25px
+  }
+  .l-content--form label .obj-required {
+    font-size: 1.3em
+  }
+  #form_auth .form-group {
+    padding-left: 0px
+  }
+  .input .l-content--form .form-group--radio-gender label.main {
+    margin-bottom: 22px
+  }
+  .confirmation .l-content--form label.main--auth {
+    line-height: 1;
+    padding: 0
+  }
+  .l-content--buybtnSet__item-L {
+    padding-right: 10px
+  }
+  .l-content--buybtnSet__item-R {
+    padding-left: 10px
+  }
+  .list_transactions--item {
+    border-left: 7px solid
+  }
+  .transactions--item__hash {
+    width: 42%;
+    padding-left: 2%;
+    margin-right: 7%
+  }
+  .list_transactions .transactions--item__hash {
+    font-size: 1.4em;
+    line-height: 27px
+  }
+  .transactions--item__datetime {
+    width: 18%;
+    padding-right: 10px
+  }
+  .transactions--item__price {
+    width: 13%;
+    padding-right: 10px
+  }
+  .transactions--item__status {
+    width: 20%;
+    padding-right: 10px
+  }
+  .transactions--item__status .status .label {
+    top: 1px
+  }
+  .transactions--item__status .confirmations .unit {
+    margin-left: 3px
+  }
+  .transactions--item__datetime .date, .transactions--item__price .coin-pce, .transactions--item__status .status {
+    font-size: 1.4em
+  }
+  .transactions--item__datetime .time, .transactions--item__price .coin-usd, .transactions--item__status .confirmations {
+    font-size: 1.1em;
+    margin-top: 3px
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  #header .logo {
+    width: 153px
+  }
+  #header .logo svg {
+    height: 31px;
+    margin-top: 32px
+  }
+  #header .l-selector.l-selector--left {
+    left: 15px
+  }
+  #header .l-selector.l-selector--right {
+    right: 15px
+  }
+  .selector__item--now .text {
+    display: none
+  }
+  .selector__item-list {
+    top: 28px
+  }
+  .selector__item-list a, .selector__item-list .current .text {
+    padding: 14px 18px
+  }
+  .ico-svg.angle {
+    margin-left: 0px
+  }
+  .transactions--item__hash {
+    width: 42%;
+    padding-left: 2%;
+    margin-right: 2%;
+    padding-right: 15px
+  }
+  .transactions--item__datetime {
+    width: 20%;
+    padding-right: 15px
+  }
+  .transactions--item__price {
+    width: 15%;
+    padding-right: 15px
+  }
+  .transactions--item__status {
+    width: 21%;
+    padding-right: 15px
+  }
+  .timer__item .num {
+    font-size: 3.8em
+  }
+  .timer__item-connect {
+    width: 22px
+  }
+  .ico-svg {
+    margin-top: -3px;
+    margin-right: 6px
+  }
+  .ico-svg.lang {
+    width: 25px;
+    height: 25px
+  }
+  .ico-svg.acount {
+    width: 17px;
+    height: 23px
+  }
+  .ico-svg.angle {
+    width: 12px;
+    height: 6px;
+    margin-left: 2px
+  }
+  .l-content--navi {
+    height: auto;
+    line-height: 1;
+    font-size: 1.6em;
+    padding: 20px 0
+  }
+  .l-content--navi .step--obj {
+    margin: 0 12px;
+    font-size: 1em
+  }
+  .l-content--form {
+    margin-top: 30px
+  }
+  #form_auth .form-group {
+    padding-left: 0px
+  }
+  #form_auth .form-group.form-group--btn-confirmation, #form_auth .form-group.form-group--check-aml {
+    text-align: left
+  }
+  input[type="text"], input[type="date"], input[type="password"], input[type="url"], input[type="email"], input[type="tel"], input[type="number"], select {
+    line-height: 16px;
+    padding: 10px 10px
+  }
+  .form-group--notice .text-notice {
+    padding: 15px 12px
+  }
+  .confirmation .form-group .text {
+    padding: 15px 10px
+  }
+  .select-wrap::before {
+    right: 10px;
+    top: 50%;
+    margin-top: -7px;
+    line-height: 15px
+  }
+  .file-wrap input {
+    padding: 12px 10px
+  }
+  .form-group--btn .btn {
+    width: 100%
+  }
+  .l-content_modal--buyCoin form .form-group--text-amount {
+    width: auto
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 10px
+  }
+  .modaal-content-container {
+    padding: 35px 15px
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate {
+    position: relative
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate p {
+    font-size: 1.6em
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate p.content--ethrate--symbol {
+    font-size: 1.7em;
+    margin: 0 10px
+  }
+  .l-content_modal--buyCoin form .l-content--buyCoin-rate p .unit {
+    margin-top: 2px
+  }
+  .l-content--buybtnSet__item-L {
+    padding-right: 7px
+  }
+  .l-content--buybtnSet__item-R {
+    padding-left: 7px
+  }
+}

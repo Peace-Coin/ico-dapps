@@ -94,7 +94,8 @@ class ConfirmProfile extends Component {
       picture: this.state.profile.picture,
       ethereumAddress: this.state.profile.ethereumAddress,
       bitcoinAddress: this.state.profile.bitcoinAddress,
-      aml: this.state.profile.aml,
+      //aml: this.state.profile.aml,
+      aml: true,
     };
 
     // Create Profile
@@ -188,7 +189,7 @@ class ConfirmProfile extends Component {
                   <p class="img"><img src={this.state.profile.picture} /></p>
                 </div>
 
-                <div class="form-group form-group--check form-group--check-aml">
+                <div class="form-group form-group--check form-group--check-aml custom-aml-div">
                   <label>
                     <CheckBoxGroup
                       name="aml"

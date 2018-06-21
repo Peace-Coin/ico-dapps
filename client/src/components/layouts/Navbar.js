@@ -17,7 +17,7 @@ class Navbar extends Component {
       menuStatus1:
         'selector__item selector__item--now selector__item--now-user',
       menuStatus2:
-        'selector__item selector__item-list selector__item-list-user theme-list-selector is-hidden',
+        'r-custom-list selector__item selector__item-list selector__item-list-user theme-list-selector is-hidden',
       langStatusOpenFlg: false,
       menuStatusOpenFlg: false
     };
@@ -79,13 +79,13 @@ class Navbar extends Component {
     if (this.state.menuStatusOpenFlg) {
       this.setState({
         menuStatus2:
-          'selector__item selector__item-list selector__item-list-lang theme-list-selector is-hidden'
+          'r-custom-list selector__item selector__item-list selector__item-list-lang theme-list-selector is-hidden'
       });
       this.setState({ menuStatusOpenFlg: false });
     } else {
       this.setState({
         menuStatus2:
-          'selector__item selector__item-list selector__item-list-lang theme-list-selector'
+          'r-custom-list selector__item selector__item-list selector__item-list-lang theme-list-selector'
       });
       this.setState({ menuStatusOpenFlg: true });
     }
@@ -147,11 +147,6 @@ class Navbar extends Component {
 
     return (
       <nav>
-        <link href="/font-awesome.min.css" rel="stylesheet" />
-        <link
-          href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700"
-          rel="stylesheet"
-        />
         <div id="header" role="banner">
           <h1 className="logo">
             <a href="#">
