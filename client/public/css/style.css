@@ -1548,9 +1548,12 @@ input[type="checkbox"]+.faSet .fa.no-check {
   display: inline-block
 }
 
-.r-custom-list{
+@media only screen and (max-width: 640px) {
 
-  left: -100px;
+  .r-custom-list{
+
+    left: -100px;
+  }
 }
 
 .custom-aml-a{
