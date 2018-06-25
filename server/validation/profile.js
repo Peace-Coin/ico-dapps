@@ -145,6 +145,17 @@ module.exports = {
             }
           }
         }),
+      nationality: Joi.string()
+        .required()
+        .label('Nationality')
+        .max(50)
+        .options({
+          language: {
+            string: {
+              max: 'less than 50 char',
+            }
+          }
+        }),
       idNumber: Joi.string()
         .required()
         .regex(/^[a-zA-Z0-9./=-]*$/)
@@ -175,7 +186,7 @@ module.exports = {
         }),
       country: Joi.string()
         .required()
-        .label('country')
+        .label('Country')
         .max(50)
         .options({
           language: {

@@ -44,6 +44,9 @@ const profileSchema = new Schema({
     streetAddress: {
       type: String
     },
+    nationality: {
+      type: String
+    },
     idNumber: {
       type: String
     },

@@ -13,6 +13,7 @@ import CheckBoxGroup from '../../UI/CheckBoxGroup';
 import { createProfile, checkProfile } from '../../../actions/profileAction';
 import Modal from 'react-modal';
 import Spinner from '../../UI/Spinner';
+import $ from 'jquery';
 
 const customStyles = {
   content: {
@@ -25,7 +26,7 @@ const customStyles = {
     backgroundColor: 'white',
     maxWidth: '462px',
     width: '95%',
-    padding: '5px'
+    padding: '0px'
   }
 };
 
@@ -42,8 +43,9 @@ class CreateProfile extends Component {
       postalCode: '',
       cityAddress: '',
       streetAddress: '',
+      nationality: 'US',
       idNumber: '',
-      country: 'AF',
+      country: 'US',
       passport: '',
       certificateResidence: '',
       picture: '',
@@ -86,6 +88,25 @@ class CreateProfile extends Component {
     this.onChangeGenderRadio = this.onChangeGenderRadio.bind(this);
   }
 
+  componentDidMount() {
+
+    //最後の要素にJqurey要素を追加すると動作する
+    //国旗リスト追加
+    const cuntl = document.createElement("script");
+
+    cuntl.src = "/js/cuntl.js";
+    cuntl.async = false;
+
+    //画面位置初期化
+    const initScroll = document.createElement("script");
+
+    initScroll.src = "/js/initScroll.js";
+    initScroll.async = true;
+
+    document.body.appendChild(cuntl);
+    document.body.appendChild(initScroll);
+  }
+
   openAmlModal() {
     //AMLの内容が定まるまで、いったんコメントアウト
     this.setState({amlIsOpen: false});
@@ -107,6 +128,22 @@ class CreateProfile extends Component {
     this.setState({
       loading: false
     })
+
+    //最後の要素にJqurey要素を追加すると動作する
+    //国旗リスト追加
+    const cuntl = document.createElement("script");
+
+    cuntl.src = "/js/cuntl.js";
+    cuntl.async = false;
+
+    //画面位置初期化
+    const initScroll = document.createElement("script");
+
+    initScroll.src = "/js/initScroll.js";
+    initScroll.async = true;
+
+    document.body.appendChild(cuntl);
+    document.body.appendChild(initScroll);
   }
 
   onSubmit(e) {
@@ -126,6 +163,7 @@ class CreateProfile extends Component {
       postalCode: this.state.postalCode,
       cityAddress: this.state.cityAddress,
       streetAddress: this.state.streetAddress,
+      nationality: this.state.nationality,
       idNumber: this.state.idNumber,
       birth: this.state.birth,
       country: this.state.country,
@@ -386,8 +424,7 @@ class CreateProfile extends Component {
                         </p>
                       </div>
                     </div>
-                    <button style={{border: '1px solid grey'}} onClick={this.closeAmlModal} type="button" class="modaal-close" id="modaal-close" aria-label="Close (Press escape to close)">
-                      <span>Close</span>
+                    <button onClick={this.closeAmlModal} type="button" class="modaal-close" id="modaal-close" aria-label="Close (Press escape to close)">
                     </button>
                   </div>
                 </div>
@@ -500,14 +537,8 @@ class CreateProfile extends Component {
                       </div>
                       <div class="form-group form-group--select form-group--text form-group--select-phone form-group--text-phone">
                         <label for="frmPhone1" class="main main--auth">Phone Number<span class="required obj-required">*</span></label>
-                        <div class="select-wrap">
-                          <SelectListGroup
-                            className="theme-is-err"
-                            name="phoneNumber1"
-                            id="frmPhone1"
-                            value={this.state.phoneNumber1}
-                            onChange={this.onChange}
-                          />
+                        <div class="custom-select-wrap">
+                          <input id="frmPhone1" name="phoneNumber1" type="tel" placeholder="" value={this.state.phoneNumber1} onBlur={this.onChange} />
                         </div>
                         <TextFieldGroup
                           className="theme-is-err"
@@ -519,6 +550,20 @@ class CreateProfile extends Component {
                         />
                         <p class="iErr">{errors.phoneNumber1}</p>
                         <p class="iErr">{errors.phoneNumber2}</p>
+                        <p class="text-help">Help text....</p>
+                      </div>
+                      <div class="form-group form-group--select form-group--select-country">
+                        <label for="frmCountry" class="main main--auth">Nationality<span class="required obj-required">*</span></label>
+                        <div class="select-wrap">
+                          <SelectListGroupOfCountry
+                            className="theme-is-err"
+                            name="nationality"
+                            id="frmCountry"
+                            value={this.state.nationality}
+                            onChange={this.onChange}
+                          />
+                        </div>
+                        <p class="iErr">{errors.nationality}</p>
                         <p class="text-help">Help text....</p>
                       </div>
                       <div class="form-group form-group--text form-group--text-idNum help">
@@ -650,7 +695,6 @@ class CreateProfile extends Component {
                 </div>
               </div>
             </div>
-
       );
     }
 

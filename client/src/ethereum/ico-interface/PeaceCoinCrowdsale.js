@@ -1,4 +1,5 @@
 import web3 from '../web3';
+import Web3 from 'web3';
 import PeaceCoinCrowdsale from '../abi-json/PeaceCoinCrowdsale.json';
 
 var conf = require('../../config/conf.json');

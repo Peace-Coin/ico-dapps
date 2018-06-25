@@ -11,7 +11,8 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    padding: '0px'
   }
 };
 
@@ -109,6 +110,8 @@ export default class ErrorBoundary extends React.Component {
                       </p>
                     </div>
                   </div>
+                  <button onClick={this.closeModal} type="button" class="modaal-close" id="modaal-close" aria-label="Close (Press escape to close)">
+                  </button>
                 </div>
               </div>
             </div>

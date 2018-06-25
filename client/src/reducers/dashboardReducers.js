@@ -32,22 +32,16 @@ export default function(state = intialState, action) {
         bitcoinRateAmount = 0
       }
 
-      bitcoinRateAmount = String(bitcoinRateAmount).replace(
-        /(\d)(?=(\d\d\d)+(?!\d))/g,
-        '$1,'
-      );
+      bitcoinRateAmount = PeaceUtil.floatFormat(bitcoinRateAmount, 10);
+      bitcoinRateAmount = PeaceUtil.conmaFormat(bitcoinRateAmount);
 
-      usdRateAmount = String(usdRateAmount).replace(
-        /(\d)(?=(\d\d\d)+(?!\d))/g,
-        '$1,'
-      );
+      usdRateAmount = PeaceUtil.floatFormat(usdRateAmount, 10);
+      usdRateAmount = PeaceUtil.conmaFormat(usdRateAmount);
 
       let totalUsdAmount = new BigNumber(action.payload.totalEthAmount).times(action.payload.usdRate).toPrecision();
 
-      totalUsdAmount = String(totalUsdAmount).replace(
-        /(\d)(?=(\d\d\d)+(?!\d))/g,
-        '$1,'
-      );
+      totalUsdAmount = PeaceUtil.floatFormat(totalUsdAmount, 10);
+      totalUsdAmount = PeaceUtil.conmaFormat(totalUsdAmount);
 
       return updateObject(state, {
         bitcoinRate: action.payload.bitcoinRate,

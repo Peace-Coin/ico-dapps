@@ -311,6 +311,27 @@ class Profile extends Component {
                           {profile.Profile.phoneNumber2}
                         </p>
                       </div>
+                      <div class="form-group form-group--select form-group--select-country">
+                        <label for="frmCountry" class="main main--auth">
+                          Nationality
+                        </label>
+                        <p>
+                          <SelectListGroupOfCountry
+                            className=""
+                            name="nationality"
+                            id="frmNationality"
+                            value={profile.Profile.nationality}
+                            disabled="true"
+                            style={{
+                              fontSize: '1.5em',
+                              backgroundColor: '#00b0c3',
+                              color: 'white',
+                              border: '0px solid grey',
+                              borderRadius: '0px'
+                            }}
+                          />
+                        </p>
+                      </div>
                       <div class="form-group form-group--text form-group--text-idNum">
                         <label for="frmIdnum" class="main main--auth">
                           ID Number

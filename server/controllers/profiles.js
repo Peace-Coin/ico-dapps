@@ -38,6 +38,7 @@ module.exports = {
     profileFields.Profile.postalCode = req.body.postalCode;
     profileFields.Profile.cityAddress = req.body.cityAddress;
     profileFields.Profile.streetAddress = req.body.streetAddress;
+    profileFields.Profile.nationality = req.body.nationality;
     profileFields.Profile.idNumber = req.body.idNumber;
     profileFields.Profile.birth = req.body.birth;
     profileFields.Profile.country = req.body.country;

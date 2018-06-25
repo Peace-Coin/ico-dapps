@@ -12,7 +12,8 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    padding: '0px'
   }
 };
 
@@ -81,14 +82,12 @@ class CompleteProfile extends Component {
                     </div>
                   </div>
                   <button
-                    style={{ border: '1px solid grey' }}
                     onClick={this.closeModal}
                     type="button"
                     class="modaal-close"
                     id="modaal-close"
                     aria-label="Close (Press escape to close)"
                   >
-                    <span>Close</span>
                   </button>
                 </div>
               </div>

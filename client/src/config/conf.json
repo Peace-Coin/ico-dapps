@@ -10,5 +10,7 @@
   "EthGasLimit": "21,000",
   "KYC_APPROVED_STATUS": "2",
   "EXCHANGE_WEI_ETH_RATE": 0.000000000000000001,
-  "GOAL_BILLION_USD": 2
+  "GOAL_BILLION_USD": 2,
+  "INFURA_NETWORK_MAIN_URL": "https://rinkeby.infura.io/BGLzy4waTqziQIzsOPov",
+  "INFURA_NETWORK_RINKEBY_URL": "https://rinkeby.infura.io/BGLzy4waTqziQIzsOPov"
 }

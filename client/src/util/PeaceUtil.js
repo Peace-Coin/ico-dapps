@@ -1,5 +1,27 @@
 module.exports = {
 
+ conmaFormat: (number) => {
+
+   Number.prototype.split3 = function() {
+    var r = '', s = this.toString();
+    s.match(/(-?)([0-9]+)(\.[0-9]*)?/);
+    var sp = [RegExp.$1, s = parseInt(RegExp.$2), RegExp.$3];
+    while(s >= 1000) {
+      r = ',' + (s%1000) + r;
+      s = parseInt(s/1000);
+    }
+    return sp[0] + s + r + sp[2];
+  }
+
+  return number.split3();
+ },
+
+ floatFormat: ( number, n )  => {
+      var _pow = Math.pow( 10 , n ) ;
+
+      return Math.round( number * _pow ) / _pow ;
+  },
+
  //param 小数点数値、小数点位置, result:js計算誤差のない数値
  reCalculationMarginOfError: (number, decimalPoint) => {
 

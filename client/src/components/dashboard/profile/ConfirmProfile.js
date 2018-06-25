@@ -14,18 +14,6 @@ import { createProfile, checkProfile } from '../../../actions/profileAction';
 import Modal from 'react-modal';
 import Spinner from '../../UI/Spinner';
 
-
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
-
 class ConfirmProfile extends Component {
   constructor(props) {
     super(props);
@@ -86,6 +74,7 @@ class ConfirmProfile extends Component {
       postalCode: this.state.profile.postalCode,
       cityAddress: this.state.profile.cityAddress,
       streetAddress: this.state.profile.streetAddress,
+      nationality: this.state.profile.nationality,
       idNumber: this.state.profile.idNumber,
       birth: this.state.profile.birth,
       country: this.state.profile.country,
@@ -156,13 +145,26 @@ class ConfirmProfile extends Component {
                     id="frmCountry"
                     value={this.state.profile.country}
                     disabled="true"
-                    style={{fontSize: '1.5em', backgroundColor: '#00b0c3', color: 'white', border: '0px solid grey', borderRadius: '0px'}}
+                    style={{fontSize: '1.5em', backgroundColor: '#00b0c3', color: 'white', border: '0px solid grey', borderRadius: '0px', height: '45px;'}}
                   />
                   </p>
                 </div>
                 <div class="form-group form-group--select form-group--text form-group--select-phone form-group--text-phone">
                   <label for="frmPhone1" class="main main--auth">Phone Number</label>
                   <p class="text">{this.state.profile.phoneNumber1} {this.state.profile.phoneNumber2}</p>
+                </div>
+                <div class="form-group form-group--select form-group--select-country">
+                  <label for="frmCountry" class="main main--auth">Nationality</label>
+                  <p >
+                  <SelectListGroupOfCountry
+                    className="text"
+                    name="country"
+                    id="frmCountry"
+                    value={this.state.profile.nationality}
+                    disabled="true"
+                    style={{fontSize: '1.5em', backgroundColor: '#00b0c3', color: 'white', border: '0px solid grey', borderRadius: '0px', height: '45px;'}}
+                  />
+                  </p>
                 </div>
                 <div class="form-group form-group--text form-group--text-idNum">
                   <label for="frmIdnum" class="main main--auth">ID Number</label>

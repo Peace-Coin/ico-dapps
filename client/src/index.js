@@ -39,10 +39,10 @@ if (token) {
 }
 
 ReactDOM.render(
-<ErrorBoundary>
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <ErrorBoundary>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </ErrorBoundary>,
   document.querySelector('#root')
 );

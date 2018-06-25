@@ -40,6 +40,8 @@ import CompleteProfile from '../components/dashboard/profile/CompleteProfile';
 
 import Auth from '../components/auth/Auth';
 import PlayGround from '../components/playground/PlayGround';
+import ErrorBoundary from '../ErrorBoundary';
+
 
 class AppRouter extends Component {
   render() {
@@ -51,6 +53,7 @@ class AppRouter extends Component {
           <React.Fragment>
             <Navbar />
             <Switch>
+
               <Route exact path="/" component={Signin} />
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/verify/:id" component={Verify} />
@@ -64,7 +67,6 @@ class AppRouter extends Component {
               <Route exact path="/reset-password" component={PasswordReset} />
               <Route exact path="/update-password/:id" component={PasswordUpdate} />
               <Route exact path="/complete-password" component={PasswordComplete} />
-
               <Route
                 exact
                 path="/PlayGround"
@@ -97,6 +99,7 @@ class AppRouter extends Component {
               />
               <Route exact path="/" component={Landing} />
               <Route component={NotFound404} />
+
             </Switch>
           </React.Fragment>
         </Router>

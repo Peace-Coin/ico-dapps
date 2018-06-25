@@ -16,6 +16,7 @@ const popupStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     backgroundColor: 'white',
+    padding: '0px'
   }
 };
 
@@ -30,7 +31,7 @@ const popupStyles2 = {
     backgroundColor: 'white',
     maxWidth: '462px',
     width: '95%',
-    padding: '5px'
+    padding: '0px'
   }
 };
 
@@ -168,7 +169,8 @@ class Signin extends Component {
                         </div>
                       </form>
                     </div>
-                  </div><button type="button" class="modaal-close" id="modaal-close" aria-label="Close (Press escape to close)"><span></span></button></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

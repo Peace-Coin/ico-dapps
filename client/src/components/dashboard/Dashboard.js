@@ -9,10 +9,11 @@ import { getProfileStatus } from '../../actions/profileAction';
 import { getRate } from '../../actions/rateAction';
 import PeaceCoinCrowdsaleToken from '../../ethereum/ico-interface/PeaceCoinCrowdsaleToken';
 import PeaceCoinCrowdsale from '../../ethereum/ico-interface/PeaceCoinCrowdsale';
-import web3 from '../../ethereum/web3';
+import {web3, hasMetamaskExtentions, isEnableMetamaskNetworkPromise} from '../../ethereum/web3';
 import PurchaseHistory from './ethereum/PurchaseHistory';
 import axios from '../../shared/axios';
 import Spinner from '../UI/Spinner';
+const PeaceUtil = require('../../util/PeaceUtil');
 
 const customStyles = {
   content: {
@@ -22,7 +23,8 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    padding: '0px'
   }
 };
 
@@ -37,7 +39,7 @@ const popupStyles = {
     backgroundColor: 'white',
     maxWidth: '600px',
     width: '95%',
-    padding: '5px'
+    padding: '0px'
   }
 };
 
@@ -85,7 +87,11 @@ class Dashboard extends Component {
       dDays: '0',
       dHour: '0',
       dMin: '0',
-      dSec: '0'
+      dSec: '0',
+
+      metamaskNetworkChangeAlertFlg: false,
+      metamaskAlertIsOpen: false,
+      metamaskAlertMessage: '',
     };
 
     this.openEthereumModal = this.openEthereumModal.bind(this);
@@ -107,8 +113,6 @@ class Dashboard extends Component {
     );
     this.countDowm = this.countDowm.bind(this);
 
-    this.onSubmit = this.onSubmit.bind(this);
-
     this.openErrorModal = this.openErrorModal.bind(this);
     this.afterErrorModal = this.afterErrorModal.bind(this);
     this.closeErrorModal = this.closeErrorModal.bind(this);
@@ -116,6 +120,10 @@ class Dashboard extends Component {
     this.openInfoModal = this.openInfoModal.bind(this);
     this.afterInfoModal = this.afterInfoModal.bind(this);
     this.closeInfoModal = this.closeInfoModal.bind(this);
+
+    this.openMetamaskAlertModal = this.openMetamaskAlertModal.bind(this);
+    this.afterMetamaskAlertModal = this.afterMetamaskAlertModal.bind(this);
+    this.closeMetamaskAlertModal = this.closeMetamaskAlertModal.bind(this);
   }
 
   async componentDidMount() {
@@ -248,12 +256,11 @@ class Dashboard extends Component {
         '$1,'
       );
 
-      ethAmount = String(ethAmount).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+      ethAmount = PeaceUtil.floatFormat(ethAmount, 6);
+      ethAmount = PeaceUtil.conmaFormat(ethAmount);
 
-      //raisedは小数点以下切り捨て
-      weiRaised = Math.round(weiRaised);
-
-      weiRaised = String(weiRaised).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+      weiRaised = PeaceUtil.floatFormat(weiRaised, 4);
+      weiRaised = PeaceUtil.conmaFormat(weiRaised);
 
       this.setState({
         tokenAmount,
@@ -267,6 +274,30 @@ class Dashboard extends Component {
       //this.interval = setInterval(this.countDowm, 1000);
 
     } catch (e) {
+
+      if(hasMetamaskExtentions()){
+
+        isEnableMetamaskNetworkPromise().then((value) => {
+
+        }, (error) => {
+
+          this.setState({ loading: false });
+
+          if (process.env.NODE_ENV === 'production') {
+
+            //プレセール中のみ、下記をコメントアウト
+            //this.setState({ errorMessage: 'Please change your metamask network to Main Ethereum Network.' });
+            this.setState({ errorMessage: 'Please change your metamask network to Rinkeby Test Network.' });
+            this.setState({ errorIsOpen: true });
+          }else{
+
+            this.setState({ errorMessage: 'Please change your metamask network to Rinkeby Test Network.' });
+            this.setState({ errorIsOpen: true });
+          }
+
+          return;
+        });
+      }
 
       var conf = require('../../config/conf.json');
 
@@ -300,10 +331,8 @@ class Dashboard extends Component {
 
       this.props.getRate('', weiRaised, goalEth, this.props.history);
 
-      //raisedは小数点以下切り捨て
-      weiRaised = Math.round(weiRaised);
-
-      weiRaised = String(weiRaised).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+      weiRaised = PeaceUtil.floatFormat(weiRaised, 4);
+      weiRaised = PeaceUtil.conmaFormat(weiRaised);
 
       this.setState({
         weiRaised
@@ -433,15 +462,18 @@ class Dashboard extends Component {
     this.setState({ smartContractAddressIsOpen: false });
   }
 
-  async onSubmit(event) {
-    event.preventDefault();
-    PeaceCoinCrowdsale.methods.buyTokens(this.state.investor).send({
-      from: this.state.investor,
-      value: web3.utils.toWei(this.state.value, 'ether')
-    });
+  openMetamaskAlertModal() {
+    this.setState({ metamaskAlertIsOpen: true });
+  }
+
+  afterMetamaskAlertModal() {}
+
+  closeMetamaskAlertModal() {
+    this.setState({ metamaskAlertIsOpen: false });
   }
 
   render() {
+
     let goalPar = this.state.goalPar;
 
     let dashboardContent;
@@ -465,9 +497,61 @@ class Dashboard extends Component {
         usdRateAmount = 0;
       }
 
+      let totalUsdAmount = this.props.rates.totalUsdAmount;
+
+      if(totalUsdAmount == undefined){
+
+        totalUsdAmount = 0;
+      }
+
       dashboardContent = (
         <div class="peaceCoinIco dashboard">
           <div>
+            <div>
+            <Modal
+              isOpen={this.state.metamaskAlertIsOpen}
+              onAfterOpen={this.afterMetamaskAlertModal}
+              onRequestClose={this.closeMetamaskAlertModal}
+              style={customStyles}
+              contentLabel="Metamask Alert Modal"
+            >
+              <div
+                class="modaal-wrapper modaal-inline l-content_modal--smartContract themeB"
+                id="modaal_152816659947189668a73f3483"
+              >
+                <div class="modaal-outer-wrapper">
+                  <div class="modaal-inner-wrapper">
+                    <div class="modaal-container">
+                      <div
+                        class="modaal-content modaal-focus"
+                        aria-hidden="false"
+                        aria-label="Dialog Window (Press escape to close)"
+                        role="dialog"
+                        tabindex="0"
+                      >
+                        <div class="modaal-content-container">
+                          <h3 class="title_content title_content__a title_content__a-modal title_content-smartContract">
+                            Information
+                          </h3>
+                          <p class="text">
+                            {this.state.metamaskAlertMessage}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={this.closeMetamaskAlertModal}
+                        type="button"
+                        class="modaal-close"
+                        id="modaal-close"
+                        aria-label="Close (Press escape to close)"
+                      >
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Modal>
+            </div>
             <div>
               <Modal
                 isOpen={this.state.ethereumModalIsOpen}
@@ -540,14 +624,12 @@ class Dashboard extends Component {
                           </div>
                         </div>
                         <button
-                          style={{ border: '1px solid grey' }}
                           onClick={this.closeBitcoinModal}
                           type="button"
                           class="modaal-close"
                           id="modaal-close"
                           aria-label="Close (Press escape to close)"
                         >
-                          <span>Close</span>
                         </button>
                       </div>
                     </div>
@@ -593,14 +675,12 @@ class Dashboard extends Component {
                           </div>
                         </div>
                         <button
-                          style={{ border: '1px solid grey' }}
                           onClick={this.closeSmartContractAddressModal}
                           type="button"
                           class="modaal-close"
                           id="modaal-close"
                           aria-label="Close (Press escape to close)"
                         >
-                          <span>Close</span>
                         </button>
                       </div>
                     </div>
@@ -641,14 +721,12 @@ class Dashboard extends Component {
                           </div>
                         </div>
                         <button
-                          style={{ border: '1px solid grey' }}
                           onClick={this.closeErrorModal}
                           type="button"
                           class="modaal-close"
                           id="modaal-close"
                           aria-label="Close (Press escape to close)"
                         >
-                          <span>Close</span>
                         </button>
                       </div>
                     </div>
@@ -689,14 +767,12 @@ class Dashboard extends Component {
                           </div>
                         </div>
                         <button
-                          style={{ border: '1px solid grey' }}
                           onClick={this.closeInfoModal}
                           type="button"
                           class="modaal-close"
                           id="modaal-close"
                           aria-label="Close (Press escape to close)"
                         >
-                          <span>Close</span>
                         </button>
                       </div>
                     </div>
@@ -832,7 +908,7 @@ class Dashboard extends Component {
                         <span class="coin coin-eth">
                           <span class="unit coin__unit">$ </span>
                           <span class="num coin__num">
-                            {this.props.rates.totalUsdAmount}
+                            {totalUsdAmount}
                           </span>
                         </span>
                       </p>

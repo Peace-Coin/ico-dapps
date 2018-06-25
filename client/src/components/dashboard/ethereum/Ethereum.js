@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 // import PeaceCoinCrowdsaleToken from '../../../ethereum/ico-interface/PeaceCoinCrowdsaleToken';
 import PeaceCoinCrowdsale from '../../../ethereum/ico-interface/PeaceCoinCrowdsale';
 import web3 from '../../../ethereum/web3';
+import {hasMetamaskExtentions} from '../../../ethereum/web3';
 import Modal from 'react-modal';
 //import {Parent} from '../Dashboard';
 
@@ -18,7 +19,8 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    padding: '0px'
   }
 };
 
@@ -165,6 +167,14 @@ export default class Ethereum extends Component {
       errorIsOpen: false,
     });
 
+    if(!hasMetamaskExtentions()){
+
+      this.setState({ errorMessage: 'Please install Metamask extentions.' });
+      this.setState({ errorIsOpen: true });
+
+      return;
+    }
+
     if (isFinite(this.state.amount) && this.state.amount > 0) {
       e.preventDefault();
 
@@ -183,8 +193,11 @@ export default class Ethereum extends Component {
           });
         })
         .catch(err => {
+
           this.setState({
-            errorMessage: 'Please check Metamask login and install Metamask',
+            //プレセール中は下記をコメントアウト
+            //errorMessage: 'Please change your metamask network to Main Ethereum Network.',
+            errorMessage: 'Please change your metamask network to Rinkeby Test Network.',
             errorIsOpen: true,
           });
         });
@@ -363,14 +376,12 @@ export default class Ethereum extends Component {
                 </div>
               </div>
               <button
-                style={{ border: '1px solid grey' }}
                 onClick={this.props.close}
                 type="button"
                 class="modaal-close"
                 id="modaal-close"
                 aria-label="Close (Press escape to close)"
               >
-                <span>Close</span>
               </button>
             </div>
           </div>
@@ -410,14 +421,12 @@ export default class Ethereum extends Component {
                       </div>
                     </div>
                     <button
-                      style={{ border: '1px solid grey' }}
                       onClick={this.closeInfoModal}
                       type="button"
                       class="modaal-close"
                       id="modaal-close"
                       aria-label="Close (Press escape to close)"
                     >
-                      <span>Close</span>
                     </button>
                   </div>
                 </div>
@@ -457,7 +466,6 @@ export default class Ethereum extends Component {
                       </div>
                     </div>
                     <button
-                      style={{ border: '1px solid grey' }}
                       onClick={this.closeErrorModal}
                       type="button"
                       class="modaal-close"
