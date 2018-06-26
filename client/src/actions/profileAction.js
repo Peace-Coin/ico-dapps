@@ -9,12 +9,13 @@ import {
 } from './types';
 
 import axios from '../shared/axios';
+import {getAxios} from '../shared/axios';
 import history from '../shared/history';
 
 // GET: Current Profile
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
-  axios
+  getAxios()
     .get('/api/profile')
     .then(res =>
       dispatch({
@@ -32,7 +33,8 @@ export const getCurrentProfile = () => dispatch => {
 
 // GET: Profile Status
 export const getProfileStatus = () => dispatch => {
-  axios
+
+  getAxios()
     .get('/api/profile/status')
     .then(res =>
       dispatch({

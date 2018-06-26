@@ -1,4 +1,5 @@
 import {
+  CLEAR_USER,
   AUTH_USER,
   UNAUTH_USER,
   AUTH_ERROR,
@@ -18,6 +19,11 @@ const intialState = {
 
 const reducer = (state = intialState, action) => {
   switch (action.type) {
+    case CLEAR_USER:
+      return updateObject(state, {
+        authenticated: false,
+        user: {}
+      });
     case AUTH_USER:
       return updateObject(state, {
         authenticated: true,

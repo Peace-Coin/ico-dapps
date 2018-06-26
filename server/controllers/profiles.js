@@ -18,7 +18,23 @@ module.exports = {
   },
 
   checkProfile: async (req, res, next) => {
-    res.json(req.body);
+
+    Profile.findOne({"Profile.ethereumAddress":req.body.ethereumAddress}).then(profile => {
+
+      //すでにethereumAddressが存在するかつ、それが自分のアカウント以外の場合
+      if(profile != null && profile.user != req.user.id){
+
+        let validation = {
+          ethereumAddress: 'ERC20 Address is already in use'
+        };
+
+        res.status(400).json({validation});
+
+      }else{
+
+        res.json(req.body);
+      }
+    });
   },
 
   // Create Profile
@@ -141,6 +157,10 @@ module.exports = {
 
   // Get Profile
   getProfileByUserId: async (req, res) => {
+
+    console.log('getProfileByUserId req.user.id -> ')
+    console.log(req.user.id)
+
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         if (!profile) {
@@ -154,6 +174,10 @@ module.exports = {
 
   // Get Profile Status
   getProfileStatus: async (req, res) => {
+
+    console.log('getProfileStatus req.user.id -> ')
+    console.log(req.user.id)
+
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         if (!profile) {

@@ -61,6 +61,11 @@ class Signin extends Component {
     };
   }
 
+  componentDidMount() {
+
+    this.props.auth.error = null;
+  }
+
   componentWillReceiveProps(nextProps) {
 
     this.setState({ loading: false });
@@ -90,6 +95,10 @@ class Signin extends Component {
   closeModal() {}
 
   render() {
+
+    console.log('this.props.auth.error -> ')
+    console.log(this.props.auth.error)
+
     const { handleSubmit } = this.props;
 
     var { errors } = this.state;

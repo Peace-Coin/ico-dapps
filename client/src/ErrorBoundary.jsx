@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from './shared/axios';
 import Modal from 'react-modal';
+import history from './shared/history';
 
 const customStyles = {
   content: {
@@ -50,7 +51,14 @@ export default class ErrorBoundary extends React.Component {
   closeModal() {
 
     this.setState({ modalIsOpen: false });
-    this.props.history.push('/signin');
+
+    //historyだと不具合が出るため、hrefで[/]へ遷移する
+    const href = document.createElement("script");
+
+    href.src = "/js/errorHistory.js";
+    href.async = true;
+
+    document.body.appendChild(href);
   }
 
   componentDidCatch(error, errorInfo) {

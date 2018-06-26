@@ -1,7 +1,7 @@
 import axiosBase from 'axios';
 import { getURL } from './utility';
 
-const axios = axiosBase.create({
+let axios = axiosBase.create({
   baseURL: getURL(),
   headers: {
     Authorization: `${localStorage.getItem('token')}`
@@ -9,3 +9,16 @@ const axios = axiosBase.create({
 });
 
 export default axios;
+
+export const getAxios = () => {
+
+  console.log('getAxios token-> ')
+  console.log(localStorage.getItem('token'))
+
+  return axiosBase.create({
+    baseURL: getURL(),
+    headers: {
+      Authorization: `${localStorage.getItem('token')}`
+  }
+  });
+}

@@ -103,6 +103,11 @@ class Signup extends Component {
     this.closeAmlModal = this.closeAmlModal.bind(this);
   }
 
+  componentDidMount() {
+
+    this.props.auth.error = null;
+  }
+
   componentWillReceiveProps(nextProps) {
 
     this.setState({ loading: false });
@@ -182,6 +187,9 @@ class Signup extends Component {
     }
 
     const loading = this.state.loading;
+
+    console.log('loading -> ')
+    console.log(loading)
 
     let content;
 

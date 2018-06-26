@@ -12,6 +12,7 @@ import PeaceCoinCrowdsale from '../../ethereum/ico-interface/PeaceCoinCrowdsale'
 import {web3, hasMetamaskExtentions, isEnableMetamaskNetworkPromise} from '../../ethereum/web3';
 import PurchaseHistory from './ethereum/PurchaseHistory';
 import axios from '../../shared/axios';
+import {getAxios} from '../../shared/axios';
 import Spinner from '../UI/Spinner';
 const PeaceUtil = require('../../util/PeaceUtil');
 
@@ -92,6 +93,8 @@ class Dashboard extends Component {
       metamaskNetworkChangeAlertFlg: false,
       metamaskAlertIsOpen: false,
       metamaskAlertMessage: '',
+
+      goalEth: '0',
     };
 
     this.openEthereumModal = this.openEthereumModal.bind(this);
@@ -133,7 +136,7 @@ class Dashboard extends Component {
       this.props.getProfileStatus();
 
       //ポップアップ制御用
-      axios.get('/api/profile').then(res => {
+      getAxios().get('/api/profile').then(res => {
         this.setState({ profile: res.data });
 
         let investor = this.state.profile.Profile.ethereumAddress;
@@ -256,7 +259,7 @@ class Dashboard extends Component {
         '$1,'
       );
 
-      ethAmount = PeaceUtil.floatFormat(ethAmount, 6);
+      ethAmount = PeaceUtil.floatFormat(ethAmount, 4);
       ethAmount = PeaceUtil.conmaFormat(ethAmount);
 
       weiRaised = PeaceUtil.floatFormat(weiRaised, 4);
@@ -265,7 +268,8 @@ class Dashboard extends Component {
       this.setState({
         tokenAmount,
         weiRaised,
-        ethAmount
+        ethAmount,
+        goalEth
       });
 
       this.setState({ loading: false });
@@ -335,7 +339,8 @@ class Dashboard extends Component {
       weiRaised = PeaceUtil.conmaFormat(weiRaised);
 
       this.setState({
-        weiRaised
+        weiRaised,
+        goalEth
       });
 
       this.setState({ tokenAmount: 0 });
@@ -922,9 +927,9 @@ class Dashboard extends Component {
                           </span>
                           <span class="coin coin-usd coin--goal">
                             <span class="sub">Goal</span>
-                            <span class="unit coin__unit">$</span>
+                            <span class="unit coin__unit"></span>
                             <span class="num coin__num">
-                              {this.state.conf.GOAL_BILLION_USD}B
+                              {this.state.goalEth} ETH
                             </span>
                           </span>
                         </div>

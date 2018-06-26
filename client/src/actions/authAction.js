@@ -1,4 +1,5 @@
 import {
+  CLEAR_USER,
   AUTH_USER,
   AUTH_ERROR,
   UNAUTH_USER,
@@ -7,6 +8,7 @@ import {
 } from './types';
 
 import axios from '../shared/axios';
+import {getAxios} from '../shared/axios';
 import history from '../shared/history';
 import setAuthToken from '../shared/setAuthToken';
 import jwt_decode from 'jwt-decode';
@@ -18,10 +20,10 @@ import { Route, Redirect } from 'react-router-dom';
 
 export const signinUser = ({ email, password }) => {
 
-  localStorage.removeItem('token');
+  localStorage.clear();
 
   return dispatch => {
-    axios
+    getAxios()
       .post('/api/users/signin', {
         email: email,
         password: password
@@ -114,9 +116,18 @@ export const changePassword = ({ secretToken, password }) => {
 };
 
 export const signoutUser = () => {
-  localStorage.removeItem('token');
-  setAuthToken(false);
-  return { type: UNAUTH_USER };
+
+  localStorage.clear();
+
+  return dispatch => {
+
+    // dispatch({
+    //   type: CLEAR_USER
+    // });
+
+    localStorage.removeItem('token');
+    setAuthToken(false);
+  };
 };
 
 // export const fetchMessage = () => {

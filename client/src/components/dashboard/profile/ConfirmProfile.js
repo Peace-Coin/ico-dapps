@@ -138,14 +138,14 @@ class ConfirmProfile extends Component {
                 </div>
                 <div class="form-group form-group--select form-group--select-country">
                   <label for="frmCountry" class="main main--auth">Country</label>
-                  <p >
+                  <p>
                   <SelectListGroupOfCountry
                     className="text"
                     name="country"
                     id="frmCountry"
                     value={this.state.profile.country}
                     disabled="true"
-                    style={{fontSize: '1.5em', backgroundColor: '#00b0c3', color: 'white', border: '0px solid grey', borderRadius: '0px', height: '45px;'}}
+                    style={{fontSize: '1.5em', backgroundColor: '#00b0c3', color: 'white', border: '0px solid grey', borderRadius: '0px', height: '50px'}}
                   />
                   </p>
                 </div>
@@ -155,14 +155,14 @@ class ConfirmProfile extends Component {
                 </div>
                 <div class="form-group form-group--select form-group--select-country">
                   <label for="frmCountry" class="main main--auth">Nationality</label>
-                  <p >
+                  <p>
                   <SelectListGroupOfCountry
                     className="text"
                     name="country"
                     id="frmCountry"
                     value={this.state.profile.nationality}
                     disabled="true"
-                    style={{fontSize: '1.5em', backgroundColor: '#00b0c3', color: 'white', border: '0px solid grey', borderRadius: '0px', height: '45px;'}}
+                    style={{fontSize: '1.5em', backgroundColor: '#00b0c3', color: 'white', border: '0px solid grey', borderRadius: '0px', height: '50px'}}
                   />
                   </p>
                 </div>
