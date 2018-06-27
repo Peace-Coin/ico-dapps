@@ -96,9 +96,6 @@ class Signin extends Component {
 
   render() {
 
-    console.log('this.props.auth.error -> ')
-    console.log(this.props.auth.error)
-
     const { handleSubmit } = this.props;
 
     var { errors } = this.state;

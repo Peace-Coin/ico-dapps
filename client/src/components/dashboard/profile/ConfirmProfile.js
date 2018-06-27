@@ -172,11 +172,11 @@ class ConfirmProfile extends Component {
                 </div>
                 <div class="form-group form-group--text form-group--text-erc">
                   <label for="frmErc" class="main main--auth">ERC20 Address</label>
-                  <p class="text">{this.state.profile.ethereumAddress}</p>
+                  <p class="text" style={{overflowX: 'auto'}} >{this.state.profile.ethereumAddress}</p>
                 </div>
                 <div class="form-group form-group--text form-group--text-erc">
                   <label for="frmErc" class="main main--auth">BITCOIN Address</label>
-                  <p class="text">{this.state.profile.bitcoinAddress}</p>
+                  <p class="text" style={{overflowX: 'auto'}} >{this.state.profile.bitcoinAddress}</p>
                 </div>
                 <div class="form-group form-group--file form-group--file-photoIdDocu help">
                   <label for="frmPhotoIdDocu" class="main main--auth">Photo ID document</label>

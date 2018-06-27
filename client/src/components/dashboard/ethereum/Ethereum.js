@@ -121,7 +121,17 @@ export default class Ethereum extends Component {
   }
 
   async componentDidMount() {
-    let rate = await PeaceCoinCrowdsale.methods.getCurrentRate().call();
+
+    let rate;
+
+    if (process.env.NODE_ENV === 'production') {
+
+      rate = 10000;
+
+    }else{
+
+      rate = await PeaceCoinCrowdsale.methods.getCurrentRate().call();
+    }
 
     let investor = this.props.ethreumAddress;
 
@@ -136,7 +146,17 @@ export default class Ethereum extends Component {
     var conf = require('../../../config/conf.json');
     let gasLimit = conf.GasLimit;
     let gasPrice = conf.GasPrice;
-    let baseRate = await PeaceCoinCrowdsale.methods.rate().call();
+
+    let baseRate;
+
+    if (process.env.NODE_ENV === 'production') {
+
+      baseRate = 10000;
+
+    }else{
+
+      baseRate = await PeaceCoinCrowdsale.methods.rate().call();
+    }
 
     let myEtherWalletUrl =
       'https://www.myetherwallet.com/?to=' +
@@ -194,12 +214,20 @@ export default class Ethereum extends Component {
         })
         .catch(err => {
 
-          this.setState({
-            //プレセール中は下記をコメントアウト
-            //errorMessage: 'Please change your metamask network to Main Ethereum Network.',
-            errorMessage: 'Please change your metamask network to Rinkeby Test Network.',
-            errorIsOpen: true,
-          });
+          if (process.env.NODE_ENV === 'production') {
+
+            this.setState({
+              errorMessage: 'Please change your metamask network to Main Ethereum Network.',
+              errorIsOpen: true,
+            });
+
+          }else{
+
+            this.setState({
+              errorMessage: 'Please change your metamask network to Rinkeby Test Network.',
+              errorIsOpen: true,
+            });
+          }
         });
 
       }catch(err){
@@ -244,6 +272,25 @@ export default class Ethereum extends Component {
       totalPce = String(totalPce).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
       this.setState({ totalPce: totalPce });
+
+      const { ethreumAddress } = this.props;
+      var conf = require('../../../config/conf.json');
+      let gasLimit = conf.GasLimit;
+      let gasPrice = conf.GasPrice;
+
+      let myEtherWalletUrl =
+        'https://www.myetherwallet.com/?to=' +
+        ethreumAddress +
+        '&value=' +
+        e.target.value
+        '&gas=' +
+        gasLimit +
+        '&gasprice=' +
+        gasPrice +
+        '#send-transaction';
+
+        this.setState({ myEtherWalletUrl: myEtherWalletUrl });
+
     } else {
       this.setState({ [e.target.name]: e.target.value });
 

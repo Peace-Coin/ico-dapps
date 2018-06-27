@@ -52,7 +52,7 @@ export const getProfileStatus = () => dispatch => {
 
 // POST: Check Profile
 export const checkProfile = (profileData, history) => dispatch => {
-  axios
+  getAxios()
     .post('/api/profile/checkProfile', profileData)
     .then(res =>
       history.push({
@@ -71,18 +71,17 @@ export const checkProfile = (profileData, history) => dispatch => {
 // POST: Create Profile
 export const createProfile = (profileData, history) => dispatch => {
 
-  axios
+  getAxios()
     .post('/api/profile', profileData)
     .then(res => history.push('/dashboard/profile/complete-profile'))
     .catch(err => {
-      console.log(err);
       history.push('/dashboard');
     });
 };
 
 // POST: Change EthreumAddress
 export const changeEthreumAddress = (ethreumAddress, history) => dispatch => {
-  axios
+  getAxios()
     .post('/api/profile/changeEthreumAddress', ethreumAddress)
     .then(res =>
       dispatch({
@@ -100,7 +99,7 @@ export const changeEthreumAddress = (ethreumAddress, history) => dispatch => {
 
 // POST: Change BitcoinAddress
 export const changeBitcoinAddress = (bitcoinAddress, history) => dispatch => {
-  axios
+  getAxios()
     .post('/api/profile/changeBitcoinAddress', bitcoinAddress)
     .then(res =>
       dispatch({

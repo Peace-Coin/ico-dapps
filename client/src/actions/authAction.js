@@ -61,7 +61,7 @@ export const setCurrentUser = decoded => {
 
 export const signupUser = ({ email, password }) => {
   return dispatch => {
-    axios
+    getAxios()
       .post('/api/users/signup', {
         email: email,
         password: password
@@ -80,7 +80,7 @@ export const signupUser = ({ email, password }) => {
 
 export const resetPassword = ({ email }) => {
   return dispatch => {
-    axios
+    getAxios()
       .post('/api/users/reset/password', {
         email: email
       })
@@ -98,7 +98,7 @@ export const resetPassword = ({ email }) => {
 
 export const changePassword = ({ secretToken, password }) => {
   return dispatch => {
-    axios
+    getAxios()
       .post('/api/users/update/password', {
         secretToken: secretToken,
         password: password
@@ -154,7 +154,7 @@ export const setAuthRedirectPath = path => {
 
 export const verifyEmail = secretToken => {
   return dispatch => {
-    axios
+    getAxios()
       .post('/api/users/verify', { secretToken: secretToken })
       .catch(err => {});
   };
@@ -174,7 +174,7 @@ export const confirmAuth = ({
   terms
 }) => {
   return dispatch => {
-    axios
+    getAxios()
       .post('/api/auth/validation', {
         name: name,
         address: address,
@@ -218,7 +218,7 @@ export const entryAuth = ({
   terms
 }) => {
   return dispatch => {
-    axios
+    getAxios()
       .post('/api/auth/insert', {
         name: name,
         address: address,

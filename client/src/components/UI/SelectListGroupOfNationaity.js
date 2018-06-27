@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled, className, id, style}) => {
+const SelectListGroupOfNationaity = ({ name, value, error, info, onChange,disabled, className, id, style}) => {
 
   return (
       <select
@@ -58,6 +58,7 @@ const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled,
       <option value="TD">Chad</option>
       <option value="CD">Channel Islands</option>
       <option value="CL">Chile</option>
+      <option value="CN">China</option>
       <option value="CI">Christmas Island</option>
       <option value="CS">Cocos Island</option>
       <option value="CO">Colombia</option>
@@ -121,10 +122,13 @@ const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled,
       <option value="IL">Israel</option>
       <option value="IT">Italy</option>
       <option value="JM">Jamaica</option>
+      <option value="JP">Japan</option>
       <option value="JO">Jordan</option>
       <option value="KZ">Kazakhstan</option>
       <option value="KE">Kenya</option>
       <option value="KI">Kiribati</option>
+      <option value="NK">Korea North</option>
+      <option value="KS">Korea South</option>
       <option value="KW">Kuwait</option>
       <option value="KG">Kyrgyzstan</option>
       <option value="LA">Laos</option>
@@ -249,6 +253,7 @@ const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled,
       <option value="VE">Venezuela</option>
       <option value="VN">Vietnam</option>
       <option value="VB">Virgin Islands (Brit)</option>
+      <option value="VA">Virgin Islands (USA)</option>
       <option value="WK">Wake Island</option>
       <option value="WF">Wallis &amp; Futana Is</option>
       <option value="YE">Yemen</option>
@@ -259,7 +264,7 @@ const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled,
   );
 };
 
-SelectListGroupOfCountry.propTypes = {
+SelectListGroupOfNationaity.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   info: PropTypes.string,
@@ -268,4 +273,4 @@ SelectListGroupOfCountry.propTypes = {
   disabled: PropTypes.string,
 };
 
-export default SelectListGroupOfCountry;
+export default SelectListGroupOfNationaity;

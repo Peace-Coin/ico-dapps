@@ -20,7 +20,9 @@ const customStyles = {
     backgroundColor: 'white',
     maxWidth: '462px',
     width: '95%',
-    padding: '0px'
+    height: '80%',
+    overflowY: 'hidden',
+    padding: '0px',
   }
 };
 
@@ -187,9 +189,6 @@ class Signup extends Component {
     }
 
     const loading = this.state.loading;
-
-    console.log('loading -> ')
-    console.log(loading)
 
     let content;
 

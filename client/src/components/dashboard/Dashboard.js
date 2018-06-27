@@ -95,6 +95,8 @@ class Dashboard extends Component {
       metamaskAlertMessage: '',
 
       goalEth: '0',
+
+      openEnableEthPopFlg: true,
     };
 
     this.openEthereumModal = this.openEthereumModal.bind(this);
@@ -149,69 +151,51 @@ class Dashboard extends Component {
         });
       });
 
-      // Crowdsale Token
-      const owner = await PeaceCoinCrowdsaleToken.methods.owner().call();
-      const tokenName = await PeaceCoinCrowdsaleToken.methods.name().call();
-      const symbol = await PeaceCoinCrowdsaleToken.methods.symbol().call();
-      const decimals = await PeaceCoinCrowdsaleToken.methods.decimals().call();
+      let rate = 10000;
+      let goal = 0;
+      let openingTime;
+      let closingTime;
 
-      // Crowdsale
-      let rate = await PeaceCoinCrowdsale.methods.getCurrentRate().call();
+      if (process.env.NODE_ENV === 'production') {
 
-      const token = await PeaceCoinCrowdsale.methods.token().call();
-      const wallet = await PeaceCoinCrowdsale.methods.wallet().call();
+      }else{
 
-      const goal = await PeaceCoinCrowdsale.methods.goal().call();
+        rate = await PeaceCoinCrowdsale.methods.getCurrentRate().call();
+        goal = await PeaceCoinCrowdsale.methods.goal().call();
 
-      const vault = await PeaceCoinCrowdsale.methods.vault().call();
-      const crowdsalOowner = await PeaceCoinCrowdsale.methods.owner().call();
-      const cap = await PeaceCoinCrowdsale.methods.cap().call();
-      let openingTime = await PeaceCoinCrowdsale.methods.openingTime().call();
+        openingTime = await PeaceCoinCrowdsale.methods.openingTime().call();
 
-      var d = new Date(Number(openingTime) * 1000);
-      var year = d.getFullYear();
-      var month = d.getMonth() + 1;
-      var day = d.getDate();
-      var hour = ('0' + d.getHours()).slice(-2);
-      var min = ('0' + d.getMinutes()).slice(-2);
-      var sec = ('0' + d.getSeconds()).slice(-2);
+        var d = new Date(Number(openingTime) * 1000);
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        var hour = ('0' + d.getHours()).slice(-2);
+        var min = ('0' + d.getMinutes()).slice(-2);
+        var sec = ('0' + d.getSeconds()).slice(-2);
 
-      openingTime = d.getTime();
+        openingTime = d.getTime();
 
-      let closingTime = await PeaceCoinCrowdsale.methods.closingTime().call();
+        closingTime = await PeaceCoinCrowdsale.methods.closingTime().call();
 
-      d = new Date(Number(closingTime) * 1000);
-      year = d.getFullYear();
-      month = d.getMonth() + 1;
-      day = d.getDate();
-      hour = ('0' + d.getHours()).slice(-2);
-      min = ('0' + d.getMinutes()).slice(-2);
-      sec = ('0' + d.getSeconds()).slice(-2);
+        d = new Date(Number(closingTime) * 1000);
+        year = d.getFullYear();
+        month = d.getMonth() + 1;
+        day = d.getDate();
+        hour = ('0' + d.getHours()).slice(-2);
+        min = ('0' + d.getMinutes()).slice(-2);
+        sec = ('0' + d.getSeconds()).slice(-2);
 
-      closingTime = d.getTime();
-
-      let value;
+        closingTime = d.getTime();
+      }
 
       var conf = require('../../config/conf.json');
 
       this.setState({
         //PeaceCoinCrowdSale
         rate,
-        token,
-        wallet,
-
         goal,
-        vault,
-        crowdsalOowner,
-        cap,
         openingTime,
         closingTime,
-        //PeaceCoinCrowdSaleToken
-        owner,
-        tokenName,
-        symbol,
-        decimals,
-
         conf
       });
 
@@ -233,11 +217,17 @@ class Dashboard extends Component {
         .times(conf.EXCHANGE_WEI_ETH_RATE)
         .toPrecision();
 
-      //eth raised = weiRaised * exchange_length
-      let weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
+      let weiRaised = 0;
 
-      let goalPar = (weiRaised / goal) * 100;
+      let goalPar = 0;
       goalPar = Math.round(goalPar);
+
+      //Test環境
+      if (process.env.NODE_ENV != 'production') {
+        weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
+        goalPar = (weiRaised / goal) * 100;
+        goalPar = Math.round(goalPar);
+      }
 
       this.setState({
         goalPar: goalPar
@@ -283,15 +273,17 @@ class Dashboard extends Component {
 
         isEnableMetamaskNetworkPromise().then((value) => {
 
+          this.setState({ openEnableEthPopFlg: true });
+
         }, (error) => {
+
+          this.setState({ openEnableEthPopFlg: false });
 
           this.setState({ loading: false });
 
           if (process.env.NODE_ENV === 'production') {
 
-            //プレセール中のみ、下記をコメントアウト
-            //this.setState({ errorMessage: 'Please change your metamask network to Main Ethereum Network.' });
-            this.setState({ errorMessage: 'Please change your metamask network to Rinkeby Test Network.' });
+            this.setState({ errorMessage: 'Please change your metamask network to Main Ethereum Network.' });
             this.setState({ errorIsOpen: true });
           }else{
 
@@ -301,6 +293,10 @@ class Dashboard extends Component {
 
           return;
         });
+
+      }else{
+
+        this.setState({ openEnableEthPopFlg: true });
       }
 
       var conf = require('../../config/conf.json');
@@ -312,13 +308,19 @@ class Dashboard extends Component {
       //PeaceUtil 小数点以下誤差吸収ライブラリ
       var BigNumber = require('bignumber.js');
 
-      //eth raised = weiRaised * exchange_length
-      let weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
+      let weiRaised = 0;
 
-      const goal = await PeaceCoinCrowdsale.methods.goal().call();
+      let goal = 0;
 
-      let goalPar = (weiRaised / goal) * 100;
+      let goalPar = 0;
       goalPar = Math.round(goalPar);
+
+      //Test環境
+      if (process.env.NODE_ENV != 'production') {
+        weiRaised = await PeaceCoinCrowdsale.methods.weiRaised().call();
+        goalPar = (weiRaised / goal) * 100;
+        goalPar = Math.round(goalPar);
+      }
 
       this.setState({
         goalPar: goalPar
@@ -407,6 +409,22 @@ class Dashboard extends Component {
   }
 
   openEthereumModal() {
+
+    //メタマスクネットワークが正しくない場合、許可しない
+    if(!this.state.openEnableEthPopFlg){
+
+      if (process.env.NODE_ENV === 'production') {
+
+        this.setState({ errorMessage: 'Please change your metamask network to Main Ethereum Network.' });
+        this.setState({ errorIsOpen: true });
+      }else{
+
+        this.setState({ errorMessage: 'Please change your metamask network to Rinkeby Test Network.' });
+        this.setState({ errorIsOpen: true });
+      }
+
+      return;
+    }
 
     //KYC 登録済みであること 承認状態は問わない
     if (this.props.profile.profileStatus != undefined
@@ -507,6 +525,16 @@ class Dashboard extends Component {
       if(totalUsdAmount == undefined){
 
         totalUsdAmount = 0;
+      }
+
+      let smartContractAddress;
+
+      if (process.env.NODE_ENV === 'production') {
+
+        smartContractAddress = this.state.conf.SMART_CONTRACT_ADDRESS;
+      }else{
+
+        smartContractAddress = this.state.conf.Test_SMART_CONTRACT_ADDRESS;
       }
 
       dashboardContent = (
@@ -669,7 +697,7 @@ class Dashboard extends Component {
                               PEACE COIN Smart Contract Address
                             </h3>
                             <span class="address">
-                              {this.state.conf.PeaceCoinCrowdsaleAddress}
+                              {smartContractAddress}
                             </span>
                             <p class="text">
                               Copy this address to your wallet to view your

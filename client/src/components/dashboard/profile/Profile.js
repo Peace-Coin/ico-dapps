@@ -342,13 +342,13 @@ class Profile extends Component {
                         <label for="frmErc" class="main main--auth">
                           ERC20 Address
                         </label>
-                        <p class="text">{profile.Profile.ethereumAddress}</p>
+                        <p class="text" style={{overflowX: 'auto'}} >{profile.Profile.ethereumAddress}</p>
                       </div>
                       <div class="form-group form-group--text form-group--text-erc">
                         <label for="frmErc" class="main main--auth">
                           BITCOIN Address
                         </label>
-                        <p class="text">{profile.Profile.bitcoinAddress}</p>
+                        <p class="text" style={{overflowX: 'auto'}} >{profile.Profile.bitcoinAddress}</p>
                       </div>
                       <div class="form-group form-group--file form-group--file-photoIdDocu help">
                         <label for="frmPhotoIdDocu" class="main main--auth">

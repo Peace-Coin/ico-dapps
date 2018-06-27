@@ -7,6 +7,7 @@ import TextFieldGroup from '../../UI/TextFieldGroup';
 import TextAreaFieldGroup from '../../UI/TextAreaFieldGroup';
 import InputGroup from '../../UI/InputGroup';
 import SelectListGroupOfCountry from '../../UI/SelectListGroupOfCountry';
+import SelectListGroupOfNationaity from '../../UI/SelectListGroupOfNationaity';
 import SelectListGroup from '../../UI/SelectListGroup';
 import FileFieldGroup from '../../UI/FileFieldGroup';
 import CheckBoxGroup from '../../UI/CheckBoxGroup';
@@ -26,6 +27,8 @@ const customStyles = {
     backgroundColor: 'white',
     maxWidth: '462px',
     width: '95%',
+    height: '80%',
+    overflowY: 'hidden',
     padding: '0px'
   }
 };
@@ -37,15 +40,15 @@ class CreateProfile extends Component {
       firstName: '',
       lastName: '',
       gender: '',
-      phoneNumber1: '+1',
+      phoneNumber1: '+...',
       phoneNumber2: '',
       birth: '',
       postalCode: '',
       cityAddress: '',
       streetAddress: '',
-      nationality: 'US',
+      nationality: '',
       idNumber: '',
-      country: 'US',
+      country: '',
       passport: '',
       certificateResidence: '',
       picture: '',
@@ -555,7 +558,7 @@ class CreateProfile extends Component {
                       <div class="form-group form-group--select form-group--select-country">
                         <label for="frmCountry" class="main main--auth">Nationality<span class="required obj-required">*</span></label>
                         <div class="select-wrap">
-                          <SelectListGroupOfCountry
+                          <SelectListGroupOfNationaity
                             className="theme-is-err"
                             name="nationality"
                             id="frmCountry"
@@ -579,7 +582,7 @@ class CreateProfile extends Component {
                         <p class="iErr">{errors.idNumber}</p>
                         <p class="text-help">ex.Passport, Driver's license</p>
                       </div>
-                      <div class="form-group form-group--text form-group--text-erc">
+                      <div class="form-group form-group--text form-group--text-erc help">
                         <label for="frmErc" class="main main--auth">ERC20 Address<span class="required obj-required">*</span></label>
                         <TextFieldGroup
                           className="theme-is-err"
@@ -590,7 +593,10 @@ class CreateProfile extends Component {
                           onChange={this.onChange}
                         />
                         <p class="iErr">{errors.ethereumAddress}</p>
-                        <p class="text-help">Help text....</p>
+                        <p class="text-help">ex. My Ethereum Wallet, METAMASK</p>
+                      </div>
+                      <div class="form-group form-group--notice">
+                        <p class="text-notice">You can upload files in PNG, JPEG. File must not be larger than 3MB.</p>
                       </div>
                       <div class="form-group form-group--text form-group--text-erc">
                         <label for="frmErc" class="main main--auth">BITCOIN Address</label>

@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import conf from '../../../config/conf.json';
 
-const ETHERSCAN_API_URL = 'http://api-rinkeby.etherscan.io';
-const CONTRACT_ADDRESS = conf.PeaceCoinCrowdsaleTokenAddress;
-const API_KEY = 'CZS8EXSB7GDIDBFN91D8QNVZZF13N9VTGF';
-
 class PurchaseHistory extends Component {
   constructor(props) {
     super(props);
@@ -17,8 +13,27 @@ class PurchaseHistory extends Component {
   async componentDidMount() {
     const { address } = this.props;
 
+    let url;
+    let contractAddress;
+    let key;
+
+    var conf = require('../../../config/conf.json');
+
+    if (process.env.NODE_ENV === 'production') {
+
+      url = conf.ETHERSCAN_API_URL;
+      contractAddress = conf.PeaceCoinCrowdsaleTokenAddress;
+      key = conf.API_KEY;
+
+    }else{
+
+      url = conf.TEST_ETHERSCAN_API_URL;
+      contractAddress = conf.Test_PeaceCoinCrowdsaleTokenAddress;
+      key = conf.TEST_API_KEY;
+    }
+
     fetch(
-      `${ETHERSCAN_API_URL}/api?module=account&action=tokentx&contractaddress=${CONTRACT_ADDRESS}&address=${address}&page=1&offset=100&sort=asc&apikey=${API_KEY}`
+      `${url}/api?module=account&action=tokentx&contractaddress=${contractAddress}&address=${address}&page=1&offset=100&sort=asc&apikey=${key}`
     )
     .then(res => res.json())
     .then(data => {

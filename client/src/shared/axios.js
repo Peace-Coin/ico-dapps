@@ -12,9 +12,6 @@ export default axios;
 
 export const getAxios = () => {
 
-  console.log('getAxios token-> ')
-  console.log(localStorage.getItem('token'))
-
   return axiosBase.create({
     baseURL: getURL(),
     headers: {

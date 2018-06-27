@@ -8,14 +8,14 @@ import {
 } from './types';
 
 import axios from '../shared/axios';
+import {getAxios} from '../shared/axios';
 import history from '../shared/history';
-
 import { Route, Redirect } from 'react-router-dom';
 
 // GET: Current Rate
 export const getRate = (ethAmount, weiRaised, goalEth, history) => dispatch => {
 
-  axios
+  getAxios()
     .post('/api/rate/getRate')
     .then(res => {
 
@@ -35,7 +35,6 @@ export const getRate = (ethAmount, weiRaised, goalEth, history) => dispatch => {
     })
     .catch(err => {
 
-      console.log(err);
-      //history.push('/error', err)
+      console.log('RATE GET FAILED')
     });
 };

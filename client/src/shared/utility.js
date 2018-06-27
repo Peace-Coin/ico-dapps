@@ -6,10 +6,16 @@ export const updateObject = (oldObject, updatedProperties) => {
 };
 
 export const getURL = () => {
+
+  var conf = require('../config/conf.json');
+
   if (process.env.NODE_ENV === 'production') {
-    return 'https://ico.peace-coin.org';
-    //return 'http://localhost:5000';
+
+    return conf.TEST_API_DOMAIN;
+    //return conf.API_DOMAIN;
+
   } else {
-    return 'http://localhost:5000';
+
+    return conf.TEST_API_DOMAIN;
   }
 };
