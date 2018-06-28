@@ -2,8 +2,7 @@
   "PeaceCoinCrowdsaleAddress": "0x9c15766481674111aac8ed27eec579e43abb27a5",
   "PeaceCoinCrowdsaleTokenAddress":
     "0x2ad2148e29398f33e8b9a23f4f9c2e5b2ee673aa",
-  "PeaceCoinBitCoinAddress":
-      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "PeaceCoinBitCoinAddress": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
   "GasPrice": "24x",
   "GasLimit": "21000",
   "EthGasPrice": "28",
@@ -11,6 +10,6 @@
   "KYC_APPROVED_STATUS": "2",
   "EXCHANGE_WEI_ETH_RATE": 0.000000000000000001,
   "GOAL_BILLION_USD": 2,
-  "INFURA_NETWORK_MAIN_URL": "https://rinkeby.infura.io/BGLzy4waTqziQIzsOPov",
-  "INFURA_NETWORK_RINKEBY_URL": "https://rinkeby.infura.io/BGLzy4waTqziQIzsOPov"
+  "INFURA_NETWORK_MAIN_URL": "https://mainnet.infura.io/KreNgXVc1W2krmd36Ojp",
+  "INFURA_NETWORK_RINKEBY_URL": "https://rinkeby.infura.io/KreNgXVc1W2krmd36Ojp"
 }
