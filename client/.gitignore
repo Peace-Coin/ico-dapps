@@ -2,6 +2,9 @@
 /node_modules
 /dist
 
+/config/
+/build/
+
 # testing
 /coverage
 
