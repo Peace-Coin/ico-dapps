@@ -138,7 +138,7 @@ class Dashboard extends Component {
       this.props.getProfileStatus();
 
       //ポップアップ制御用
-      getAxios().get('/api/profile').then(res => {
+      await getAxios().get('/api/profile').then(res => {
         this.setState({ profile: res.data });
 
         let investor = this.state.profile.Profile.ethereumAddress;
@@ -244,10 +244,8 @@ class Dashboard extends Component {
 
       this.props.getRate(ethAmount, weiRaised, goalEth, this.props.history);
 
-      tokenAmount = String(tokenAmount).replace(
-        /(\d)(?=(\d\d\d)+(?!\d))/g,
-        '$1,'
-      );
+      tokenAmount = PeaceUtil.floatFormat(tokenAmount, 0);
+      tokenAmount = PeaceUtil.conmaFormat(tokenAmount);
 
       ethAmount = PeaceUtil.floatFormat(ethAmount, 4);
       ethAmount = PeaceUtil.conmaFormat(ethAmount);

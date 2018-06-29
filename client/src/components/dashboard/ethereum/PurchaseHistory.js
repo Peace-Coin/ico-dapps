@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import conf from '../../../config/conf.json';
+import PeaceCoinCrowdsale from '../../../ethereum/ico-interface/PeaceCoinCrowdsale';
+const PeaceUtil = require('../../../util/PeaceUtil');
 
 class PurchaseHistory extends Component {
   constructor(props) {
@@ -42,9 +44,17 @@ class PurchaseHistory extends Component {
       console.log(err);
     });
 
-    const { rates } = this.props;
+    let rate = 10000;
+
+    if (process.env.NODE_ENV === 'production') {
+
+    }else{
+
+      rate = await PeaceCoinCrowdsale.methods.getCurrentRate().call();
+    }
+
     this.setState({
-      rates: rates
+      rate: rate
     });
   }
 
@@ -57,13 +67,12 @@ class PurchaseHistory extends Component {
     let records;
     let header;
 
-    let rates = this.state.rates;
-
     if (histories.map != undefined && histories.length > 0) {
 
       histories = histories.slice().reverse();
 
       for (let i in histories) {
+
         var date = new Date(histories[i].timeStamp * 1000);
 
         var year = date.getFullYear();
@@ -75,6 +84,29 @@ class PurchaseHistory extends Component {
 
         histories[i].dateTime1 = year + '/' + month + '/' + day;
         histories[i].dateTime2 = hour + ':' + min + ':' + sec;
+
+        let value = histories[i].value;
+
+        let pce = new BigNumber(value)
+          .times(conf.EXCHANGE_WEI_ETH_RATE)
+          .toPrecision();
+
+        let eth = new BigNumber(pce)
+            .div(this.state.rate)
+            .toPrecision();
+
+        let usd = new BigNumber(eth)
+          .times(this.props.rates.usdRate)
+          .toPrecision();
+
+        pce = PeaceUtil.floatFormat(pce, 2);
+        pce = PeaceUtil.conmaFormat(pce);
+
+        usd = PeaceUtil.floatFormat(usd, 2);
+        usd = PeaceUtil.conmaFormat(usd);
+
+        histories[i].pceAmount = pce;
+        histories[i].usdAmount = usd;
       }
 
       header = (
@@ -102,19 +134,14 @@ class PurchaseHistory extends Component {
             {' '}
             <span className="coin coin-pce">
               <span className="num coin__num">
-                {new BigNumber(history.value)
-                  .times(conf.EXCHANGE_WEI_ETH_RATE)
-                  .toPrecision()}
+                {history.pceAmount}
               </span>
-              <span className="unit coin__unit">{history.tokenSymbol}</span>
+              <span className="unit coin__unit">PCE</span>
             </span>
             <span className="coin coin-usd cl_themeA-2">
               <span className="unit coin__unit">$</span>
               <span className="num coin__num">
-                {new BigNumber(history.value)
-                  .times(conf.EXCHANGE_WEI_ETH_RATE)
-                  .times(rates.usdRate)
-                  .toPrecision()}
+                {history.usdAmount}
               </span>
             </span>
           </p>
