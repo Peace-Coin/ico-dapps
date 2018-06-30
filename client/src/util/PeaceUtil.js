@@ -2,18 +2,30 @@ module.exports = {
 
  conmaFormat: (number) => {
 
-   Number.prototype.split3 = function() {
-    var r = '', s = this.toString();
-    s.match(/(-?)([0-9]+)(\.[0-9]*)?/);
-    var sp = [RegExp.$1, s = parseInt(RegExp.$2), RegExp.$3];
-    while(s >= 1000) {
-      r = ',' + (s%1000) + r;
-      s = parseInt(s/1000);
-    }
-    return sp[0] + s + r + sp[2];
-  }
+   return number;
 
-  return number.split3();
+  //  Number.prototype.split3 = function() {
+  //   var r = '', s = this.toString();
+  //   s.match(/(-?)([0-9]+)(\.[0-9]*)?/);
+  //   var sp = [RegExp.$1, s = parseInt(RegExp.$2), RegExp.$3];
+  //   while(s >= 1000) {
+  //     r = ',' + (s%1000) + r;
+  //     s = parseInt(s/1000);
+  //   }
+  //   return sp[0] + s + r + sp[2];
+  // }
+  //
+  // return number.split3();
+
+  // if (isNaN(number)) {
+  //   return this;
+  // }
+  // return ("" + number).replace(
+  //   /^([+-]?\d{1,3})((\d{3})+)((\.\d+)?)$/g,
+  //   function(s, p1, p2, p3, p4) {
+  //     return p1 + p2.replace(/(\d{3})/g, ",$1") + p4;
+  //   }
+  // );
  },
 
  floatFormat: ( number, n )  => {

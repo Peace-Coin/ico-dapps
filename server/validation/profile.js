@@ -102,7 +102,7 @@ module.exports = {
         }),
       streetAddress: Joi.string()
         .required()
-        .regex(/^[a-zA-Z0-9./=-\s　]*$/)
+        .regex(/^[a-zA-Z0-9.,/=-\s　]*$/)
         .max(50)
         .label('Street Address')
         .options({
@@ -110,14 +110,14 @@ module.exports = {
             string: {
               max: 'less than 50 char',
               regex: {
-                base: 'fails to match the required pattern: half-width alphanumeric and number and [./=-]'
+                base: 'fails to match the required pattern: half-width alphanumeric and number and [.,/=-]'
               }
             }
           }
         }),
       cityAddress: Joi.string()
         .required()
-        .regex(/^[a-zA-Z0-9./=-\s　]*$/)
+        .regex(/^[a-zA-Z0-9.,/=-\s　]*$/)
         .max(50)
         .label('City')
         .options({
@@ -125,7 +125,7 @@ module.exports = {
             string: {
               max: 'less than 50 char',
               regex: {
-                base: 'fails to match the required pattern: half-width alphanumeric and number and [./=-]'
+                base: 'fails to match the required pattern: half-width alphanumeric and number and [.,/=-]'
               }
             }
           }

@@ -203,6 +203,8 @@ class Dashboard extends Component {
         .balanceOf(this.state.investor)
         .call();
 
+      //console.log('tokenAmount -> ' + tokenAmount)
+
       let ethAmount;
 
       //PeaceUtil 小数点以下誤差吸収ライブラリ
@@ -216,6 +218,8 @@ class Dashboard extends Component {
       tokenAmount = new BigNumber(tokenAmount)
         .times(conf.EXCHANGE_WEI_ETH_RATE)
         .toPrecision();
+
+      //console.log('tokenAmount 2 -> ' + tokenAmount)
 
       let weiRaised = 0;
 
@@ -238,14 +242,29 @@ class Dashboard extends Component {
         .times(conf.EXCHANGE_WEI_ETH_RATE)
         .toPrecision();
 
+      //TEST CODE START
+      // tokenAmount = conf.TEST_CALC_NUMBER;
+      // ethAmount = conf.TEST_CALC_NUMBER;
+      // weiRaised = conf.TEST_CALC_NUMBER;
+      //TEST CODE END
+
       let goalEth = new BigNumber(goal)
         .times(conf.EXCHANGE_WEI_ETH_RATE)
         .toPrecision();
 
       this.props.getRate(ethAmount, weiRaised, goalEth, this.props.history);
 
-      tokenAmount = PeaceUtil.floatFormat(tokenAmount, 0);
+      tokenAmount = PeaceUtil.floatFormat(tokenAmount, 2);
+
+      //console.log('tokenAmount 2.5 -> ' + tokenAmount)
+
+      //tokenAmount = String(tokenAmount).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+
       tokenAmount = PeaceUtil.conmaFormat(tokenAmount);
+
+      //tokenAmount = PeaceUtil.conmaFormat(tokenAmount);
+
+      //console.log('tokenAmount 3 -> ' + tokenAmount)
 
       ethAmount = PeaceUtil.floatFormat(ethAmount, 4);
       ethAmount = PeaceUtil.conmaFormat(ethAmount);
@@ -266,6 +285,9 @@ class Dashboard extends Component {
       //this.interval = setInterval(this.countDowm, 1000);
 
     } catch (e) {
+
+      console.log('e -> ')
+      console.log(e)
 
       if(hasMetamaskExtentions()){
 

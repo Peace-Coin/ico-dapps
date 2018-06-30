@@ -99,6 +99,11 @@ class PurchaseHistory extends Component {
           .times(this.props.rates.usdRate)
           .toPrecision();
 
+        // //TEST CODE START
+        // pce = conf.TEST_CALC_NUMBER;
+        // usd = conf.TEST_CALC_NUMBER;
+        // //TEST CODE END
+
         pce = PeaceUtil.floatFormat(pce, 2);
         pce = PeaceUtil.conmaFormat(pce);
 

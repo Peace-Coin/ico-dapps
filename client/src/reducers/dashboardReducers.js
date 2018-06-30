@@ -32,6 +32,12 @@ export default function(state = intialState, action) {
         bitcoinRateAmount = 0
       }
 
+      //TEST CODE START
+      // var conf = require('../config/conf.json');
+      // bitcoinRateAmount = conf.TEST_CALC_NUMBER;
+      // usdRateAmount = conf.TEST_CALC_NUMBER;
+      //TEST CODE END
+
       bitcoinRateAmount = PeaceUtil.floatFormat(bitcoinRateAmount, 6);
       bitcoinRateAmount = PeaceUtil.conmaFormat(bitcoinRateAmount);
 
@@ -39,6 +45,10 @@ export default function(state = intialState, action) {
       usdRateAmount = PeaceUtil.conmaFormat(usdRateAmount);
 
       let totalUsdAmount = new BigNumber(action.payload.totalEthAmount).times(action.payload.usdRate).toPrecision();
+
+      //TEST CODE START
+      //totalUsdAmount = conf.TEST_CALC_NUMBER;
+      //TEST CODE END
 
       totalUsdAmount = PeaceUtil.floatFormat(totalUsdAmount, 2);
       totalUsdAmount = PeaceUtil.conmaFormat(totalUsdAmount);
