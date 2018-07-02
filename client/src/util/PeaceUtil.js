@@ -2,7 +2,78 @@ module.exports = {
 
  conmaFormat: (number) => {
 
-   return number;
+   try{
+
+     if(number === undefined || number === null){
+
+       return number;
+     }
+
+     var cammaStr = String(number).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+
+     var numArray = cammaStr.split(".");
+     var intStr = '';
+     var fewStr = '';
+
+     intStr = numArray[0];
+
+     //console.log('intStr -> ' + intStr)
+     //console.log('numArray.length -> ' + numArray.length)
+
+     if(numArray.length === 2){
+
+       fewStr = numArray[1];
+
+       //fewStr.replace(/,/g, '');
+
+       fewStr = fewStr.split(",").join("")
+
+       fewStr = '.' + fewStr;
+     }
+
+     //console.log('fewStr -> ' + fewStr)
+
+     var result = intStr + fewStr
+
+     return result;
+
+   }catch(err){
+
+     console.log('err ->' + err);
+
+     return number;
+   }
+
+   // console.log("number=" + number + " type=" + typeof number);
+   //
+   // var numArray = number.toString().split("");
+   // var crateCammaNumStr = '';
+   // var beforeDecimalPointFlg = true;
+   //
+   // numArray.reverse();
+   //
+   // for(var i = 0; i < numArray.length; i++) {
+   //
+   //   var addStr = numArray[i];
+   //
+   //   if(addStr === '.'){
+   //
+   //     beforeDecimalPointFlg = false;
+   //   }
+   //
+   //   if( i != 0 && (i % 3) == 0 && beforeDecimalPointFlg){
+   //
+   //     addStr = addStr + ',';
+   //   }
+   //
+   //   crateCammaNumStr = crateCammaNumStr + addStr;
+   // }
+   //
+   // var resultArray = crateCammaNumStr.split("");
+   // resultArray.reverse();
+   // crateCammaNumStr = resultArray.join(',');
+   //
+   // return crateCammaNumStr;
 
   //  Number.prototype.split3 = function() {
   //   var r = '', s = this.toString();
