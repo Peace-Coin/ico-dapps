@@ -48,6 +48,8 @@ signToken = user => {
 module.exports = {
   signUp: async (req, res, next) => {
 
+    try{
+
     const { email, password } = req.value.body;
     // Check if there is a user with the same mail
     const foundUser = await User.findOne({ 'local.email': email });
@@ -61,8 +63,27 @@ module.exports = {
       return res.status(400).json(error);
     }
 
-    // Generate Rondom Token for email confirmation
-    const secretToken = randomstring.generate(128);
+    // generate reset token
+    let secretToken;
+
+    let existFlg = true;
+
+    //secretToken 重複チェック
+    while (existFlg){
+
+      secretToken = randomstring.generate(128);
+
+      let existSecretTokenUser = await User.findOne({ 'local.secretToken': secretToken });
+
+      console.log('secretToken -> ' + secretToken)
+      console.log('!existSecretTokenUser -> ' + !existSecretTokenUser)
+      console.log('password -> ' + password)
+
+      if (!existSecretTokenUser) {
+
+        existFlg = false;
+      }
+    }
 
     // creae a new user
     const newUser = new User({
@@ -84,6 +105,12 @@ module.exports = {
       html: verifyHtml(newUser)
     };
     await mailer.sendEmail(message);
+
+  }catch(err){
+
+    console.log('signup err -> ')
+    console.log(err)
+  }
 
     res
       .status(200)
@@ -171,7 +198,25 @@ module.exports = {
     }
 
     // generate reset token
-    const secretToken = randomstring.generate(128);
+    let secretToken;
+
+    let existFlg = true;
+
+    //secretToken 重複チェック
+    while (existFlg){
+
+      secretToken = randomstring.generate(128);
+
+      let existSecretTokenUser = await User.findOne({ 'local.secretToken': secretToken });
+
+      console.log('secretToken -> ' + secretToken)
+      console.log('!existSecretTokenUser -> ' + !existSecretTokenUser)
+
+      if (!existSecretTokenUser) {
+
+        existFlg = false;
+      }
+    }
 
     // Save Secret Token
     foundUser.local.secretToken = secretToken;
@@ -214,7 +259,7 @@ module.exports = {
       subject: 'Peace Coin ICO System Error',
       html: body
     };
-    
+
     await mailer.sendEmail(message);
 
     res.status(200).json({
@@ -226,6 +271,8 @@ module.exports = {
     // Secret Token Check
     const { secretToken, password } = req.body;
     const foundUser = await User.findOne({ 'local.secretToken': secretToken });
+
+    console.log('secretToken -> ' + secretToken)
 
     if (!foundUser || secretToken === null || secretToken === '') {
       return res.status(403).json({
