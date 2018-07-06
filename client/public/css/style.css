@@ -1476,7 +1476,7 @@ form label.main, form .text-help, .form-group--check-aml .text-label, .form-grou
   }
 }
 
-/** 以下、紺野調整 */
+/** konno custom style */
 
 #root{
 
@@ -1673,4 +1673,24 @@ input[type="checkbox"]+.faSet .fa.no-check {
     margin-left: 32%;
     z-index: 0;
     margin-top: -45px;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  font-size: 1.6em !important;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid !important;
+  border-radius: 4px;
+}
+
+.kyc-alert{
+
+
+
 }

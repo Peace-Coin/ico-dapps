@@ -155,6 +155,23 @@ module.exports = {
       .catch(err => res.status(500).json(err));
   },
 
+
+  // getAddressByUserId: async (req, res) => {
+  //
+  //   console.log('getProfileByUserId req.user.id -> ')
+  //   console.log(req.user.id)
+  //
+  //   Profile.findOne({ user: req.user.id })
+  //     .then(profile => {
+  //       if (!profile) {
+  //         errors.noprofile = 'There is no profile for this user';
+  //         res.status(400).json(errors);
+  //       }
+  //       res.json(CodeNameUtil.getProfileStatus(profile));
+  //     })
+  //     .catch(err => res.status(404).json(err));
+  // },
+
   // Get Profile
   getProfileByUserId: async (req, res) => {
 
@@ -183,8 +200,12 @@ module.exports = {
         if (!profile) {
           res.json({ profileStatus: 0 });
         }
+
+        let newProfile = CodeNameUtil.getProfileStatus(profile);
+
         res.json({
-          profileStatus: 1,
+          profileStatus: newProfile.Profile.status,
+          profileStatusName: newProfile.Profile.statusName,
           ethereumAddress: profile.Profile.ethereumAddress + '',
           bitcoinAddress: profile.Profile.bitcoinAddress + ''
         });

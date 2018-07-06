@@ -149,7 +149,7 @@ class Navbar extends Component {
       <nav>
         <div id="header" role="banner">
           <h1 className="logo">
-            <a href="#">
+            <a href="https://www.peace-coin.org/">
               <svg
                 version="1.1"
                 id="logo"

@@ -125,6 +125,7 @@ const SelectListGroupOfCountry = ({ name, value, error, info, onChange,disabled,
       <option value="KZ">Kazakhstan</option>
       <option value="KE">Kenya</option>
       <option value="KI">Kiribati</option>
+      <option value="KS">Korea South</option>
       <option value="KW">Kuwait</option>
       <option value="KG">Kyrgyzstan</option>
       <option value="LA">Laos</option>

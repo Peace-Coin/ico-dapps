@@ -11,7 +11,6 @@ const posts = require('./routes/api/posts');
 const auth = require('./routes/api/auth');
 const rate = require('./routes/api/rate');
 const ico = require('./routes/api/ico');
-const mobile = require('./routes/api/mobile');
 
 // Express Instance
 const app = express();
@@ -48,7 +47,6 @@ app.use('/api/posts', posts);
 app.use('/api/auth', auth);
 app.use('/api/rate', rate);
 app.use('/api/ico', ico);
-app.use('/api/mobile', mobile);
 
 module.exports = app;
 

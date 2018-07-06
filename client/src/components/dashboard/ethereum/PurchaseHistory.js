@@ -44,7 +44,7 @@ class PurchaseHistory extends Component {
       console.log(err);
     });
 
-    let rate = 10000;
+    let rate = 50000;
 
     if (process.env.NODE_ENV === 'production') {
 

@@ -126,7 +126,7 @@ export default class Ethereum extends Component {
 
     if (process.env.NODE_ENV === 'production') {
 
-      rate = 10000;
+      rate = 50000;
 
     }else{
 
@@ -151,7 +151,7 @@ export default class Ethereum extends Component {
 
     if (process.env.NODE_ENV === 'production') {
 
-      baseRate = 10000;
+      baseRate = 50000;
 
     }else{
 

@@ -151,7 +151,7 @@ class Dashboard extends Component {
         });
       });
 
-      let rate = 10000;
+      let rate = 50000;
       let goal = 0;
       let openingTime;
       let closingTime;
@@ -517,6 +517,27 @@ class Dashboard extends Component {
 
   render() {
 
+    let kycStatusAlertArea;
+
+    //KYCステータスが登録中、および承認以外の場合
+    if (
+      this.props.profile.profileStatus &&
+      this.props.profile.profileStatus.profileStatus &&
+      this.props.profile.profileStatus.profileStatus != 0 &&
+      this.props.profile.profileStatus.profileStatus != 2
+    ) {
+
+      kycStatusAlertArea = (
+        <div class="alert alert-danger">
+          Authenticate (status : {this.props.profile.profileStatus.profileStatusName})
+        </div>
+      );
+
+    }else{
+
+      kycStatusAlertArea = '';
+    }
+
     let goalPar = this.state.goalPar;
 
     let dashboardContent;
@@ -836,6 +857,9 @@ class Dashboard extends Component {
 
             <div id="mainContent" role="main">
               <div id="pageContent">
+                <div class="kyc-alert">
+                  {kycStatusAlertArea}
+                </div>
                 <div class="l-sec sec_token">
                   <h2 class="title_sec title_sec__a title_sec-token">Token</h2>
                   <div class="l-content l-content--token theme-bgA">
