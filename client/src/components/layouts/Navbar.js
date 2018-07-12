@@ -110,6 +110,7 @@ class Navbar extends Component {
       // show a link to sign out
       return (
         <li className="nav-item">
+          <a href="https://www.peace-coin.org/">Home</a>
           <NavLink to="/dashboard">Dashboard</NavLink>
           {kycaml}
           <NavLink to="/signout">Sign Out</NavLink>
@@ -149,7 +150,7 @@ class Navbar extends Component {
       <nav>
         <div id="header" role="banner">
           <h1 className="logo">
-            <a href="https://www.peace-coin.org/">
+            <NavLink to="/dashboard">
               <svg
                 version="1.1"
                 id="logo"
@@ -254,7 +255,7 @@ class Navbar extends Component {
                   </g>
                 </g>
               </svg>
-            </a>
+            </NavLink>
           </h1>
           <div
             onClick={this.toggleLang}

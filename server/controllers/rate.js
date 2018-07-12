@@ -1,33 +1,48 @@
 const Rate = require('../models/rate');
+const SendError = require('../util/SendError');
 
 module.exports = {
   getRate: async (req, res, next) => {
 
-    Rate.findOne({ __v: 0 })
-      .then(rate => {
+    try{
 
-        console.log(rate)
+      Rate.findOne({ __v: 0 })
+        .then(rate => {
 
-        res.status(200).json(rate);
+          console.log(rate)
 
-      }).catch(err => res.status(404).json(err));
+          res.status(200).json(rate);
+
+        }).catch(err => res.status(404).json(err));
+
+    }catch(err){
+
+      SendError.send(err);
+    }
   },
   updateRate: async (req, res, next) => {
 
-    Rate.findOne({ __v: 0 })
-      .then(rate => {
-        rate.remove();
-      });
+    try{
 
-    let rate = {
-      bitcoinRate: req.bitcoinRate,
-      usdRate: req.usdRate,
+      Rate.findOne({ __v: 0 })
+        .then(rate => {
+          rate.remove();
+        });
+
+      let rate = {
+        bitcoinRate: req.bitcoinRate,
+        usdRate: req.usdRate,
+      }
+
+      new Rate(rate).save();
+
+      res
+        .status(200)
+        .json({ message: 'Rate update Success' });
+
+    }catch(err){
+
+      SendError.send(err);
     }
-
-    new Rate(rate).save();
-
-    res
-      .status(200)
-      .json({ message: 'Rate update Success' });
   }
 };

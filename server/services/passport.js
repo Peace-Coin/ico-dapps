@@ -9,6 +9,9 @@ const FacebookTokenStrategy = require('passport-facebook-token');
 const config = require('../config/keys');
 const User = require('../models/user');
 
+const SendError = require('../util/SendError');
+
+
 // JSON WEB TOKENS STRATEGY
 passport.use(
   new JwtStrategy(
@@ -18,9 +21,17 @@ passport.use(
     },
     async (payload, done) => {
       try {
+
+        console.log('passport.use start...')
+
         // Find the User specified in token
         // payload.sub from signToken
         const user = await User.findById(payload.sub);
+
+        console.log('user -> ')
+        console.log(user)
+
+        console.log('passport.use end...')
 
         // If user does not exsits, handle it
         if (!user) {
@@ -30,6 +41,9 @@ passport.use(
         // otherwise, return the user
         done(null, user);
       } catch (error) {
+
+        SendError.send(error);
+
         done(error, false);
       }
     }
@@ -74,6 +88,9 @@ passport.use(
         await newUser.save();
         done(null, newUser);
       } catch (error) {
+
+        SendError.send(error);
+
         done(error, false, error.message);
       }
     }
@@ -113,6 +130,9 @@ passport.use(
         await newUser.save();
         done(null, newUser);
       } catch (error) {
+
+        SendError.send(error);
+
         done(error, false, error.message);
       }
     }
@@ -128,6 +148,9 @@ passport.use(
     },
     async (email, password, done) => {
       try {
+
+        console.log('passport.use start...')
+
         // Find the user given the email
         const user = await User.findOne({ 'local.email': email });
 
@@ -140,6 +163,16 @@ passport.use(
 
         // check if the password is correct
         const isMatch = await user.isValidPassword(password);
+
+        console.log('user -> ')
+        console.log(user)
+
+        console.log('email -> ' + email)
+        console.log('password -> ' + password)
+        console.log('isMatch -> ' + isMatch)
+
+        console.log('passport.use end...')
+
         // If not, handle it
         if (!isMatch) {
           return done(null, false, {
@@ -153,9 +186,13 @@ passport.use(
             message: 'You have to confirm the Email first!'
           });
         }
+
         // otherwise, return the user
         done(null, user);
       } catch (error) {
+
+        SendError.send(error);
+
         done(error, false);
       }
     }

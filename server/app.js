@@ -29,10 +29,8 @@ mongoose
 
 console.log('environment: ', process.env.NODE_ENV);
 
-// Middleware
-if (!process.env.NODE_ENV === 'test') {
-  app.use(morgan('dev'));
-}
+
+app.use(morgan('combined'));
 
 app.use(cors());
 
